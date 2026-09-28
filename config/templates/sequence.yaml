@@ -1,0 +1,71 @@
+# Five-touch outbound sequence. Placeholders are filled by leadgen.outreach.
+# Keep every email under 120 words. The first line must be specific to the
+# lead ("{personal_line}") - a generic first line is the #1 reason cold email
+# fails. Day offsets are relative to the first send.
+#
+# Available placeholders:
+#   {first_name} {company} {category_noun} {personal_line} {pain_line}
+#   {facility_line} {sender_name} {sender_title} {proof_line} {cta_line}
+
+touches:
+  - day: 0
+    channel: email
+    subject: "{company} x spare {category_noun} capacity"
+    body: |
+      Hi {first_name},
+
+      {personal_line}
+
+      {pain_line}
+
+      {facility_line} They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+
+      {cta_line}
+
+      {sender_name}
+      {sender_title}
+
+  - day: 3
+    channel: linkedin
+    subject: "Connection request"
+    body: |
+      Hi {first_name}, I work with a US {category_noun} manufacturer that has open capacity and does full turnkey (formulation to shelf-ready). Saw what {company} is doing and thought it was worth a quick hello.
+
+  - day: 5
+    channel: email
+    subject: "Re: {company} x spare {category_noun} capacity"
+    body: |
+      Hi {first_name},
+
+      Quick follow-up. The two reasons brands like {company} talk to us:
+
+      1. Lead time. Most co-packers are booked 6 to 12 months out and push MOQs up. This facility has room now.
+      2. One roof. {proof_line}
+
+      Would a 15-minute call this week or next be useful? Happy to send a capabilities sheet first if that is easier.
+
+      {sender_name}
+
+  - day: 10
+    channel: email
+    subject: "Sample run for {company}?"
+    body: |
+      Hi {first_name},
+
+      Rather than trade emails, would it help to see a sample? Send me your spec or your current product and the facility will turn around a benchmark sample so you can judge quality yourself.
+
+      If the timing is wrong, tell me when to check back and I will.
+
+      {sender_name}
+
+  - day: 18
+    channel: email
+    subject: "Closing the loop"
+    body: |
+      Hi {first_name},
+
+      I will stop here so I am not cluttering your inbox. If {company} ever needs {category_noun} production capacity, a second supplier, or a new SKU developed without building it in-house, I am one reply away.
+
+      Wishing you a strong quarter.
+
+      {sender_name}

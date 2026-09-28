@@ -1,0 +1,6 @@
+company,website,category,segment,contact_name,contact_title,email,city,state,notes
+Crumb Co,https://www.crumbco.com,cookie,established brand,Jordan Lee,Founder,jordan@crumbco.com,Austin,TX,Saw at Expo West
+Barkery Lane,barkerylane.com,pet treat,emerging_brand,Priya Nair,CEO,priya@barkerylane.com,Denver,CO,
+Crumb Co Duplicate,crumbco.com,cookie,,,,,,,duplicate domain
+,nowhere.com,cookie,,,,,,,blank company should be skipped
+Bad Email Bakes,badmail.com,bakery,,Alex,Owner,not-an-email,,,

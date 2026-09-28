@@ -1,0 +1,46 @@
+# Facility profile. Fill this in from the partner's data sheet
+# (see docs/05_facility_data_sheet.md). Every field marked TO_CONFIRM must be
+# verified with the partner before it is used in outreach. The engine uses this
+# file for capability-fit scoring and for outreach personalization.
+
+name: "Partner Facility"           # TO_CONFIRM - the name you are allowed to use
+location:
+  city: "TO_CONFIRM"
+  state: "TO_CONFIRM"
+  ships_nationwide: true
+
+# Production lines the facility runs. Categories drive lead scoring.
+categories:
+  - cookie
+  - bakery
+  - pet_treat
+  - pet_food
+
+# Turnkey services. These are the pitch.
+services:
+  formulation: true                # R&D / recipe development
+  private_label: true              # brand's label, facility's recipe
+  contract_manufacturing: true     # brand's recipe, facility produces
+  packaging: true
+  labeling: true
+  nutrition_panels: true           # shelf-ready compliance work
+  shelf_ready: true                # case pack, pallets, retailer specs
+
+# Certifications. Buyers ask about these on the first call.
+certifications:
+  fda_registered: true             # TO_CONFIRM
+  sqf: "TO_CONFIRM"                # e.g. "SQF Level 2"
+  organic: "TO_CONFIRM"
+  gluten_free: "TO_CONFIRM"
+  kosher: "TO_CONFIRM"
+  non_gmo: "TO_CONFIRM"
+  aafco_pet: "TO_CONFIRM"          # pet food / treat nutritional standard
+  allergen_controlled_lines: "TO_CONFIRM"
+
+# Commercial terms used in qualification and outreach.
+commercial:
+  spare_capacity_pct: 40
+  min_order_units: 0               # TO_CONFIRM - minimum run size
+  typical_lead_time_weeks: 0       # TO_CONFIRM - from PO to ship
+  sampling_turnaround_days: 0      # TO_CONFIRM - how fast can they sample
+  onboarding_weeks: 0              # TO_CONFIRM - first production run
