@@ -26,7 +26,11 @@ leadgen enrich                  # reads public homepages and Shopify catalogs
 leadgen score                   # ranks by ICP weights in config/icp.yaml
 leadgen qualify                 # AI fit + opening line (rule-based without a key)
 leadgen draft crumbco.com       # five-touch sequence for one lead (--ai sharpens it)
-leadgen advance crumbco.com contacted --note "day 0 sent"
+leadgen brief crumbco.com       # one-page call prep: facts, fit, history
+leadgen touch crumbco.com 0     # log the day-0 send (marks the lead contacted)
+leadgen due                     # follow-ups owed today, most overdue first
+leadgen touch crumbco.com 3 --channel linkedin
+leadgen advance crumbco.com replied --note "asked for capabilities sheet"
 leadgen report                  # funnel
 leadgen export pipeline.csv     # for a spreadsheet or a CRM
 leadgen economics --pct 5 --annual-purchases 400000

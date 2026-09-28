@@ -97,3 +97,26 @@ def test_sender_from_env(monkeypatch):
     monkeypatch.setenv("LEADGEN_SENDER_NAME", "Sam")
     assert cli._sender().name == "Sam"
     assert os.environ["LEADGEN_SENDER_NAME"] == "Sam"
+
+
+def test_touch_due_and_brief(run, sample_csv, capsys):
+    run("import", str(sample_csv))
+    assert run("touch", "crumbco.com", "0") == 0
+    assert "logged day 0" in capsys.readouterr().out
+    assert run("due") == 0
+    assert "nothing due" in capsys.readouterr().out
+    from datetime import date, timedelta
+
+    later = (date.today() + timedelta(days=4)).isoformat()
+    assert run("due", "--date", later) == 0
+    out = capsys.readouterr().out
+    assert "Crumb Co" in out and "linkedin" in out
+    assert run("touch", "crumbco.com", "3", "--channel", "linkedin") == 0
+    capsys.readouterr()
+    assert run("due", "--date", later) == 0
+    assert "nothing due" in capsys.readouterr().out
+    assert run("brief", "crumbco.com") == 0
+    out = capsys.readouterr().out
+    assert "Call brief: Crumb Co" in out and "Fit " in out and "stage_change" in out
+    assert run("touch", "nobody.com", "0") == 1
+    assert run("brief", "nobody.com") == 1

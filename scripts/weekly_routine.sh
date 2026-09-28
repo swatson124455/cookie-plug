@@ -10,6 +10,7 @@ leadgen import "$CSV" --source "$SOURCE"
 leadgen enrich
 leadgen score --min-score 40 --top 40
 leadgen qualify --min-score 40 --limit 40
+leadgen due
 leadgen report
 leadgen export "data/pipeline_$(date -u +%Y%m%d).csv"
 echo "Pipeline exported. Email the export to yourself as the timestamped commission record."

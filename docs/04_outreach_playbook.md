@@ -10,7 +10,7 @@ Everything you send, say, or answer, in one place. The engine renders the sequen
 4. **Send Tuesday to Thursday, 7 to 9 am their time.** Founders read email early.
 5. **Follow up four times.** Most replies come on touches 2 to 4. Stop after five; say you are stopping.
 6. **Reply within two hours** during business hours. Speed is the cheapest differentiator you have.
-7. **Log everything** with `leadgen advance`. The activity table is your commission record.
+7. **Log everything.** `leadgen touch <lead> 0` when the first email goes out, `leadgen due` every morning for the follow-ups owed, `leadgen touch <lead> <day>` as each one is sent, `leadgen advance <lead> replied` the moment someone answers (which stops the sequence). The activity table is your commission record.
 
 ## 2. The five-touch sequence (rendered by `leadgen draft`)
 
@@ -71,6 +71,8 @@ Two posts a week, from your own account, on: what retail buyers actually require
 | Unsubscribe or hostile | Stop immediately, log closed_lost, honor the opt-out. |
 
 ## 6. Discovery call script (15 minutes)
+
+Run `leadgen brief <lead>` before the call for the facts, the fit assessment, and the thread history on one page.
 
 **Open (1 min):** "Thanks for the time. I'll ask a few questions about what you make and where you're headed, tell you how the facility works, and we'll decide together if a sample makes sense. Fair?"
 

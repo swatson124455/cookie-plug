@@ -12,11 +12,12 @@ import argparse
 import json
 import os
 import sys
+from datetime import date
 from pathlib import Path
 from typing import Callable
 
 from leadgen import __version__
-from leadgen.ai import QualifierError, build_qualifier
+from leadgen.ai import QualifierError, build_qualifier, lead_facts
 from leadgen.crm import LeadStore, conversion_rates, export_csv
 from leadgen.discover import import_csv, search_queries
 from leadgen.economics import FunnelAssumptions, ReferralTerms, account_value, funnel_plan
@@ -24,6 +25,7 @@ from leadgen.enrich import WebsiteEnricher
 from leadgen.facility import load_facility
 from leadgen.models import Category, Stage
 from leadgen.outreach import SenderIdentity, load_sequence, render_sequence
+from leadgen.schedule import due_touches, log_touch
 from leadgen.scoring import apply_score, load_weights
 
 
@@ -134,6 +136,60 @@ def cmd_advance(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_due(args: argparse.Namespace) -> int:
+    template = load_sequence(args.template)
+    today = date.fromisoformat(args.date) if args.date else date.today()
+    with _store(args) as store:
+        due = due_touches(store, template, today)
+    if not due:
+        print(f"nothing due on {today.isoformat()}")
+        return 0
+    print(f"{'overdue':>7}  {'day':>3}  {'channel':<9} {'lead':<32} subject")
+    for touch in due:
+        print(f"{touch.days_overdue:>7}  {touch.day:>3}  {touch.channel:<9} {touch.company[:32]:<32} {touch.subject}")
+    print(f"{len(due)} touches due. Log each with: leadgen touch <lead> <day> [--channel email]")
+    return 0
+
+
+def cmd_touch(args: argparse.Namespace) -> int:
+    with _store(args) as store:
+        lead = store.get(args.lead)
+        if lead is None:
+            print(f"no lead found for {args.lead!r}", file=sys.stderr)
+            return 1
+        log_touch(store, lead, args.day, args.channel)
+        if args.day == 0 and lead.stage in (Stage.NEW, Stage.ENRICHED, Stage.QUALIFIED):
+            store.advance(args.lead, Stage.CONTACTED, note="day 0 sent")
+    print(f"{lead.company}: logged day {args.day} {args.channel}")
+    return 0
+
+
+def cmd_brief(args: argparse.Namespace) -> int:
+    facility = load_facility(args.facility)
+    with _store(args) as store:
+        lead = store.get(args.lead)
+        if lead is None:
+            print(f"no lead found for {args.lead!r}", file=sys.stderr)
+            return 1
+        history = store.activities(lead.domain or lead.company.lower())
+    qualifier = build_qualifier()
+    print(f"# Call brief: {lead.company}\n")
+    print(lead_facts(lead, facility))
+    try:
+        assessment = qualifier.assess(lead, facility)
+        print(f"\nFit {assessment.fit_score}/100 ({qualifier!r})")
+        print(f"Likely pain: {assessment.likely_pain}")
+        print(f"Best angle: {assessment.best_angle}")
+        if assessment.disqualifiers:
+            print(f"Disqualifiers: {'; '.join(assessment.disqualifiers)}")
+    except QualifierError as exc:
+        print(f"\nAI assessment unavailable: {exc}", file=sys.stderr)
+    print("\nHistory:")
+    for activity in history or [{"created_at": "", "kind": "none", "detail": "no activity logged"}]:
+        print(f"  {activity['created_at'][:10]} {activity['kind']}: {activity['detail'][:120]}")
+    return 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     with _store(args) as store:
         report = store.pipeline_report()
@@ -200,6 +256,20 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
     p.add_argument("lead", help="domain or lowercase company name")
     p.add_argument("--ai", action="store_true", help="use Claude for the personal line")
     p.set_defaults(func=cmd_draft)
+
+    p = sub.add_parser("touch", help="log a sent touch (day 0 also marks the lead contacted)")
+    p.add_argument("lead")
+    p.add_argument("day", type=int)
+    p.add_argument("--channel", default="email")
+    p.set_defaults(func=cmd_touch)
+
+    p = sub.add_parser("due", help="follow-ups owed today for contacted leads")
+    p.add_argument("--date", default="", help="YYYY-MM-DD, defaults to today")
+    p.set_defaults(func=cmd_due)
+
+    p = sub.add_parser("brief", help="one-page call prep for a lead")
+    p.add_argument("lead")
+    p.set_defaults(func=cmd_brief)
 
     p = sub.add_parser("advance", help="move a lead to a new stage")
     p.add_argument("lead")
