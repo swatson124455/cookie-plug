@@ -17,6 +17,7 @@ AI-assisted lead generation for a co-packing referral partnership. The partner f
 | `docs/09_capabilities_one_pager_template.md` | Buyer-facing one-pager, filled from the data sheet |
 | `docs/10_trade_show_playbook.md` | 12-month show calendar with before, during, and after plans |
 | `docs/11_inbound_demand.md` | Marketplaces and communities where brands already ask for a co-packer |
+| `docs/12_referral_partners.md` | Warm-intro network: who, the share offer, the outreach email |
 | `docs/PINS.md` | Everything that needs you |
 
 ## Quick start
@@ -33,6 +34,7 @@ leadgen enrich                  # reads public homepages and Shopify catalogs
 leadgen score                   # ranks by ICP weights in config/icp.yaml
 leadgen qualify                 # AI fit + opening line (rule-based without a key)
 leadgen draft crumbco.com       # five-touch sequence for one lead (--ai sharpens it)
+leadgen emails crumbco.com      # ranked, unverified address candidates for the contact
 leadgen brief crumbco.com       # one-page call prep: facts, fit, history
 leadgen touch crumbco.com 0     # log the day-0 send (marks the lead contacted)
 leadgen due                     # follow-ups owed today, most overdue first

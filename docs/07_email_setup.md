@@ -42,7 +42,7 @@ Free warm-up networks exist but change often; manual warm-up works and costs not
 
 1. Company contact page or press page.
 2. LinkedIn: the person's name and title; then the company's email pattern.
-3. Pattern: most small brands use `first@brand.com` or `first.last@brand.com`. Verify with a free lookup (Hunter's free tier gives a handful per month) or by sending the day-0 email and watching for a bounce.
+3. Pattern: most small brands use `first@brand.com` or `first.last@brand.com`. `leadgen emails <lead>` prints the candidates in likelihood order, and `--pattern first.last` reorders them once you have seen one real address at the company. Every candidate is unverified: check it with a free lookup (Hunter's free tier gives a handful per month) or by sending the day-0 email and watching for a bounce. Never load an unverified guess into a bulk sequence; bounces burn the domain.
 4. Founder emails for Shopify brands are often in the site's "Contact" or "Wholesale" page.
 
 Log the source of every address in the lead's notes so you can prove it was found publicly.

@@ -120,3 +120,19 @@ def test_touch_due_and_brief(run, sample_csv, capsys):
     assert "Call brief: Crumb Co" in out and "Fit " in out and "stage_change" in out
     assert run("touch", "nobody.com", "0") == 1
     assert run("brief", "nobody.com") == 1
+
+
+def test_emails_command(run, sample_csv, tmp_path, capsys):
+    run("import", str(sample_csv))
+    assert run("emails", "crumbco.com") == 0
+    out = capsys.readouterr().out
+    assert "jordan@crumbco.com" in out and "verified" in out
+    no_email = tmp_path / "noemail.csv"
+    no_email.write_text("company,website,contact_name\nPup Co,pupco.com,Priya Nair\nNo Site,,Ann Lee\n", encoding="utf-8")
+    run("import", str(no_email))
+    capsys.readouterr()
+    assert run("emails", "pupco.com", "--pattern", "first.last") == 0
+    out = capsys.readouterr().out
+    assert out.splitlines()[0].startswith("priya.nair@pupco.com") and "UNVERIFIED" in out
+    assert run("emails", "no site") == 1
+    assert run("emails", "nobody.com") == 1

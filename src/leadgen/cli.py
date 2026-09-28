@@ -18,6 +18,7 @@ from typing import Callable
 
 from leadgen import __version__
 from leadgen.ai import QualifierError, build_qualifier, lead_facts
+from leadgen.contacts import email_candidates
 from leadgen.crm import LeadStore, conversion_rates, export_csv
 from leadgen.discover import import_csv, search_queries
 from leadgen.economics import FunnelAssumptions, ReferralTerms, account_value, funnel_plan
@@ -190,6 +191,24 @@ def cmd_brief(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_emails(args: argparse.Namespace) -> int:
+    with _store(args) as store:
+        lead = store.get(args.lead)
+    if lead is None:
+        print(f"no lead found for {args.lead!r}", file=sys.stderr)
+        return 1
+    candidates = email_candidates(lead, known_pattern=args.pattern or None)
+    if not candidates:
+        print(f"{lead.company}: no website on file, cannot propose addresses")
+        return 1
+    for candidate in candidates:
+        flag = "verified" if candidate.verified else "UNVERIFIED"
+        print(f"{candidate.address:<45} {candidate.pattern:<12} {flag}")
+    if not candidates[0].verified:
+        print("Verify with a free lookup or a single test send before adding to the sequence.")
+    return 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     with _store(args) as store:
         report = store.pipeline_report()
@@ -270,6 +289,11 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
     p = sub.add_parser("brief", help="one-page call prep for a lead")
     p.add_argument("lead")
     p.set_defaults(func=cmd_brief)
+
+    p = sub.add_parser("emails", help="ranked, unverified address candidates for a lead's contact")
+    p.add_argument("lead")
+    p.add_argument("--pattern", default="", help="known company pattern, e.g. first.last")
+    p.set_defaults(func=cmd_emails)
 
     p = sub.add_parser("advance", help="move a lead to a new stage")
     p.add_argument("lead")
