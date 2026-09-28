@@ -57,6 +57,10 @@ def personal_line_from_signals(lead: Lead) -> str:
     if signals.retailers_mentioned:
         retailer = signals.retailers_mentioned[0].title()
         return f"Congrats on getting {lead.company} onto {retailer} shelves. That kind of retail pull usually turns production into the bottleneck fast."
+    if signals.recent_retail_launch or signals.in_national_retail:
+        return f"Congrats on the retail expansion at {lead.company}. The first reorders are where most brands find out the current setup cannot keep up."
+    if signals.recent_funding:
+        return f"Congrats on the round. Most of that money usually goes into inventory, and inventory needs a plant that can run it."
     if signals.out_of_stock:
         return f"Noticed a few {lead.company} products showing sold out. A good problem, but one that usually means demand has outrun production capacity."
     if signals.hiring_ops_or_production:

@@ -36,6 +36,9 @@ def test_personal_line_variants():
     def lead_with(**kwargs):
         return Lead(company="Z", signals=LeadSignals(**kwargs))
 
+    assert "retail expansion" in personal_line_from_signals(lead_with(in_national_retail=True))
+    assert "retail expansion" in personal_line_from_signals(lead_with(recent_retail_launch=True))
+    assert "the round" in personal_line_from_signals(lead_with(recent_funding=True))
     assert "sold out" in personal_line_from_signals(lead_with(out_of_stock=True))
     assert "hiring" in personal_line_from_signals(lead_with(hiring_ops_or_production=True))
     assert "outside manufacturing" in personal_line_from_signals(lead_with(mentions_copacker=True))

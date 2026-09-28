@@ -26,7 +26,26 @@ from leadgen.outreach import SenderIdentity, load_sequence, render_sequence  # n
 from leadgen.scoring import apply_score, load_weights  # noqa: E402
 
 LEADS_DIR = Path("leads")
+OVERRIDES_PATH = LEADS_DIR / "overrides.csv"
 TOP_N = 15
+WEAK_FIT_CAP = 39  # weak product fits never outrank a real fit; they stay in nurture
+
+# Companies the research surfaced as triggers but that are not realistic
+# buyers for this facility: national conglomerates, retailers whose recall
+# concerned a supplier, and fresh, frozen, or raw-only brands.
+EXCLUSIONS: dict[str, str] = {
+    "general mills": "conglomerate; plant closure is a market signal, not a lead",
+    "hostess": "conglomerate (J.M. Smucker)",
+    "natures bakery": "owned by Mars",
+    "hain celestial group": "conglomerate",
+    "lidl us": "retailer; recall concerned an imported supplier",
+    "lunds byerlys": "retailer; recall concerned a supplier",
+    "target favorite day bakery": "retailer; recall concerned a Canadian supplier",
+    "girl scouts of usa": "licensor; BARK is the manufacturer (kept separately)",
+    "farmers dog": "fresh-only pet food, facility bakes",
+    "omas pride": "raw pet food",
+    "albrights raw pet food": "raw pet food",
+}
 
 
 def merge(paths: list[Path]) -> list[Lead]:
@@ -39,8 +58,52 @@ def merge(paths: list[Path]) -> list[Lead]:
             print(f"  row {row_number}: {reason}")
         leads.extend(report.leads)
     unique = dedupe(leads)
-    print(f"merged {len(leads)} -> {len(unique)} unique")
-    return unique
+    kept = [lead for lead in unique if not _excluded(lead)]
+    print(f"merged {len(leads)} -> {len(unique)} unique -> {len(kept)} after exclusions")
+    return kept
+
+
+def apply_overrides(leads: list[Lead], path: Path) -> list[Lead]:
+    """Merge hand-verified facts from ``leads/overrides.csv``.
+
+    Columns: company, website, contact_name, contact_title, email, fit_note,
+    exclude_reason. A row with exclude_reason drops the lead; other columns
+    fill blanks; fit_note is appended to notes and, when it starts with
+    "WEAK FIT", the lead is demoted so it never ranks above real fits.
+    """
+    if not path.exists():
+        return leads
+    from leadgen.discover import normalized_name
+
+    overrides = {normalized_name(r["company"]): r for r in csv.DictReader(open(path, encoding="utf-8"))}
+    kept: list[Lead] = []
+    for lead in leads:
+        row = overrides.get(normalized_name(lead.company))
+        if row is None:
+            kept.append(lead)
+            continue
+        if (row.get("exclude_reason") or "").strip():
+            print(f"  excluded {lead.company}: {row['exclude_reason']}")
+            continue
+        for field in ("website", "contact_name", "contact_title", "email"):
+            if (row.get(field) or "").strip() and not getattr(lead, field):
+                setattr(lead, field, row[field].strip())
+        note = (row.get("fit_note") or "").strip()
+        if note:
+            lead.notes = f"{lead.notes} || {note}".strip(" |")
+        kept.append(lead)
+    return kept
+
+
+def _excluded(lead: Lead) -> bool:
+    from leadgen.discover import normalized_name
+
+    key = normalized_name(lead.company)
+    for name, reason in EXCLUSIONS.items():
+        if normalized_name(name) in key:
+            print(f"  excluded {lead.company}: {reason}")
+            return True
+    return False
 
 
 def write_seed_csv(leads: list[Lead], path: Path) -> None:
@@ -88,10 +151,13 @@ def main(argv: list[str]) -> int:
         print(__doc__)
         return 1
     LEADS_DIR.mkdir(exist_ok=True)
-    leads = merge(paths)
+    leads = apply_overrides(merge(paths), OVERRIDES_PATH)
     weights, facility = load_weights(), load_facility()
     for lead in leads:
         apply_score(lead, weights, facility)
+        if "WEAK FIT" in lead.notes.upper() and lead.score > WEAK_FIT_CAP:
+            lead.score = WEAK_FIT_CAP
+            lead.score_reasons.append("capped: weak product fit, see notes")
     leads.sort(key=lambda l: (-l.score, l.company.lower()))
     write_seed_csv(leads, LEADS_DIR / "seed_list.csv")
     write_scored_csv(leads, LEADS_DIR / "seed_list_scored.csv")

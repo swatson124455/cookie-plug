@@ -45,6 +45,30 @@ def test_dedupe_by_domain_then_name():
     assert [lead.company for lead in dedupe(leads)] == ["A", "NoSite"]
 
 
+def test_dedupe_merges_by_normalized_name_and_unions_signals():
+    from leadgen.models import LeadSignals
+
+    first = Lead(company="Fields Good", category=Category.COOKIE, notes="funding", source="funding_news",
+                 signals=LeadSignals(recent_funding=True))
+    second = Lead(company="Fields Good, LLC", website="fieldsgood.co", contact_name="Ashley Fields",
+                  notes="launch", source="brand_extension", signals=LeadSignals(recent_retail_launch=True))
+    merged = dedupe([first, second])
+    assert len(merged) == 1
+    lead = merged[0]
+    assert lead.website == "https://fieldsgood.co"
+    assert lead.contact_name == "Ashley Fields"
+    assert lead.signals.recent_funding and lead.signals.recent_retail_launch
+    assert "funding" in lead.notes and "launch" in lead.notes
+    assert lead.source == "funding_news+brand_extension"
+
+
+def test_dedupe_domain_row_first_then_name_only_row():
+    first = Lead(company="Elavi", website="elavi.co", notes="a")
+    second = Lead(company="Elavi Inc", notes="b")
+    merged = dedupe([first, second])
+    assert len(merged) == 1 and "b" in merged[0].notes
+
+
 def test_search_queries_substitute_category_term():
     queries = search_queries(Category.PET_TREAT)
     assert "google" in queries and "trade_shows" in queries
@@ -65,3 +89,16 @@ def test_import_csv_reads_signal_columns(tmp_path):
     assert trig.signals.in_national_retail and trig.signals.recent_funding
     assert not trig.signals.hiring_ops_or_production
     assert not any(v for v in plain.signals.model_dump().values() if isinstance(v, bool))
+
+
+def test_dedupe_merges_name_containment_but_not_short_names():
+    leads = [
+        Lead(company="Mightylicious Gluten Free", notes="a"),
+        Lead(company="Mightylicious", website="mightylicious.com", notes="b"),
+        Lead(company="Rogue"),
+        Lead(company="Rogue Bakery Co"),
+    ]
+    merged = dedupe(leads)
+    names = [lead.company for lead in merged]
+    assert names == ["Mightylicious Gluten Free", "Rogue", "Rogue Bakery Co"]
+    assert merged[0].website == "https://mightylicious.com"

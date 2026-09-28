@@ -47,6 +47,8 @@ src/leadgen/      engine: models, facility, discover, enrich, scoring, ai, outre
 config/           facility.yaml (partner facts), icp.yaml (scoring weights), templates/sequence.yaml
 prompts/          system prompts used by the AI layer and usable by hand
 docs/             strategy documents
+leads/            researched seed list (scored), overrides, and day-0 drafts
+scripts/          build_seed_list.py and the weekly routine
 tests/            unit, integration, fixtures (offline, 99% coverage)
 data/             local SQLite pipeline (git-ignored)
 ```

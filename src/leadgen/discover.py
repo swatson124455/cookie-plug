@@ -9,6 +9,7 @@ you export from them. That path works today and survives site changes.
 from __future__ import annotations
 
 import csv
+import re
 from pathlib import Path
 from typing import Iterable
 
@@ -105,17 +106,73 @@ def _coerce_enum(value: str, enum_cls: type, fallback):  # type: ignore[no-untyp
         return fallback
 
 
+_NAME_SUFFIXES = ("llc", "inc", "co", "company", "corp", "ltd", "the")
+
+
+def normalized_name(company: str) -> str:
+    """Collapse a company name to a comparison key: lowercase, alphanumeric, no suffixes."""
+    words = re.sub(r"[^a-z0-9 ]", " ", company.lower()).split()
+    kept = [w for w in words if w not in _NAME_SUFFIXES]
+    return "".join(kept)
+
+
 def dedupe(leads: Iterable[Lead]) -> list[Lead]:
-    """Drop duplicates by domain (or lowercase company name when no website)."""
-    seen: set[str] = set()
-    unique: list[Lead] = []
+    """Merge duplicates by domain, then by normalized company name.
+
+    Two research passes often find the same brand with different amounts of
+    detail. Merging keeps the website, unions the boolean signals, and joins
+    the evidence notes so nothing a researcher found is lost.
+    """
+    by_key: dict[str, Lead] = {}
+    order: list[str] = []
+    name_to_key: dict[str, str] = {}
     for lead in leads:
-        key = lead.domain or lead.company.lower()
-        if key in seen:
-            continue
-        seen.add(key)
-        unique.append(lead)
-    return unique
+        name_key = normalized_name(lead.company)
+        known = name_to_key.get(name_key) or _containing_name(name_key, name_to_key)
+        key = lead.domain if lead.domain and lead.domain in by_key else (known or lead.domain or name_key)
+        if key in by_key:
+            _merge_into(by_key[key], lead)
+        else:
+            by_key[key] = lead
+            order.append(key)
+        name_to_key.setdefault(name_key, key)
+    return [by_key[k] for k in order]
+
+
+_MIN_CONTAINMENT_LENGTH = 8
+
+
+def _containing_name(name_key: str, known: dict[str, str]) -> str | None:
+    """Match "mightylicious" to "mightyliciousglutenfree" and vice versa.
+
+    Only long keys qualify so short names like "rogue" never swallow others.
+    """
+    if len(name_key) < _MIN_CONTAINMENT_LENGTH:
+        return None
+    for other, key in known.items():
+        if len(other) >= _MIN_CONTAINMENT_LENGTH and (name_key in other or other in name_key):
+            return key
+    return None
+
+
+def _merge_into(target: Lead, other: Lead) -> None:
+    """Fold ``other`` into ``target`` without overwriting known facts."""
+    for field in ("website", "contact_name", "contact_title", "email", "linkedin_url", "city", "state"):
+        if not getattr(target, field) and getattr(other, field):
+            setattr(target, field, getattr(other, field))
+    if target.category == Category.OTHER:
+        target.category = other.category
+    if target.segment == Segment.UNKNOWN:
+        target.segment = other.segment
+    if other.notes and other.notes not in target.notes:
+        target.notes = f"{target.notes} || {other.notes}".strip(" |")
+    if other.source and other.source not in target.source:
+        target.source = f"{target.source}+{other.source}"
+    merged = target.signals.model_dump()
+    for name, value in other.signals.model_dump().items():
+        if value is True:
+            merged[name] = True
+    target.signals = LeadSignals(**merged)
 
 
 SEARCH_TEMPLATES: dict[str, list[str]] = {
