@@ -86,8 +86,9 @@ Cold outreach that references a trigger converts several times better than outre
 |---|---|---|---|
 | Cold email, personal Gmail, 20 to 30 per day | $0 | Primary. Scales with the engine. | 5 to 8% replies, 2 to 3% positive |
 | LinkedIn connection + short note, 15 per day | $0 | Second touch, builds visibility | 20 to 30% accept, 5 to 10% reply |
+| Inbound: Keychain and PartnerSlate listings, Startup CPG Slack, home-baker groups | $0 | Brands already asking for a co-packer. See `11_inbound_demand.md`. | Highest intent of any channel |
 | Warm intros through adjacent vendors | $0 | Highest close rate. Packaging suppliers, ingredient distributors, food-safety consultants, brokers, accelerators, SCORE mentors, commissary kitchens. Offer them a piece of your referral. | 30%+ meeting rate |
-| Trade show exhibitor lists | $0 (lists are public) | Bulk source of Tier A leads with a built-in trigger | Same as cold email, better fit |
+| Trade show exhibitor lists and floor walks | $0 for lists, a badge and travel to attend | Bulk source of Tier A leads with a built-in trigger. See `10_trade_show_playbook.md`. | Pre-show and post-show emails reply 2 to 3x cold |
 | LinkedIn content, 2 posts per week | $0 | Inbound over time. Post about capacity, MOQs, what retail buyers require. | Slow build, compounding |
 | Paid data and sending tools | Later | Only after proof: Apollo, Clay, Instantly, Sales Navigator | Raises volume 5x |
 

@@ -11,6 +11,13 @@ AI-assisted lead generation for a co-packing referral partnership. The partner f
 | `docs/03_lead_sources.md` | Every free source of leads and how to work it |
 | `docs/04_outreach_playbook.md` | Sequences, openers, reply handling, call script, objections, handoff |
 | `docs/05_facility_data_sheet.md` | Questions for the partner and the referral terms to sign |
+| `docs/06_partner_kickoff.md` | Kickoff email, referral term sheet, handoff protocol |
+| `docs/07_email_setup.md` | Sending domain, SPF/DKIM/DMARC, warm-up, finding emails |
+| `docs/08_proof_memo_template.md` | The 30-day memo that gates tool spending |
+| `docs/09_capabilities_one_pager_template.md` | Buyer-facing one-pager, filled from the data sheet |
+| `docs/10_trade_show_playbook.md` | 12-month show calendar with before, during, and after plans |
+| `docs/11_inbound_demand.md` | Marketplaces and communities where brands already ask for a co-packer |
+| `docs/PINS.md` | Everything that needs you |
 
 ## Quick start
 

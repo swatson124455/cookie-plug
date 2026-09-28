@@ -12,4 +12,7 @@ Kept current as work proceeds. Each pin says what is blocked without it. Nothing
 | 6 | Run `leadgen import leads/seed_list.csv` then `leadgen enrich` on your own machine | This cloud session cannot reach brand websites; enrichment adds sold-out and catalog signals and moves scores | `leads/README.md` |
 | 7 | Your referral percentage and term in years | Exact account values in the proof memo and prioritization | `leadgen economics --pct X --years Y` |
 | 8 | Decide whether an Anthropic API key is in budget now (cents per lead) or after the proof gate | `leadgen qualify` and `draft --ai`; without it the rule-based path runs | `.env` |
+| 10 | Create the facility's Keychain and PartnerSlate profiles with the partner, with you as the inbound contact, and add marketplace inbound to the referral definition | The inbound channel, the easiest win in the plan | `docs/11_inbound_demand.md` |
+| 11 | Ask the partner for their declined inquiries, unsigned quotes, and lost customers from the past 24 months | The warmest leads available and the fastest route to the proof gate | `docs/11_inbound_demand.md` section 3 |
+| 12 | Facility city and state | A regional pass on brands within cheap freight range | `config/facility.yaml` |
 | 9 | Confirm which product formats the facility can run: bars, no-bake protein balls, dry mixes, soft chews, extruded kibble | Several MODERATE FIT leads in `leads/overrides.csv` hinge on this | `leads/overrides.csv` |
