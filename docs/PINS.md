@@ -15,4 +15,6 @@ Kept current as work proceeds. Each pin says what is blocked without it. Nothing
 | 10 | Create the facility's Keychain and PartnerSlate profiles with the partner, with you as the inbound contact, and add marketplace inbound to the referral definition | The inbound channel, the easiest win in the plan | `docs/11_inbound_demand.md` |
 | 11 | Ask the partner for their declined inquiries, unsigned quotes, and lost customers from the past 24 months | The warmest leads available and the fastest route to the proof gate | `docs/11_inbound_demand.md` section 3 |
 | 12 | Facility city and state | A regional pass on brands within cheap freight range | `config/facility.yaml` |
+| 13 | Confirm sub-referrals are allowed under the facility agreement, so you can pay referral partners a share | Sending the referral-partner outreach in `docs/12` | `docs/06_partner_kickoff.md` section 2 |
+| 14 | Decide whether to register the facility for PLMA (Nov 15 to 17, 2026) or an ECRM private-label session | The retail private-label list in `leads/retail_private_label.csv`; those buyers do not answer cold email | `docs/10_trade_show_playbook.md` |
 | 9 | Confirm which product formats the facility can run: bars, no-bake protein balls, dry mixes, soft chews, extruded kibble | Several MODERATE FIT leads in `leads/overrides.csv` hinge on this | `leads/overrides.csv` |
