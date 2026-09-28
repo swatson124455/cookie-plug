@@ -75,7 +75,7 @@ def apply_overrides(leads: list[Lead], path: Path) -> list[Lead]:
         return leads
     from leadgen.discover import normalized_name
 
-    overrides = {normalized_name(r["company"]): r for r in csv.DictReader(open(path, encoding="utf-8"))}
+    overrides = _load_overrides(path)
     kept: list[Lead] = []
     for lead in leads:
         row = overrides.get(normalized_name(lead.company))
@@ -85,14 +85,39 @@ def apply_overrides(leads: list[Lead], path: Path) -> list[Lead]:
         if (row.get("exclude_reason") or "").strip():
             print(f"  excluded {lead.company}: {row['exclude_reason']}")
             continue
-        for field in ("website", "contact_name", "contact_title", "email"):
-            if (row.get(field) or "").strip() and not getattr(lead, field):
+        # Hand-verified facts win over research rows; a contact chosen on
+        # purpose (the ops lead, not the celebrity founder) must stick.
+        if (row.get("contact_name") or "").strip():
+            lead.contact_name = row["contact_name"].strip()
+            lead.contact_title = (row.get("contact_title") or "").strip()
+        for field in ("website", "email"):
+            if (row.get(field) or "").strip():
                 setattr(lead, field, row[field].strip())
         note = (row.get("fit_note") or "").strip()
         if note:
             lead.notes = f"{lead.notes} || {note}".strip(" |")
         kept.append(lead)
     return kept
+
+
+def _load_overrides(path: Path) -> dict[str, dict[str, str]]:
+    """Read overrides, merging repeated company rows: blanks fill, notes join."""
+    from leadgen.discover import normalized_name
+
+    merged: dict[str, dict[str, str]] = {}
+    with open(path, encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            key = normalized_name(row["company"])
+            current = merged.setdefault(key, {})
+            for field, value in row.items():
+                value = (value or "").strip()
+                if not value:
+                    continue
+                if field == "fit_note" and current.get(field):
+                    current[field] = f"{current[field]} || {value}"
+                elif not current.get(field):
+                    current[field] = value
+    return merged
 
 
 def _excluded(lead: Lead) -> bool:
