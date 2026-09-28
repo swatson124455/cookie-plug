@@ -144,7 +144,7 @@ def write_seed_csv(leads: list[Lead], path: Path) -> None:
 
 def write_scored_csv(leads: list[Lead], path: Path) -> None:
     columns = ["score", "company", "website", "category", "segment", "contact_name", "contact_title",
-               "city", "state", "source", "score_reasons", "notes"]
+               "email", "city", "state", "source", "score_reasons", "notes"]
     with open(path, "w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=columns)
         writer.writeheader()

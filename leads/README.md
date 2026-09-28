@@ -1,6 +1,6 @@
 # Seed lead list (built 2026-09-28)
 
-**137 leads, 130 with websites, 68 with a named contact.** Score buckets: 25 at 55 and up, 20 at 40 to 54, 92 under 40.
+**137 leads, 130 with websites, 69 with a named contact, 35 with a public email address (20 of the top 25).** Score buckets: 25 at 55 and up, 20 at 40 to 54, 92 under 40.
 
 Research pass across Expo West 2026, Sweets & Snacks 2026, Fancy Food 2026, SuperZoo 2025/2026, Global Pet Expo 2026, retailer emerging-brand programs, funding news, retail-launch news, recalls, co-packer closures, and job postings. Every row records only facts seen in a search result, with the source URL in `notes`. Nothing here has been enriched from the brand's own website yet.
 
@@ -21,7 +21,7 @@ Research pass across Expo West 2026, Sweets & Snacks 2026, Fancy Food 2026, Supe
 
 1. **Websites** for the rows that have none: search the company name, paste the domain into `overrides.csv`, rebuild.
 2. **Enrichment:** run `leadgen enrich` on your machine (this cloud session cannot reach brand sites). It reads Shopify catalogs for sold-out signals and product counts and will move scores.
-3. **Contact names and emails:** LinkedIn and the company contact page; see `docs/07_email_setup.md` section 6. Put them in `overrides.csv`.
+3. **Contact names and emails:** 35 leads carry a public address (wholesale@, hello@, or a named founder) found in search results; most are general inboxes, which founders at small brands do read. For the rest, `leadgen emails <lead>` proposes candidates and `docs/07_email_setup.md` section 6 says how to verify. Put verified addresses in `overrides.csv`.
 4. **Fit check** on anything marked MODERATE or UNCERTAIN in notes, against the facility data sheet once it is complete.
 
 ## Rebuild
