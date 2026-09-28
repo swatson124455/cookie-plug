@@ -310,21 +310,21 @@ Worth a 15-minute call to see if the capacity and the specs line up?
 Partnerships
 ```
 
-## 58 · Natural Balance Pet Foods (pet_treat, established_brand)
-- Website: naturalbalanceinc.com
-- Evidence: Introduced Yo-Gut Bites, a new line of oven-baked digestive-health dog treats, among new products at Global Pet Expo in March 2026. https://www.naturalbalanceinc.com/news-room/new-products-2026/ || Contact source: https://theorg.com/org/j-m-smucker-natural-balance/teams/leadership-team | No VP Operations / Supply Chain / Innovation surfaced in two searches; closest named exec on supplier-facing side. CEO Brian Connolly also listed on same page
-- Score reasons: category pet_treat (+20); segment established_brand (+16); in_national_retail (+12); recent_retail_launch (+10)
+## 58 · Don't Worry Snacks (cookie, established_brand)
+- Website: https://dontworrysnacks.com
+- Evidence: Low-calorie meringue cookies; took $500K for 33.33% from Lori Greiner on Shark Tank S17 finale (Apr 2026) and entered US via Texas stores incl. H-E-B and Walmart. https://www.sharktankblog.com/business/dont-worry-snacks/ || MODERATE FIT: baked meringue and quinoa bites (not cookies), Shark Tank S17 deal with Lori Greiner; brothers Santiago and Diego Arroyo.
+- Score reasons: category cookie (+20); segment established_brand (+16); in_national_retail (+12); recent_funding (+10)
 
-**Subject:** Natural Balance Pet Foods x spare pet treat capacity
+**Subject:** Don't Worry Snacks x spare cookie capacity
 
 ```
-Hi Billy,
+Hi Santiago,
 
-Congrats on the retail expansion at Natural Balance Pet Foods. The first reorders are where most brands find out the current setup cannot keep up.
+Congrats on the retail expansion at Don't Worry Snacks. The first reorders are where most brands find out the current setup cannot keep up.
 
-Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
+Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 

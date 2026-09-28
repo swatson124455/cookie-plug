@@ -1,5 +1,7 @@
 # Seed lead list (built 2026-09-28)
 
+**137 leads, 130 with websites, 68 with a named contact.** Score buckets: 25 at 55 and up, 20 at 40 to 54, 92 under 40.
+
 Research pass across Expo West 2026, Sweets & Snacks 2026, Fancy Food 2026, SuperZoo 2025/2026, Global Pet Expo 2026, retailer emerging-brand programs, funding news, retail-launch news, recalls, co-packer closures, and job postings. Every row records only facts seen in a search result, with the source URL in `notes`. Nothing here has been enriched from the brand's own website yet.
 
 | File | What it is |
@@ -28,4 +30,4 @@ Research pass across Expo West 2026, Sweets & Snacks 2026, Fancy Food 2026, Supe
 python scripts/build_seed_list.py path/to/research_1.csv path/to/research_2.csv ...
 ```
 
-The four original research CSVs are not committed (they were session scratch files); `seed_list.csv` is their merged output and can be passed back in as the single input.
+The five original research CSVs are not committed (they were session scratch files); `seed_list.csv` is their merged output and can be passed back in as the single input.
