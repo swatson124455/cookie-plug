@@ -32,7 +32,7 @@ leadgen export pipeline.csv     # for a spreadsheet or a CRM
 leadgen economics --pct 5 --annual-purchases 400000
 ```
 
-CSV format: see `tests/fixtures/sample_leads.csv`. Only `company` is required; `website` unlocks enrichment.
+CSV format: see `tests/fixtures/sample_leads.csv`. Only `company` is required; `website` unlocks enrichment. Optional boolean columns (`in_national_retail`, `recent_funding`, `recent_retail_launch`, `hiring_ops_or_production`, `sells_wholesale`, `mentions_copacker`) let research-found triggers count toward the score before enrichment runs. The committed seed list lives in `leads/`.
 
 ## Using the AI layer
 

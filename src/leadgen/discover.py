@@ -14,13 +14,22 @@ from typing import Iterable
 
 from pydantic import ValidationError
 
-from leadgen.models import Category, Lead, Segment
+from leadgen.models import Category, Lead, LeadSignals, Segment
 
 REQUIRED_COLUMNS = ("company",)
 OPTIONAL_COLUMNS = (
     "website", "category", "segment", "contact_name", "contact_title",
     "email", "linkedin_url", "city", "state", "source", "notes",
 )
+# Boolean signal columns a researcher can fill by hand. They seed
+# LeadSignals so a trigger found in the news counts before enrichment runs.
+SIGNAL_COLUMNS = (
+    "in_national_retail", "recent_funding", "recent_retail_launch",
+    "hiring_ops_or_production", "sells_wholesale", "mentions_copacker",
+    "mentions_private_label", "out_of_stock", "has_pet_and_human_lines",
+    "explicit_own_facility_only",
+)
+TRUE_VALUES = {"true", "yes", "y", "1", "x"}
 
 
 class ImportReport:
@@ -74,7 +83,17 @@ def _row_to_lead(row: dict[str, str], default_source: str) -> Lead:
     payload.setdefault("source", default_source)
     payload["category"] = _coerce_enum(payload.get("category", ""), Category, Category.OTHER).value
     payload["segment"] = _coerce_enum(payload.get("segment", ""), Segment, Segment.UNKNOWN).value
-    return Lead(**payload)
+    return Lead(**payload, signals=_row_signals(row))
+
+
+def _row_signals(row: dict[str, str]) -> LeadSignals:
+    """Build seed signals from any boolean columns present in the row."""
+    flags = {
+        column: (row.get(column) or "").strip().lower() in TRUE_VALUES
+        for column in SIGNAL_COLUMNS
+        if column in row
+    }
+    return LeadSignals(**flags)
 
 
 def _coerce_enum(value: str, enum_cls: type, fallback):  # type: ignore[no-untyped-def]

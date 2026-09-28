@@ -69,7 +69,7 @@ People who already talk to your buyers every week: packaging suppliers, ingredie
 
 ## Working the list
 
-1. Put every company in one CSV with the columns from `tests/fixtures/sample_leads.csv`. Company and website are the only required fields; the engine fills the rest.
+1. Put every company in one CSV with the columns from `tests/fixtures/sample_leads.csv`. Company and website are the only required fields; the engine fills the rest. When you saw a trigger while researching (a retail listing, a funding round, a job post), mark it `true` in the matching column (`in_national_retail`, `recent_funding`, `recent_retail_launch`, `hiring_ops_or_production`, `sells_wholesale`, `mentions_copacker`) so it counts immediately.
 2. `leadgen import path.csv --source expo_west_2026`.
 3. `leadgen enrich` then `leadgen score`. Anything over 55 gets a contact search; 40 to 55 goes in a nurture list; under 40 is archived.
 4. Find the person: LinkedIn search "founder" or "operations" plus the company; verify the email pattern with a free lookup or the company's contact page.
