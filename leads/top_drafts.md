@@ -200,6 +200,28 @@ Worth a 15-minute call to see if the capacity and the specs line up?
 Partnerships
 ```
 
+## 64 · Chewy (pet_treat, retailer_private_label)
+- Website: https://www.chewy.com
+- Evidence: Consolidated its private label brands American Journey, Tiny Tiger, True Acre Foods and Bones & Chews into a new Chewy Made line covering food and treats with refreshed packaging in 2026. https://www.petage.com/ecommerce-pet-retailer-chewy-private-label-brands-chewy-made/ || Programs: Chewy Made master brand (2026 consolidation of American Journey, Tiny Tiger, True Acre Foods, Bones & Chews, Frisco), Vibeful (supplements), Get Real (fresh dog food, 2025). Hunt title per ZoomInfo snippet - https://www.zoominfo.com/p/Paul-Hunt/2377667626 (verify); Jason Giroir, Director of Private Brands (already on file) - https://www.inc.com/ali-donaldson/how-chewys-director-of-private-brands-builds-and-leads-teams/91063723 ; Allen Hughes, President of Retail (quoted on master-brand strategy). Prior VP Nate Deno left for PetSafe Brands. News: https://storebrands.com/why-chewy-streamlining-its-store-brands-portfolio-one-master-brand (Aug 13 2026) ; https://www.petfoodindustry.com/pet-food-marketing-and-branding/news/15825690/chewy-consolidates-private-label-pet-brands-under-chewy-made ; https://www.petage.com/ecommerce-pet-retailer-chewy-private-label-brands-chewy-made/. || LARGE PRIVATE LABEL: Chewy Made consolidates American Journey, Tiny Tiger, True Acre, Bones & Chews (petfoodindustry 15825690); long cycle, supplier-onboarding path. || Contact source: https://www.inc.com/ali-donaldson/how-chewys-director-of-private-brands-builds-and-leads-teams/91063723 | Leads consumables private brands (American Journey, Tiny Tiger), now consolidated under Chewy Made; a VP Private Brands role exists but name not surfaced
+- Score reasons: category pet_treat (+20); segment retailer_private_label (+14); in_national_retail (+12); mentions_private_label (+8); recent_retail_launch (+10)
+
+**Subject:** Chewy x spare pet treat capacity
+
+```
+Hi Jason,
+
+Congrats on the retail expansion at Chewy. The first reorders are where most brands find out the current setup cannot keep up.
+
+Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
+
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+
+Worth a 15-minute call to see if the capacity and the specs line up?
+
+[Your name]
+Partnerships
+```
+
 ## 64 · Elavi (bakery, established_brand)
 - Website: elavi.co
 - Evidence: Los Angeles-based protein brownie brand went national at Whole Foods Market and crossed 1,000 retail doors with a 114-store Wegmans launch in April 2026; https://www.nosh.com/pr/2026/04/09/elavi-crosses-1000-retail-doors-with-wegmans-launch-bringing-clean-protein-brownies-to-the-northeast || Contact source: https://soapboxinc.medium.com/small-business-spotlight-elavi-a5cfa6b60256 | Co-founder Nikki Elliott, CPA (Co-Founder; finance). Products: collagen protein bars, dessert cashew butters, cookie dough; Costco and Amazon || Email: general inbox (PR/marketing), source https://elavi.co/pages/contact (also support@elavi.co)
@@ -266,6 +288,28 @@ Worth a 15-minute call to see if the capacity and the specs line up?
 Partnerships
 ```
 
+## 64 · Tractor Supply Company (pet_treat, retailer_private_label)
+- Website: tractorsupply.com
+- Evidence: Announced in 2026 an expansion of its pet assortment with more than 200 new dog and cat products including treats at everyday value. https://corporate.tractorsupply.com/newsroom/news-releases/news-releases-details/2026/Tractor-Supply-Expands-Pet-Assortment-With-More-Than-200-New-Dog-and-Cat-Products/default.aspx || Programs: 4health (140+ products; 15th anniversary Aug 2025), Retriever, Paws & Claws. Alt: Seth Estep, EVP Chief Merchandising Officer. 2025 news: 4health Shreds launch Jan 2025 - https://ir.tractorsupply.com/newsroom/news-releases/news-releases-details/2025/Tractor-Supply-Launches-4health-Shreds-Premium-Dog-Food/default.aspx ; https://storebrands.com/tractor-supply-expands-proprietary-4health-pet-food-brand. 2026 news: Aug 5 2026 expanded pet assortment with 200+ new dog & cat products incl. air-dried, gently cooked, toppers and treats - https://corporate.tractorsupply.com/newsroom/news-releases/news-releases-details/2026/Tractor-Supply-Expands-Pet-Assortment-With-More-Than-200-New-Dog-and-Cat-Products/default.aspx. || No current Director of Private Brands or pet merchandising lead surfaced in two searches (only former employees: Travis Chesser now at DG, Cameron Gibson now at pOpshelf)
+- Score reasons: category pet_treat (+20); segment retailer_private_label (+14); in_national_retail (+12); mentions_private_label (+8); recent_retail_launch (+10)
+
+**Subject:** Tractor Supply Company x spare pet treat capacity
+
+```
+Hi Kyle,
+
+Congrats on the retail expansion at Tractor Supply Company. The first reorders are where most brands find out the current setup cannot keep up.
+
+Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
+
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+
+Worth a 15-minute call to see if the capacity and the specs line up?
+
+[Your name]
+Partnerships
+```
+
 ## 62 · Kismet (pet_food, established_brand)
 - Website: https://kismetpets.com
 - Evidence: Chrissy Teigen and John Legend gut-health dog food brand expanded to PetSmart stores and entered pet specialty retail for the first time in 2026. https://www.petage.com/chrissy-teigen-john-legend-gut-health-kismet-petsmart-stores/ ; https://www.petfoodprocessing.net/articles/20931-kismet-enters-pet-specialty-retail-stores-for-first-time || MODERATE FIT: extruded kibble and toppers (PetSmart, Chewy); only relevant if the facility runs extrusion. || GOOD FIT for treats: sells two treat flavors alongside kibble (kismetpets.com); PetSmart and Chewy national; pitch the treat line, not the kibble. || Contact source: https://www.petfoodindustry.com/news-newsletters/pet-food-press-releases/press-release/15670217/chrissy-teigen-and-john-legend-launch-new-pet-lifestyle-brand | Operating CEO (not the celebrity founders); brand sells dog food and treats at Chewy and pet specialty || Email: general inbox (support), source https://kismetpets.com/contact
@@ -281,50 +325,6 @@ Congrats on the retail expansion at Kismet. The first reorders are where most br
 Most pet food brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
 I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet food production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
-
-Worth a 15-minute call to see if the capacity and the specs line up?
-
-[Your name]
-Partnerships
-```
-
-## 62 · Open Farm (pet_food, established_brand)
-- Website: https://openfarmpet.com
-- Evidence: Brought full portfolio (dry, wet, freeze-dried, treats, supplements) to nearly 1,700 PetSmart stores beginning June 2026. https://www.petfoodprocessing.net/articles/20559-open-farm-makes-its-debut-in-petsmart-stores-nationwide || MODERATE FIT: large brand with treats in its portfolio; long cycle, likely has incumbent co-manufacturers; second-source pitch. || Contact source: https://theorg.com/org/open-farm | Also listed: Hugh Underwood, Chief Supply Chain Officer; Open Farm uses external manufacturers (job posting says a Senior Manager reports to VP Ops managing day-to-day with co-manufacturers) || Email: general inbox (support), source https://openfarmpet.com/pages/contact
-- Score reasons: category pet_food (+16); segment established_brand (+16); sells_wholesale (+8); in_national_retail (+12); recent_retail_launch (+10)
-
-**Subject:** Open Farm x spare pet food capacity
-
-```
-Hi Stéphanie,
-
-Congrats on the retail expansion at Open Farm. The first reorders are where most brands find out the current setup cannot keep up.
-
-Most pet food brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
-
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet food production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
-
-Worth a 15-minute call to see if the capacity and the specs line up?
-
-[Your name]
-Partnerships
-```
-
-## 58 · Don't Worry Snacks (cookie, established_brand)
-- Website: https://dontworrysnacks.com
-- Evidence: Low-calorie meringue cookies; took $500K for 33.33% from Lori Greiner on Shark Tank S17 finale (Apr 2026) and entered US via Texas stores incl. H-E-B and Walmart. https://www.sharktankblog.com/business/dont-worry-snacks/ || MODERATE FIT: baked meringue and quinoa bites (not cookies), Shark Tank S17 deal with Lori Greiner; brothers Santiago and Diego Arroyo. || Email: general inbox, source https://dontworrysnacks.com/pages/contact-us
-- Score reasons: category cookie (+20); segment established_brand (+16); in_national_retail (+12); recent_funding (+10)
-
-**Subject:** Don't Worry Snacks x spare cookie capacity
-
-```
-Hi Santiago,
-
-Congrats on the retail expansion at Don't Worry Snacks. The first reorders are where most brands find out the current setup cannot keep up.
-
-Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
-
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
