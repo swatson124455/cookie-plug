@@ -98,6 +98,9 @@ def apply_overrides(leads: list[Lead], path: Path) -> list[Lead]:
             lead.notes = f"{lead.notes} || {note}".strip(" |")
             if "TRANSITION:" in note.upper() or "CHANGE:" in note.upper():
                 lead.signals.transitioning = True
+            if "OWN PLANT:" in note.upper() or "OVERFLOW ONLY:" in note.upper():
+                lead.signals.transitioning = False
+                lead.signals.explicit_own_facility_only = False
             if "seeking" in note.lower() or "looking for a co-packer" in note.lower() or "third-party manufacturing" in note.lower():
                 lead.signals.seeking_copacker = True
         kept.append(lead)
@@ -184,7 +187,7 @@ def main(argv: list[str]) -> int:
     weights, facility = load_weights(), load_facility()
     for lead in leads:
         apply_score(lead, weights, facility)
-        if "WEAK FIT" in lead.notes.upper() and lead.score > WEAK_FIT_CAP:
+        if ("WEAK FIT" in lead.notes.upper() or "OWN PLANT:" in lead.notes.upper()) and lead.score > WEAK_FIT_CAP:
             lead.score = WEAK_FIT_CAP
             lead.score_reasons.append("capped: weak product fit, see notes")
     leads.sort(key=lambda l: (-l.score, l.company.lower()))

@@ -46,72 +46,6 @@ Worth a 15-minute call to see if the capacity and the specs line up?
 Partnerships
 ```
 
-## 68 · Farm to Pet (pet_treat, emerging_brand)
-- Website: farmtopettreats.com
-- Evidence: Bootstrapped single-ingredient chip treat brand ($5M+ 2025 revenue, profitable 2026) opened Reg CF crowdfunding on StartEngine June 2026 explicitly to expand production capacity; sold via independent retailers and Walmart.com marketplace. https://www.petfoodindustry.com/news-newsletters/pet-food-news/news/15828901/farm-to-pet-opens-first-crowdfunding-campaign-on-startengine || Opened its first Regulation Crowdfunding campaign on StartEngine in 2026 after growing to $5M+ 2025 revenue from a 13,000 sq ft Chicago facility, with proceeds earmarked to expand production capacity and distribution. https://www.petfoodindustry.com/news-newsletters/pet-food-news/news/15828901/farm-to-pet-opens-first-crowdfunding-campaign-on-startengine || Email: general inbox, source https://help.farmtopettreats.com/en-US/contact || TRANSITION: June 2026 StartEngine raise explicitly to expand production capacity; bootstrapped to $5M+.
-- Score reasons: category pet_treat (+20); segment emerging_brand (+16); sells_wholesale (+8); recent_funding (+10); transitioning (+14)
-
-**Subject:** Farm to Pet x spare pet treat capacity
-
-```
-Hi Jackson,
-
-Congrats on the round. Most of that money usually goes into inventory, and inventory needs a plant that can run it.
-
-Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
-
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
-
-Worth a 15-minute call to see if the capacity and the specs line up?
-
-[Your name]
-Partnerships
-```
-
-## 66 · Nowhere Bakery (cookie, emerging_brand)
-- Website: nowherebakery.com
-- Evidence: Allergen-free paleo cookies/brownies; Shark Tank S15 deal; launched in Sprouts across California and wholesale is ~35% of the business with LA-area retail and coffee-shop accounts. https://startupcpg.com/newswire/startup-cpg-newswire-nowhere-bakery-launches-in-sprouts-across-california || Email: sales/wholesale inbox, source https://nowherebakery.com/pages/contact-us (also hello@nowherebakery.com; wholesale site https://wholesalenowherebakery.com/) || TRANSITION: wholesale about 35 percent of the business and growing, Sprouts California; moving from DTC to retail.
-- Score reasons: category cookie (+20); segment emerging_brand (+16); sells_wholesale (+8); recent_retail_launch (+8); transitioning (+14)
-
-**Subject:** Nowhere Bakery x spare cookie capacity
-
-```
-Hi Saphira,
-
-Congrats on the retail expansion at Nowhere Bakery. The first reorders are where most brands find out the current setup cannot keep up.
-
-Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
-
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
-
-Worth a 15-minute call to see if the capacity and the specs line up?
-
-[Your name]
-Partnerships
-```
-
-## 66 · Spoiled Pets (pet_treat, emerging_brand)
-- Website: shopspoiledpets.com
-- Evidence: Founded 2024 freeze-dried meals/treats brand selected for Emerging Brands Pavilion and New Products Showcase at SUPERZOO 2026 and separately launched on Chewy; wholesale listing on Faire. https://www.petfoodprocessing.net/articles/20658-spoiled-pets-selected-for-emerging-brands-pavilion-launching-new-treats-at-superzoo-2026 ; https://www.petfoodprocessing.net/articles/20669-spoiled-pets-launches-on-chewy || Email: general inbox, source https://shopspoiledpets.com/pages/refund-policy || TRANSITION: founded 2024, SUPERZOO Emerging Brands Pavilion, Chewy launch 2026; scaling from emerging to national e-commerce.
-- Score reasons: category pet_treat (+20); segment emerging_brand (+16); sells_wholesale (+8); recent_retail_launch (+8); transitioning (+14)
-
-**Subject:** Spoiled Pets x spare pet treat capacity
-
-```
-Hi Daedrien,
-
-Congrats on the retail expansion at Spoiled Pets. The first reorders are where most brands find out the current setup cannot keep up.
-
-Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
-
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
-
-Worth a 15-minute call to see if the capacity and the specs line up?
-
-[Your name]
-Partnerships
-```
-
 ## 62 · Brune Kitchen (cookie, established_brand)
 - Website: https://brunekitchen.com
 - Evidence: Women-owned, BIPOC-founded clean-label cookie brand; Chocolate Chip and Peanut Butter Chunk cookies launched nationwide in the refrigerated section at Sprouts Farmers Market (April 30 2025 release). https://www.nosh.com/pr/2025/04/30/brune-kitchen-launches-nationwide-at-sprouts-farmers-market || STRONG FIT: soft-baked organic gluten-free vegan cookies at Sprouts and Erewhon; founders Tania and Jahan; public email hello@brunekitchen.com (brunekitchen.com/pages/about-us). || TRANSITION: two-person brand already on a co-packer (founder podcast), refrigerated set; a shelf-stable version is the next step.
@@ -180,7 +114,7 @@ Partnerships
 
 ## 60 · Roaring Fork Mill (cookie, emerging_brand)
 - Website: roaringforkmill.com
-- Evidence: Family-run stone flour mill previewing its new regenerative organic shortbread cookie line at Expo West 2026; Shortbread Cookies named a 2026 NEXTY finalist (Planet-forward category) and founder received a $25,000 Greg Steltenpohl Pragmatic Visionary grant on March 5 2026; mill launching a CPG cookie line is a strong co-packing fit. https://www.snackandbakery.com/articles/115174-expo-wests-nexty-awards-reveals-2026-finalists and https://www.compassnaturalmarketing.com/compass-natural-new-directions-for-green-business/tag/Roaring+Fork+Mill || Regenerative Organic Certified stone mill (founded 2022) whose shortbread cookies were a 2026 NEXTY finalist; also sells Upcycled Certified graham crackers; founder received a $25K Pragmatic Visionary grant at Expo West March 2026; https://www.snackandbakery.com/articles/115174-expo-wests-nexty-awards-reveals-2026-finalists || No address surfaced in search results; contact form at https://www.roaringforkmill.com/contact || TRANSITION: a flour mill launching its first packaged cookie line at Expo West 2026 with no bakery of its own.
+- Evidence: Family-run stone flour mill previewing its new regenerative organic shortbread cookie line at Expo West 2026; Shortbread Cookies named a 2026 NEXTY finalist (Planet-forward category) and founder received a $25,000 Greg Steltenpohl Pragmatic Visionary grant on March 5 2026; mill launching a CPG cookie line is a strong co-packing fit. https://www.snackandbakery.com/articles/115174-expo-wests-nexty-awards-reveals-2026-finalists and https://www.compassnaturalmarketing.com/compass-natural-new-directions-for-green-business/tag/Roaring+Fork+Mill || Regenerative Organic Certified stone mill (founded 2022) whose shortbread cookies were a 2026 NEXTY finalist; also sells Upcycled Certified graham crackers; founder received a $25K Pragmatic Visionary grant at Expo West March 2026; https://www.snackandbakery.com/articles/115174-expo-wests-nexty-awards-reveals-2026-finalists || No address surfaced in search results; contact form at https://www.roaringforkmill.com/contact || TRANSITION: a flour mill launching its first packaged cookie line at Expo West 2026 with no bakery of its own. || CLEAN TRANSITION: mill launching its first packaged ROC shortbread, NEXTY finalist, 700+ retail doors unlocked after the Unify show (Startup CPG podcast #250), and the only baker on record is the founder's mother in R&D. No co-packer named.
 - Score reasons: category cookie (+20); segment emerging_brand (+16); recent_funding (+10); transitioning (+14)
 
 **Subject:** Roaring Fork Mill x spare cookie capacity
@@ -189,28 +123,6 @@ Partnerships
 Hi Jacob,
 
 Congrats on the round. Most of that money usually goes into inventory, and inventory needs a plant that can run it.
-
-Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
-
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
-
-Worth a 15-minute call to see if the capacity and the specs line up?
-
-[Your name]
-Partnerships
-```
-
-## 58 · Fat & Weird Cookie (cookie, emerging_brand)
-- Website: fatandweirdcookie.com
-- Evidence: TikTok-viral stuffed cookie brand (1,500+ reviews, on TikTok/Amazon) baking ~40,000 cookies/week in a 10,000 sq ft facility; frozen stuffed cookie dough bites launched in H-E-B stores across Texas in 2026. https://www.fatandweirdcookie.com/blogs/news/f-w-cookie-batch-report-heb-launch-june-drop-may-4-8 || Email: named wholesale contact (site lists adam@ for wholesale/special opportunities), source https://www.fatandweirdcookie.com/pages/contact-us (also help@fatandweirdcookie.com); title per https://rocketreach.co/adam-cantrell-email_715485341. Pattern: first@ (from adam@fatandweirdcookie.com) || TRANSITION: bakes ~40,000 cookies a week in its own 10,000 sq ft facility and just entered a frozen retail format at H-E-B.
-- Score reasons: category cookie (+20); segment emerging_brand (+16); recent_retail_launch (+8); transitioning (+14)
-
-**Subject:** Fat & Weird Cookie x spare cookie capacity
-
-```
-Hi Adam,
-
-Congrats on the retail expansion at Fat & Weird Cookie. The first reorders are where most brands find out the current setup cannot keep up.
 
 Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
@@ -268,7 +180,7 @@ Partnerships
 
 ## 52 · Fields Good (cookie, established_brand)
 - Website: fieldsgood.co
-- Evidence: Raised $1.8M pre-seed in May 2026 led by Female Founders Fund; functional cookie brand founded by Debbi Fields' daughter; funds earmarked to scale DTC, expand to TikTok Shop and Amazon, and build toward national retail distribution. https://www.finsmes.com/2026/05/fields-good-raises-1-8m-in-pre-seed-funding.html and https://raising.fi/news/fields-good-pre-seed-may-2026 || Functional soft-baked cookie brand (Protein, Focus, Sleep cookies) launched May 2026 with a $1.8M pre-seed led by Female Founders Fund, planning DTC/TikTok Shop/Amazon then national retail; https://www.prnewswire.com/news-releases/fields-good-launches-cookies-with-benefits-backed-by-1-8m-from-female-founders-fund-302782578.html || Functional cookie brand from Mrs. Fields founder's daughter launched May 27 2026 with three ready-to-eat cookies and a $1.8M pre-seed led by Female Founders Fund to scale DTC, TikTok Shop and Amazon and build toward national retail. https://www.prnewswire.com/news-releases/fields-good-launches-cookies-with-benefits-backed-by-1-8m-from-female-founders-fund-302782578.html || Email: sales/wholesale inbox, source https://fieldsgood.co/pages/contact (also hello@fieldsgood.co, press@fieldsgood.co media contact) || TRANSITION: launched May 2026 with a $1.8M pre-seed to scale DTC, TikTok Shop, Amazon and build toward national retail.
+- Evidence: Raised $1.8M pre-seed in May 2026 led by Female Founders Fund; functional cookie brand founded by Debbi Fields' daughter; funds earmarked to scale DTC, expand to TikTok Shop and Amazon, and build toward national retail distribution. https://www.finsmes.com/2026/05/fields-good-raises-1-8m-in-pre-seed-funding.html and https://raising.fi/news/fields-good-pre-seed-may-2026 || Functional soft-baked cookie brand (Protein, Focus, Sleep cookies) launched May 2026 with a $1.8M pre-seed led by Female Founders Fund, planning DTC/TikTok Shop/Amazon then national retail; https://www.prnewswire.com/news-releases/fields-good-launches-cookies-with-benefits-backed-by-1-8m-from-female-founders-fund-302782578.html || Functional cookie brand from Mrs. Fields founder's daughter launched May 27 2026 with three ready-to-eat cookies and a $1.8M pre-seed led by Female Founders Fund to scale DTC, TikTok Shop and Amazon and build toward national retail. https://www.prnewswire.com/news-releases/fields-good-launches-cookies-with-benefits-backed-by-1-8m-from-female-founders-fund-302782578.html || Email: sales/wholesale inbox, source https://fieldsgood.co/pages/contact (also hello@fieldsgood.co, press@fieldsgood.co media contact) || TRANSITION: launched May 2026 with a $1.8M pre-seed to scale DTC, TikTok Shop, Amazon and build toward national retail. || TRANSITION: launched May 2026 on an unnamed commercial manufacturing partner at $47.50 per 10 cookies; raised $1.8M to move to Amazon, TikTok Shop, and national retail, which needs a partner built for volume. Co-founder Kim Anderson.
 - Score reasons: category cookie (+20); segment established_brand (+8); recent_funding (+10); transitioning (+14)
 
 **Subject:** Fields Good x spare cookie capacity
@@ -325,6 +237,94 @@ Congrats on the retail expansion at Chewy. The first reorders are where most bra
 Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
 I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+
+Worth a 15-minute call to see if the capacity and the specs line up?
+
+[Your name]
+Partnerships
+```
+
+## 50 · Tractor Supply Company (pet_treat, retailer_private_label)
+- Website: tractorsupply.com
+- Evidence: Announced in 2026 an expansion of its pet assortment with more than 200 new dog and cat products including treats at everyday value. https://corporate.tractorsupply.com/newsroom/news-releases/news-releases-details/2026/Tractor-Supply-Expands-Pet-Assortment-With-More-Than-200-New-Dog-and-Cat-Products/default.aspx || Programs: 4health (140+ products; 15th anniversary Aug 2025), Retriever, Paws & Claws. Alt: Seth Estep, EVP Chief Merchandising Officer. 2025 news: 4health Shreds launch Jan 2025 - https://ir.tractorsupply.com/newsroom/news-releases/news-releases-details/2025/Tractor-Supply-Launches-4health-Shreds-Premium-Dog-Food/default.aspx ; https://storebrands.com/tractor-supply-expands-proprietary-4health-pet-food-brand. 2026 news: Aug 5 2026 expanded pet assortment with 200+ new dog & cat products incl. air-dried, gently cooked, toppers and treats - https://corporate.tractorsupply.com/newsroom/news-releases/news-releases-details/2026/Tractor-Supply-Expands-Pet-Assortment-With-More-Than-200-New-Dog-and-Cat-Products/default.aspx. || No current Director of Private Brands or pet merchandising lead surfaced in two searches (only former employees: Travis Chesser now at DG, Cameron Gibson now at pOpshelf)
+- Score reasons: category pet_treat (+20); segment retailer_private_label (+10); in_national_retail (+4); mentions_private_label (+8); recent_retail_launch (+8)
+
+**Subject:** Tractor Supply Company x spare pet treat capacity
+
+```
+Hi Kyle,
+
+Congrats on the retail expansion at Tractor Supply Company. The first reorders are where most brands find out the current setup cannot keep up.
+
+Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
+
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+
+Worth a 15-minute call to see if the capacity and the specs line up?
+
+[Your name]
+Partnerships
+```
+
+## 48 · A Better Treat (pet_treat, emerging_brand)
+- Website: abettertreat.com
+- Evidence: Family/minority-owned organic single-ingredient freeze-dried treat brand competed in Expo West Pitch Slam (2025) and exhibited at SUPERZOO 2025; sold at Whole Foods Market. https://www.newhope.com/natural-products-expos/foods-beverages-pet-treats-plant-care-brands-compete-2025-expo-west-pitch-slam || No address surfaced in search results; contact form at https://www.abettertreat.com/pages/contact
+- Score reasons: category pet_treat (+20); segment emerging_brand (+16); sells_wholesale (+8); in_national_retail (+4)
+
+**Subject:** A Better Treat x spare pet treat capacity
+
+```
+Hi Boris,
+
+Congrats on the retail expansion at A Better Treat. The first reorders are where most brands find out the current setup cannot keep up.
+
+Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
+
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+
+Worth a 15-minute call to see if the capacity and the specs line up?
+
+[Your name]
+Partnerships
+```
+
+## 46 · cadootz! (bakery, established_brand)
+- Website: cadootz.com
+- Evidence: Organic kids cheese-cracker brand raised $3M+ seed led by Selva Ventures (April 2026) and launched in 2,000+ Target stores nationwide as its first retail partner in June 2026; https://www.prnewswire.com/news-releases/breakout-kids-snack-brand-cadootz-secures-3m-seed-funding-to-scale-nationwide-retail-expansion-302736104.html || Contact source: https://www.foodbusinessnews.net/articles/30178-seed-funding-to-push-cadootz-into-retail | Co-founder and Co-CEO Jordan Carpenter (https://www.linkedin.com/in/jordan-carpenter-03934326/); third co-founder Kiva Dickinson (Selva Ventures). Product is organic kids crackers, not cookies || Email: general inbox, source https://cadootz.com/pages/contact (also support@cadootz.com)
+- Score reasons: category bakery (+18); segment established_brand (+8); sells_wholesale (+8); in_national_retail (+4); recent_funding (+10); recent_retail_launch (+8); likely under co-manufacturer contract (-10)
+
+**Subject:** cadootz! x spare bakery capacity
+
+```
+Hi Rachel,
+
+Congrats on the retail expansion at cadootz!. The first reorders are where most brands find out the current setup cannot keep up.
+
+Most bakery brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
+
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for bakery production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+
+Worth a 15-minute call to see if the capacity and the specs line up?
+
+[Your name]
+Partnerships
+```
+
+## 44 · Bombolo Biscotti (Sotto I Trulli Inc.) (cookie, emerging_brand)
+- Website: https://bombolobiscotti.com
+- Evidence: Wholesale biscotti/Italian cookie bakery with distribution in FL, GA, NC, SC, VA, NE, AL and TN, relocating to a new facility and expanding nationally. https://bombolobiscotti.com/about/
+- Score reasons: category cookie (+20); segment emerging_brand (+16); sells_wholesale (+8)
+
+**Subject:** Bombolo Biscotti (Sotto I Trulli Inc.) x spare cookie capacity
+
+```
+Hi there,
+
+Saw Bombolo Biscotti (Sotto I Trulli Inc.) sells wholesale. Retail accounts tend to grow faster than a small production setup can keep up with.
+
+Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
+
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
