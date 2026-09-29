@@ -20,7 +20,7 @@ In your domain registrar's DNS panel add:
 | DKIM | TXT on `google._domainkey` | the key Google Workspace generates under Apps > Google Workspace > Gmail > Authenticate email |
 | DMARC | TXT on `_dmarc` | `v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com` |
 
-Verify with a free checker (MXToolbox or Google Admin's toolbox). All three must pass before sending.
+Verify with `python scripts/check_dns.py yourdomain.com` (or MXToolbox). All three must pass before sending.
 
 ## 4. Warm up for 14 days
 
