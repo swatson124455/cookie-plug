@@ -1,0 +1,25 @@
+# Site settings. Everything customer-facing on the site comes from here or
+# from config/facility.yaml (confirmed facts only). Fill the placeholders,
+# then `python site/build.py` writes site/dist/.
+
+brand: "Cookie Plug"                      # decision 12
+tagline: "Open co-packing capacity for cookies, baked goods, and pet treats"
+domain: "https://example.com"             # TO_FILL: your registered domain, no trailing slash
+capacity_status: "Open capacity as of October 2026: cookie, bakery, and pet-treat lines."
+
+contact:
+  name: "TO_FILL Your Name"
+  title: "Partnerships"
+  email: "TO_FILL you@yourdomain.com"
+  phone: "TO_FILL (000) 000-0000"
+  address: "TO_FILL Street, City, State ZIP"   # a physical address builds trust and is required for CAN-SPAM mail
+  linkedin: "https://www.linkedin.com/in/TO_FILL"
+
+author_bio: "TO_FILL One sentence: who you are and why you know co-packing."
+
+# Form endpoint. Netlify Forms: leave empty and deploy on Netlify (the form
+# has data-netlify="true"). Formspree: paste the endpoint URL.
+form_action: ""
+
+# Optional analytics snippet, pasted verbatim into <head> (Plausible recommended).
+analytics_snippet: ""

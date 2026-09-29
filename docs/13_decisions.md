@@ -61,3 +61,14 @@ Each one has a recommendation. Nothing here blocks the build; each blocks a spec
 **Recommendation:** post from your personal profile, not a new brand page.
 - Pro: personal profiles reach far more people; founders reply to people.
 - Con: your name is attached to the facility's promises, so the claims discipline matters.
+
+## 12. Website brand and domain (blocks the site launch)
+**Recommendation:** your own brand, not the facility's, working name "Cookie Plug" on a .com or .co you register this week.
+- Pro: you control it, launch needs no partner approval, rankings stay yours if the partnership changes; the name is memorable and already the repo's.
+- Con: "Cookie Plug" reads casual to a retail buyer; a second option is a plainer name such as "Open Capacity Partners". Either works; pick one and stop.
+- Alternative: the facility's own site. Pro: buyers trust a named plant. Con: needs the data sheet, the partner's approval on every claim, and you do not own it.
+
+## 13. Paid search at day 60 (blocks nothing yet)
+**Recommendation:** decide with Search Console data. If organic impressions for "cookie co-packer" and "dog treat co-packer" are growing and the form converts, spend $10 to $20 a day on exact-match terms only.
+- Pro: the searches are pure intent; a click that converts is worth hundreds of dollars in referral income.
+- Con: clicks in this niche cost several dollars; without conversion data it is guessing.

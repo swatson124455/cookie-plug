@@ -18,6 +18,8 @@ AI-assisted lead generation for a co-packing referral partnership. The partner f
 | `docs/10_trade_show_playbook.md` | 12-month show calendar with before, during, and after plans |
 | `docs/11_inbound_demand.md` | Marketplaces and communities where brands already ask for a co-packer |
 | `docs/12_referral_partners.md` | Warm-intro network: who, the share offer, the outreach email |
+| `docs/17_website_seo_aio_plan.md` | The site: structure, keywords, AI-citation tactics, technical SEO, conversion, launch |
+| `docs/18_marketing_campaign.md` | 90-day campaign: channels, LinkedIn calendar, community rules, pitches, milestones |
 | `docs/16_first_mover_plan.md` | Reaching the Tier 1 accounts this week without waiting on the domain |
 | `docs/15_infrastructure.md` | The automated pipeline: feed sourcing, dossiers, what stays manual |
 | `docs/14_spear_playbook.md` | Account-based selling for the top twelve: cadence, multi-threading, the give |
@@ -59,6 +61,10 @@ leadgen economics --pct 5 --annual-purchases 400000
 
 CSV format: see `tests/fixtures/sample_leads.csv`. Only `company` is required; `website` unlocks enrichment. Optional boolean columns (`in_national_retail`, `recent_funding`, `recent_retail_launch`, `hiring_ops_or_production`, `sells_wholesale`, `mentions_copacker`) let research-found triggers count toward the score before enrichment runs. The committed seed list lives in `leads/`.
 
+## Website
+
+`python site/build.py` renders a static site into `site/dist/` from `site/config.yaml` and the confirmed facts in `config/facility.yaml`: home with a capacity-check form, capabilities, four category pages, four guides, FAQ with schema markup, contact, `llms.txt`, sitemap. Deploy on Netlify or Cloudflare Pages. Plan in `docs/17`, campaign in `docs/18`.
+
 ## Fully automated
 
 A cloud Routine runs the whole pipeline every Monday and sends the report as a notification; `scripts/install_cron.sh` does the same on your own machine with an emailed report. Details in `docs/15_infrastructure.md` section 3b.
@@ -77,7 +83,8 @@ config/           facility.yaml (partner facts), icp.yaml (scoring weights), fee
 prompts/          system prompts used by the AI layer and usable by hand
 docs/             strategy documents
 leads/            researched seed list (scored), overrides, and day-0 drafts
-scripts/          weekly_pipeline.sh, build_seed_list.py, check_dns.py
+scripts/          weekly_pipeline.sh, install_cron.sh, build_seed_list.py, check_dns.py
+site/             static website: config.yaml, build.py, content/ (guides, FAQ), static/, netlify.toml
 tests/            unit, integration, fixtures (offline, 99% coverage)
 data/             local SQLite pipeline (git-ignored)
 ```
