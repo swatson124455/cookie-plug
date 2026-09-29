@@ -18,6 +18,7 @@ AI-assisted lead generation for a co-packing referral partnership. The partner f
 | `docs/10_trade_show_playbook.md` | 12-month show calendar with before, during, and after plans |
 | `docs/11_inbound_demand.md` | Marketplaces and communities where brands already ask for a co-packer |
 | `docs/12_referral_partners.md` | Warm-intro network: who, the share offer, the outreach email |
+| `docs/14_spear_playbook.md` | Account-based selling for the top twelve: cadence, multi-threading, the give |
 | `docs/13_decisions.md` | Open decisions with a recommendation and trade-offs for each |
 | `docs/PINS.md` | Everything that needs you |
 

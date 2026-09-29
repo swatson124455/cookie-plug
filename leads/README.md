@@ -9,6 +9,8 @@ Research pass across Expo West 2026, Sweets & Snacks 2026, Fancy Food 2026, Supe
 | `seed_list.csv` | Merged, deduped input rows with the research trigger columns. Import this with `leadgen import leads/seed_list.csv --source seed_2026_09`. |
 | `seed_list_scored.csv` | The same rows scored against `config/icp.yaml`, ranked, with score reasons. Review this first. |
 | `top_drafts.md` | Day-0 email drafts for the top-ranked leads. Edit the first line by hand using the evidence in `notes`. |
+| `spear_list.md` | The twelve accounts worth working as accounts, ranked, with threads, the give, and a custom day-0 email each. Playbook in `docs/14`. |
+| `dossiers/` | Full research dossiers behind the spear list, every fact with its URL. |
 | `retail_private_label.csv` | 22 retailers with the executive who owns store brands, and their 2025-2026 store-brand expansion news. Work these through PLMA and ECRM (`docs/10`), not cold email. |
 | `referral_partners.csv` | 39 brokers, packaging and label suppliers, consultants, accelerators, and pet-industry groups for the warm-intro network (`docs/12`). |
 | `overrides.csv` | Hand-verified websites, contacts, fit notes, and exclusions. Add to it as you verify; `scripts/build_seed_list.py` merges it on every rebuild. |

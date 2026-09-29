@@ -1,6 +1,6 @@
 # Spear Playbook: Account-Based Selling for the Top Twelve
 
-The wide net (`04_outreach_playbook.md`) gets you to the proof numbers. The spear list gets you the accounts that pay for two years. Twelve accounts, worked like a key-account rep would: research first, several people at once, a specific give, and a cadence measured in weeks rather than days. Dossiers live in `leads/spear_list.md`.
+The wide net (`04_outreach_playbook.md`) gets you to the proof numbers. The spear list gets you the accounts that pay for two years. Twelve accounts, worked like a key-account rep would: research first, several people at once, a specific give, and a cadence measured in weeks rather than days. The ranked list with custom emails is `leads/spear_list.md`; full dossiers are in `leads/dossiers/`.
 
 ## Why twelve, and which twelve
 
