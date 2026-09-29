@@ -14,6 +14,7 @@ import os
 import sys
 from datetime import date
 from pathlib import Path
+from pathlib import Path
 from typing import Callable
 
 from leadgen import __version__
@@ -21,12 +22,15 @@ from leadgen.ai import QualifierError, build_qualifier, lead_facts
 from leadgen.contacts import email_candidates
 from leadgen.crm import LeadStore, conversion_rates, export_csv
 from leadgen.discover import import_csv, search_queries
+from leadgen.dossier import build_dossier, save_dossier
 from leadgen.economics import FunnelAssumptions, ReferralTerms, account_value, funnel_plan
 from leadgen.enrich import WebsiteEnricher
 from leadgen.facility import load_facility
 from leadgen.models import Category, Stage
 from leadgen.outreach import SenderIdentity, load_sequence, render_sequence
 from leadgen.schedule import due_touches, log_touch
+from leadgen.sources import build_sources, default_client, load_feeds, since_date
+from leadgen.triggers import ClaudeExtractor, RuleBasedExtractor, extraction_to_lead
 from leadgen.scoring import apply_score, load_weights
 
 
@@ -209,6 +213,86 @@ def cmd_emails(args: argparse.Namespace) -> int:
     return 0
 
 
+def _extractor(use_ai: bool):  # type: ignore[no-untyped-def]
+    if use_ai and (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
+        import anthropic
+
+        return ClaudeExtractor(anthropic.Anthropic(), model=os.environ.get("LEADGEN_MODEL", "claude-opus-5"))
+    return RuleBasedExtractor()
+
+
+def cmd_watch(args: argparse.Namespace) -> int:
+    """Poll public feeds, extract triggers, and add new leads to the pipeline."""
+    config = load_feeds(args.feeds)
+    sources = build_sources(config, default_client())
+    if args.source:
+        sources = [s for s in sources if s.name == args.source or s.name.endswith(args.source)]
+    extractor = _extractor(args.ai)
+    since = since_date(args.days)
+    added = updated = skipped = 0
+    with _store(args) as store:
+        for source in sources:
+            items = source.fetch(since)
+            print(f"{source.name}: {len(items)} items")
+            for item in items:
+                lead = extraction_to_lead(item, extractor.extract(item))
+                if lead is None:
+                    skipped += 1
+                    continue
+                existing = store.get(lead.domain or lead.company.lower())
+                if existing is None:
+                    store.upsert(lead)
+                    added += 1
+                else:
+                    _merge_trigger(existing, lead)
+                    store.upsert(existing)
+                    updated += 1
+                store.log_activity(lead.domain or lead.company.lower(), "trigger", lead.notes[:300])
+    print(f"watch since {since.isoformat()} ({extractor!r}): added {added}, updated {updated}, skipped {skipped}. Run `leadgen score` next.")
+    return 0
+
+
+def _merge_trigger(existing, incoming) -> None:  # type: ignore[no-untyped-def]
+    """Add a newly seen trigger to a lead already in the pipeline."""
+    if incoming.notes and incoming.notes not in existing.notes:
+        existing.notes = f"{existing.notes} || {incoming.notes}".strip(" |")
+    merged = existing.signals.model_dump()
+    for name, value in incoming.signals.model_dump().items():
+        if value is True:
+            merged[name] = True
+    existing.signals = type(existing.signals)(**merged)
+    if not existing.website and incoming.website:
+        existing.website = incoming.website
+
+
+def cmd_dossier(args: argparse.Namespace) -> int:
+    """Research a lead with Claude and web search; save Markdown under leads/dossiers/."""
+    if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
+        print("dossier needs ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN); see docs/15_infrastructure.md", file=sys.stderr)
+        return 1
+    import anthropic
+
+    facility = load_facility(args.facility)
+    client = anthropic.Anthropic()
+    model = os.environ.get("LEADGEN_MODEL", "claude-opus-5")
+    with _store(args) as store:
+        leads = [store.get(key) for key in args.leads] if args.leads else store.list(min_score=args.min_score, limit=args.limit)
+        leads = [lead for lead in leads if lead is not None]
+        if not leads:
+            print("no matching leads", file=sys.stderr)
+            return 1
+        for lead in leads:
+            try:
+                text = build_dossier(lead, facility, client, model=model)
+            except QualifierError as exc:
+                print(f"{lead.company}: dossier failed: {exc}", file=sys.stderr)
+                continue
+            path = save_dossier(lead, text, directory=Path(args.out))
+            store.log_activity(lead.domain or lead.company.lower(), "dossier", str(path))
+            print(f"{lead.company}: {path}")
+    return 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     with _store(args) as store:
         report = store.pipeline_report()
@@ -289,6 +373,20 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
     p = sub.add_parser("brief", help="one-page call prep for a lead")
     p.add_argument("lead")
     p.set_defaults(func=cmd_brief)
+
+    p = sub.add_parser("watch", help="poll public feeds (FDA recalls, EDGAR filings, trade press) for new triggers")
+    p.add_argument("--days", type=int, default=7)
+    p.add_argument("--source", default="", help="only this source, e.g. fda_recall, edgar_filing, nosh_pr")
+    p.add_argument("--feeds", default="config/feeds.yaml")
+    p.add_argument("--ai", action="store_true", help="use Claude to classify items (needs an API key)")
+    p.set_defaults(func=cmd_watch)
+
+    p = sub.add_parser("dossier", help="research leads with Claude web search and save Markdown dossiers")
+    p.add_argument("leads", nargs="*", help="domains or lowercase company names; default: top leads by score")
+    p.add_argument("--min-score", type=int, default=55)
+    p.add_argument("--limit", type=int, default=5)
+    p.add_argument("--out", default="leads/dossiers")
+    p.set_defaults(func=cmd_dossier)
 
     p = sub.add_parser("emails", help="ranked, unverified address candidates for a lead's contact")
     p.add_argument("lead")

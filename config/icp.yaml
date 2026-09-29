@@ -32,6 +32,8 @@ signals:                 # observed on their website or in public data
   product_count_under_3: -6      # too small to matter yet
   recent_funding: 10
   recent_retail_launch: 10
+  recent_recall: 8         # a recall or a co-packer closure means the current supply chain failed
+  new_product_launch: 6    # a new SKU or format needs a line to run on
   has_pet_and_human_lines: 6     # facility can consolidate both under one roof
 
 hard_disqualifiers:      # any of these sets the score to 0

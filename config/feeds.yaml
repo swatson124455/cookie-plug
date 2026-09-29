@@ -1,0 +1,26 @@
+# Public feeds polled by `leadgen watch`. Every entry is a free, public source.
+# Add or remove feeds freely; the extractor decides relevance by keyword
+# (rule-based) or by Claude (`leadgen watch --ai`).
+
+rss:
+  - name: nosh_pr
+    url: https://www.nosh.com/feed
+  - name: prnewswire_food
+    url: https://www.prnewswire.com/rss/food-beverages-latest-news/food-beverages-latest-news-list.rss
+  - name: prnewswire_pets
+    url: https://www.prnewswire.com/rss/consumer-products-retail-latest-news/consumer-products-retail-latest-news-list.rss
+  - name: pet_food_processing
+    url: https://www.petfoodprocessing.net/rss/topic/2528-news
+  - name: food_business_news
+    url: https://www.foodbusinessnews.net/rss/articles
+  - name: snack_bakery
+    url: https://www.snackandbakery.com/rss/articles
+
+# openFDA enforcement API (recalls). Terms are OR'd inside product_description.
+fda:
+  terms: ["cookie", "cookies", "biscuit", "bakery", "brownie", "muffin", "granola", "cracker", "dog treat", "dog treats", "pet food", "cat treat", "pet treat"]
+
+# SEC EDGAR full-text search: Reg CF (Form C) filings mentioning these phrases.
+edgar:
+  queries: ['"cookies"', '"dog treats"', '"pet treats"', '"baked goods"', '"co-packer"', '"co-manufacturer"']
+  forms: ["C", "C/A", "C-U", "D"]

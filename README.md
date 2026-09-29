@@ -18,6 +18,7 @@ AI-assisted lead generation for a co-packing referral partnership. The partner f
 | `docs/10_trade_show_playbook.md` | 12-month show calendar with before, during, and after plans |
 | `docs/11_inbound_demand.md` | Marketplaces and communities where brands already ask for a co-packer |
 | `docs/12_referral_partners.md` | Warm-intro network: who, the share offer, the outreach email |
+| `docs/15_infrastructure.md` | The automated pipeline: feed sourcing, dossiers, what stays manual |
 | `docs/14_spear_playbook.md` | Account-based selling for the top twelve: cadence, multi-threading, the give |
 | `docs/13_decisions.md` | Open decisions with a recommendation and trade-offs for each |
 | `docs/PINS.md` | Everything that needs you |
@@ -31,12 +32,14 @@ cp .env.example .env            # optional; the engine runs without an API key
 
 leadgen facility-check          # lists what the partner still needs to confirm
 leadgen queries cookie          # search strings to build your first list
+leadgen watch --days 7          # pull triggers from FDA recalls, EDGAR filings, trade press
 leadgen import my_list.csv --source expo_west
 leadgen enrich                  # reads public homepages and Shopify catalogs
 leadgen score                   # ranks by ICP weights in config/icp.yaml
 leadgen qualify                 # AI fit + opening line (rule-based without a key)
 leadgen draft crumbco.com       # five-touch sequence for one lead (--ai sharpens it)
 leadgen emails crumbco.com      # ranked, unverified address candidates for the contact
+leadgen dossier crumbco.com     # Claude + web search writes the account dossier (needs a key)
 leadgen brief crumbco.com       # one-page call prep: facts, fit, history
 leadgen touch crumbco.com 0     # log the day-0 send (marks the lead contacted)
 leadgen due                     # follow-ups owed today, most overdue first
@@ -58,12 +61,12 @@ No key yet? Paste `prompts/qualify.md` or `prompts/draft_email.md` into claude.a
 ## Layout
 
 ```
-src/leadgen/      engine: models, facility, discover, enrich, scoring, ai, outreach, crm, economics, cli
-config/           facility.yaml (partner facts), icp.yaml (scoring weights), templates/sequence.yaml
+src/leadgen/      engine: models, facility, discover, sources, triggers, enrich, scoring, ai, dossier, outreach, crm, schedule, contacts, economics, cli
+config/           facility.yaml (partner facts), icp.yaml (scoring weights), feeds.yaml (public sources), templates/sequence.yaml
 prompts/          system prompts used by the AI layer and usable by hand
 docs/             strategy documents
 leads/            researched seed list (scored), overrides, and day-0 drafts
-scripts/          build_seed_list.py and the weekly routine
+scripts/          weekly_pipeline.sh, build_seed_list.py, check_dns.py
 tests/            unit, integration, fixtures (offline, 99% coverage)
 data/             local SQLite pipeline (git-ignored)
 ```

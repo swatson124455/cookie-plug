@@ -59,6 +59,8 @@ def _signal_points(signals: LeadSignals, weights: dict[str, int]) -> list[tuple[
         ("out_of_stock", signals.out_of_stock),
         ("recent_funding", signals.recent_funding),
         ("recent_retail_launch", signals.recent_retail_launch),
+        ("recent_recall", signals.recent_recall),
+        ("new_product_launch", signals.new_product_launch),
         ("has_pet_and_human_lines", signals.has_pet_and_human_lines),
         ("product_count_20_plus", (signals.product_count or 0) >= 20),
         ("product_count_under_3", signals.product_count is not None and signals.product_count < 3),

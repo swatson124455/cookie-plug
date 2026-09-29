@@ -11,7 +11,7 @@ Three phases with a spending gate between each. You do not buy tools until the p
 - [ ] Draft the referral agreement terms (section 4 of the data sheet doc) and send them to the partner in writing. (2 h)
 - [ ] Set up sending: a Gmail on your own domain, SPF/DKIM/DMARC, plain-text signature with a physical address. Start warm-up at 10 emails a day to friends and colleagues, asking for replies. (3 h)
 - [ ] Run `leadgen queries cookie`, `leadgen queries pet_treat`, `leadgen queries bakery`. Work the trade show and Google searches into a CSV using the column layout in `tests/fixtures/sample_leads.csv`. Target 150 companies. (10 h)
-- [ ] `leadgen import`, `leadgen enrich`, `leadgen score`. Review the top 40 by hand. (3 h)
+- [ ] `leadgen import leads/seed_list.csv`, `leadgen watch --days 30`, `leadgen enrich`, `leadgen score`. Review the top 40 by hand. (3 h)
 
 ### Week 2: first sends (20 h)
 - [ ] Find contact names and emails for the top 40 (LinkedIn free, company site, email pattern guessing, Hunter free tier). (6 h)
@@ -44,7 +44,7 @@ Spend in this order, only as each becomes the bottleneck:
 3. A second sending inbox plus a warm-up tool (about $30 to $100): doubles daily volume safely.
 
 Weekly rhythm (20 h):
-- Monday (4 h): add 60 leads, import, enrich, score, qualify. Plan the week's sends.
+- Monday (4 h): `scripts/weekly_pipeline.sh` (watch, enrich, score, qualify, dossiers), add 30 to 60 leads by hand from the show and retailer lists, promote two or three to the spear bench. Plan the week's sends.
 - Tuesday to Thursday (3 h each): 30 day-0 sends, follow-ups, LinkedIn, reply handling.
 - Friday (4 h): discovery calls, sample chasing with the facility, `leadgen report`, scorecard, ICP reweighting.
 - Every week: one LinkedIn post on capacity, MOQs, or what retail buyers require.

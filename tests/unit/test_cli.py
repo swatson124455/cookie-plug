@@ -136,3 +136,50 @@ def test_emails_command(run, sample_csv, tmp_path, capsys):
     assert out.splitlines()[0].startswith("priya.nair@pupco.com") and "UNVERIFIED" in out
     assert run("emails", "no site") == 1
     assert run("emails", "nobody.com") == 1
+
+
+def test_watch_command_with_mocked_feeds(run, monkeypatch, capsys):
+    from datetime import date
+
+    from leadgen import cli
+    from leadgen.sources import RawItem
+
+    class FakeSource:
+        name = "rss_fake"
+
+        def fetch(self, since):
+            return [
+                RawItem(source=self.name, title="Crumb Co launches cookies at Target", url="https://e/1", published=date.today()),
+                RawItem(source=self.name, title="Crumb Co raises $2M seed for cookies", url="https://e/2", published=date.today()),
+                RawItem(source=self.name, title="Why consumers love snacks", url="https://e/3", published=date.today()),
+            ]
+
+    monkeypatch.setattr(cli, "build_sources", lambda config, client: [FakeSource()])
+    monkeypatch.setattr(cli, "default_client", lambda: None)
+    assert run("watch", "--days", "3") == 0
+    out = capsys.readouterr().out
+    assert "added 1, updated 1, skipped 1" in out
+    assert run("watch", "--source", "nothing") == 0
+    assert run("score", "--min-score", "0") == 0
+    out = capsys.readouterr().out
+    assert "Crumb Co" in out and "recent_funding" in out and "recent_retail_launch" in out
+
+
+def test_dossier_command_requires_key_and_runs_with_fake_client(run, sample_csv, monkeypatch, capsys, tmp_path):
+    from types import SimpleNamespace
+
+    from leadgen import cli
+
+    run("import", str(sample_csv))
+    assert run("dossier", "crumbco.com") == 1
+    assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-test")
+    monkeypatch.setattr(cli, "build_dossier", lambda lead, facility, client, model: "**Product line**\n- cookies")
+    import anthropic
+
+    monkeypatch.setattr(anthropic, "Anthropic", lambda: SimpleNamespace())
+    assert run("dossier", "crumbco.com", "--out", str(tmp_path)) == 0
+    assert "crumbco_com.md" in capsys.readouterr().out
+    assert run("dossier", "nobody.com", "--out", str(tmp_path)) == 1
+    run("score")
+    assert run("dossier", "--min-score", "0", "--limit", "1", "--out", str(tmp_path)) == 0

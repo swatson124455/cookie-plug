@@ -73,6 +73,8 @@ class LeadSignals(BaseModel):
     product_count: int | None = None
     recent_funding: bool = False
     recent_retail_launch: bool = False
+    recent_recall: bool = False
+    new_product_launch: bool = False
     has_pet_and_human_lines: bool = False
     explicit_own_facility_only: bool = False
     detected_categories: list[Category] = Field(default_factory=list)
