@@ -1,0 +1,63 @@
+# Open Decisions
+
+Each one has a recommendation. Nothing here blocks the build; each blocks a specific step of execution, named in the first line.
+
+## 1. Sending domain and mailbox (blocks week-2 sends)
+**Recommendation:** buy a variant domain (about $12) and one Google Workspace mailbox (about $7 a month). Treat it as the one exception to the zero-dollar phase.
+- Pro: protects your main domain; authenticated mail lands in the inbox; Workspace mailboxes warm faster than free Gmail.
+- Con: roughly $100 for the year before proof exists.
+- Alternative: free Gmail for the proof month. Pro: $0. Con: lower deliverability, no custom domain, and you cannot set SPF or DKIM, so replies from bigger brands drop.
+
+## 2. Anthropic API key now or after proof (blocks `qualify --ai` and `draft --ai`)
+**Recommendation:** now, with a $20 monthly cap. At this volume it is cents per lead.
+- Pro: sharper openers on the top 25, where reply rate matters most; a call brief in seconds.
+- Con: breaks the strict zero-dollar rule by a few dollars.
+- Alternative: paste the prompts into claude.ai by hand. Pro: free. Con: slower, and you will skip it on busy days.
+
+## 3. Name the facility in outreach or stay anonymous (blocks the day-0 email wording)
+**Recommendation:** name it, once the partner approves the name and the claims.
+- Pro: named manufacturers get materially more replies; anonymity reads like a broker blast.
+- Con: needs the partner's sign-off and their agreement to field inbound you did not originate.
+- Alternative: "a US manufacturer" until the first handoff. Pro: no approval needed. Con: lower reply rate during the proof month, when you need replies most.
+
+## 4. Contact Mightylicious first despite its "supply chain integration" raise (blocks the top of the send list)
+**Recommendation:** yes, first, and ask the question directly: are you building or buying capacity?
+- Pro: highest-scoring lead; if they are buying, the deal is large; if building, you learn it in one email.
+- Con: a wasted top slot if they have already decided to build.
+
+## 5. Referral share for partners who introduce brands (blocks partner outreach)
+**Recommendation:** 25 percent of what you receive, flat, for as long as you receive it.
+- Pro: simple, generous enough to motivate a broker, still leaves three quarters to you.
+- Con: reduces margin on those accounts; requires the facility agreement to allow sub-referral (pin 13).
+- Alternative: 20 percent with a bonus after the second account. Pro: cheaper. Con: harder to explain, weaker first-intro motivation.
+
+## 6. Credit for the facility's own dormant leads that you re-engage (blocks pin 11)
+**Recommendation:** full rate for leads dormant more than 12 months, half rate for open quotes under 6 months old, written into the agreement.
+- Pro: fair to both sides; makes the partner comfortable handing over the list.
+- Con: half-rate accounts are the fastest closes, so early income is lower than it looks.
+
+## 7. PLMA on November 15 to 17 (blocks the retail private-label list)
+**Recommendation:** attend as a visitor only if the facility data sheet is complete by November 1; otherwise skip and target the ECRM private-label session in April 2027.
+- Pro: the only room where store-brand buyers at Target, Kroger, Petco and the rest actually meet suppliers; a badge is cheap.
+- Con: travel cost and two days; useless without certifications and a rate card in hand.
+
+## 8. Marketplace listing ownership (blocks pin 10)
+**Recommendation:** the facility's own Keychain and PartnerSlate profiles, with you named as the inbound contact.
+- Pro: buyers trust a manufacturer profile; you still touch every lead.
+- Con: depends on the partner setting them up and routing inbound to you; the agreement must count marketplace inbound as referred.
+- Alternative: your own "representative" profile. Pro: no dependency. Con: some platforms disallow it, and buyers discount it.
+
+## 9. Moderate-fit leads (bars, no-bake bites, dry mixes, soft chews, kibble) in the send list (blocks about 15 leads)
+**Recommendation:** hold them until the data sheet confirms which formats run.
+- Pro: no promises the plant cannot keep.
+- Con: a few of them, MOSH and Day Out Snacks among them, are large and would otherwise be week-2 sends.
+
+## 10. CRM now or later (blocks nothing yet)
+**Recommendation:** stay on the built-in SQLite pipeline until about 300 contacts, then `leadgen export` into HubSpot free.
+- Pro: zero setup now; the export is one command.
+- Con: no email integration or reminders beyond `leadgen due`; you log sends by hand.
+
+## 11. LinkedIn voice (blocks the content plan)
+**Recommendation:** post from your personal profile, not a new brand page.
+- Pro: personal profiles reach far more people; founders reply to people.
+- Con: your name is attached to the facility's promises, so the claims discipline matters.
