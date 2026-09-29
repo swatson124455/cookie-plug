@@ -1,0 +1,77 @@
+{% extends layout %}
+{% import "partials/macros.html" as m with context %}
+{% block main %}
+<section class="page-head"><div class="wrap">
+{{ m.crumbs(page) }}
+<h1>Capabilities</h1>
+<p class="lead">What the facility makes and handles, limited to what it has confirmed in writing. If a detail you need is missing, ask: we confirm it with the facility before we answer.</p>
+</div></section>
+
+<section class="section"><div class="wrap split">
+<div>
+{{ m.section_head(1, "Production lines") }}
+<div class="ruled cols-2">
+{% for line in site.facts.lines %}
+{% set spec = site.categories.get(line.slug) %}
+<a class="cell" href="{{ site.url(line.slug) }}">
+<span class="status-pill{% if not line.open %} ask{% endif %}">{{ "Open now" if line.open else "Ask" }}</span>
+<h3>{{ line.label }}</h3>
+<p>{{ spec.card if spec else "" }}</p>
+<span class="more">{{ spec.crumb if spec else line.label }} <span class="arrow" aria-hidden="true">&rarr;</span></span>
+</a>
+{% endfor %}
+</div>
+
+<div class="section-gap"></div>
+{{ m.section_head(2, "Turnkey services") }}
+<dl class="spec-list">
+{% for service in site.facts.services %}
+<div><dt>{{ service.label }}</dt><dd>{{ service.blurb }}</dd></div>
+{% endfor %}
+</dl>
+
+<div class="section-gap"></div>
+{{ m.section_head(3, "Certifications") }}
+{% if site.facts.certifications %}
+<ul class="checks">
+{% for cert in site.facts.certifications %}<li>{{ cert }}</li>{% endfor %}
+</ul>
+<p class="muted">Certificates are available on request, and we send them before you plan around them.</p>
+{% else %}
+<p>We list only certifications we can document with a current certificate. Tell us what your buyer requires (SQF, organic, gluten-free, kosher, or another standard) and we confirm it with the facility, in writing, before you plan around it.</p>
+{% endif %}
+
+<div class="section-gap"></div>
+{{ m.section_head(4, "Minimums, lead times, and sampling") }}
+{% if site.facts.numbers %}
+<dl class="spec-list">
+{% for fact in site.facts.numbers %}<div><dt>{{ fact.label }}</dt><dd>{{ fact.value }}</dd></div>{% endfor %}
+</dl>
+<p class="muted">Numbers vary with the product, format, and packaging; your quote states the ones that apply to you.</p>
+{% else %}
+<p>Minimums and lead times depend on the product, the format, and the packaging, so the facility confirms them for your product on the first call. We do not publish a number we cannot stand behind.</p>
+{% endif %}
+{% if site.facts.location %}<p>Production location: {{ site.facts.location }}.{% if site.facts.ships_nationwide %} Ships nationwide.{% endif %}</p>{% endif %}
+
+<div class="section-gap"></div>
+{{ m.section_head(5, "What to send for a benchmark") }}
+<ul class="checks">
+<li>Your product: a case, not a bag, so the facility can test it properly.</li>
+<li>Your spec sheet or recipe, if you have one.</li>
+<li>Target retail price, pack size, and case pack.</li>
+<li>Realistic monthly volume for the next twelve months.</li>
+<li>Your channel or retailer, and any certification the buyer asked for.</li>
+<li>Your current packaging, or photos of it.</li>
+</ul>
+
+<div class="section-gap"></div>
+{{ m.section_head(6, "What we do, and what we do not") }}
+<p>We are the partnerships side. We check fit, run the process through sample and quote, and introduce you to the facility to sign. We do not make the product, and we never charge brands: the facility pays us when you become its customer.</p>
+</div>
+<div class="aside">
+{{ m.facts_panel() }}
+<div class="box signal"><h3>Is your product a fit?</h3><p>Four questions, and we reply within {{ site.cfg.reply_within }}.</p><p><a class="btn small" href="{{ site.url('contact') }}">Check capacity</a></p></div>
+</div>
+</div></section>
+{{ m.cta_band("Capacity is open now", "Send the four questions and we confirm line fit with the facility within " ~ site.cfg.reply_within ~ ".") }}
+{% endblock %}

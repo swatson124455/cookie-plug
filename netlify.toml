@@ -1,0 +1,16 @@
+# Netlify reads this file automatically when the repo is connected.
+#
+# The build runs in site/ and stops, on purpose, while site/config.yaml still
+# has TO_FILL placeholders, so a half-filled site cannot go live. For a private
+# look before then, change the command to "python build.py --draft": every
+# page is marked noindex and robots.txt blocks crawlers.
+#
+# After the first deploy, in the Netlify UI: Forms -> enable form detection,
+# redeploy, then add an email notification for the "capacity-check" form.
+[build]
+  base = "site"
+  command = "pip install -r requirements.txt && python build.py"
+  publish = "dist"
+
+[build.environment]
+  PYTHON_VERSION = "3.11"

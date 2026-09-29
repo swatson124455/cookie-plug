@@ -1,0 +1,143 @@
+{# Shared pieces. Import with context: {% import "partials/macros.html" as m with context %} #}
+
+{% macro lockup() -%}
+<svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true" focusable="false"><rect class="m-bg" width="34" height="34" rx="3"/><rect class="m-line" x="6" y="15" width="15" height="4"/><circle class="m-dot" cx="25.5" cy="17" r="3.5"/></svg>
+<span class="brand-name"><b>{{ site.cfg.short_name }}</b>{% if site.brand_rest %}<span>{{ site.brand_rest }}</span>{% endif %}</span>
+{%- endmacro %}
+
+{% macro email(value) -%}
+{% if site.real(value) and not site.preview %}<a href="mailto:{{ value }}">{{ value }}</a>{% else %}{{ site.field(value) }}{% endif %}
+{%- endmacro %}
+
+{% macro phone(value) -%}
+{% if site.tel(value) and not site.preview %}<a href="{{ site.tel(value) }}">{{ value }}</a>{% else %}{{ site.field(value) }}{% endif %}
+{%- endmacro %}
+
+{% macro linkedin(value) -%}
+{% if site.real(value) %}<a href="{{ value }}" rel="me noopener">LinkedIn</a>{% else %}LinkedIn: {{ site.field(value) }}{% endif %}
+{%- endmacro %}
+
+{% macro crumbs(page) -%}
+<ol class="crumbs">
+<li><a href="{{ site.url('') }}">Home</a></li>
+{% for name, key in page.crumbs[:-1] %}<li><a href="{{ site.url(key) }}">{{ name }}</a></li>{% endfor %}
+<li aria-current="page">{{ page.crumbs[-1][0] }}</li>
+</ol>
+{%- endmacro %}
+
+{% macro facts_panel() -%}
+<aside class="facts" aria-label="Capacity facts">
+<h2>Capacity Facts</h2>
+<div class="sub">Confirmed with the facility &middot; <b>{{ site.facts.as_of }}</b></div>
+<div class="bar-xl"></div>
+<dl>
+<div class="row big"><dt>Lines open</dt><dd class="num">{{ site.facts.open_lines|length }}</dd></div>
+</dl>
+<div class="bar-md"></div>
+<p class="row small-head">Status</p>
+<dl>
+{% for line in site.facts.lines %}
+<div class="row"><dt>{{ line.label }}</dt><dd>{% if line.open %}<span class="status">Open</span>{% else %}Ask{% endif %}</dd></div>
+{% endfor %}
+<div class="row"><dt>Waitlist</dt><dd>None</dd></div>
+<div class="row"><dt>Turnkey services</dt><dd class="num">{{ site.facts.services|length }}</dd></div>
+{% for service in site.facts.services %}
+<div class="row sub-row"><dt>{{ service.label }}</dt><dd>Included</dd></div>
+{% endfor %}
+{% if site.facts.certifications %}
+<div class="row"><dt>Certifications</dt><dd class="num">{{ site.facts.certifications|length }}</dd></div>
+{% for cert in site.facts.certifications %}
+<div class="row sub-row"><dt>{{ cert }}</dt><dd>On file</dd></div>
+{% endfor %}
+{% endif %}
+{% for fact in site.facts.numbers %}
+<div class="row"><dt>{{ fact.label }}</dt><dd>{{ fact.value }}</dd></div>
+{% endfor %}
+{% if not site.facts.numbers %}
+<div class="row"><dt>Minimum run</dt><dd>Per product</dd></div>
+{% endif %}
+<div class="row"><dt>Cost to ask</dt><dd class="num">$0</dd></div>
+</dl>
+<div class="foot"><p>Status confirmed with the facility for {{ site.facts.as_of }}. Minimums, lead times, and certifications are confirmed for your product on the first call. We are paid by the facility, never by brands.</p></div>
+</aside>
+{%- endmacro %}
+
+{% macro capacity_form(page, fid) -%}
+{% set netlify = not site.preview and site.cfg.form.provider == "netlify" %}
+<form class="capacity-form" {% if site.preview %}data-preview{% elif netlify %}name="capacity-check" method="POST" action="{{ site.url('thanks') }}" data-netlify="true" netlify-honeypot="bot-field"{% else %}method="POST" action="{{ site.cfg.form.action }}"{% endif %}>
+{% if netlify %}<input type="hidden" name="form-name" value="capacity-check">{% endif %}
+<input type="hidden" name="source_page" value="{{ site.path(page.key) }}">
+<p class="hp" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+<div class="field wide"><label for="{{ fid }}-product">What are you making?</label><input id="{{ fid }}-product" name="product" required maxlength="200" placeholder="Soft-baked oatmeal cookies, 6 oz bag"></div>
+<div class="field"><label for="{{ fid }}-volume">Monthly volume, now or needed</label>
+<select id="{{ fid }}-volume" name="volume" required><option value="">Choose one</option><option>Under 5,000 units</option><option>5,000 to 25,000</option><option>25,000 to 100,000</option><option>Over 100,000</option></select></div>
+<div class="field"><label for="{{ fid }}-timing">When you need it</label>
+<select id="{{ fid }}-timing" name="timing" required><option value="">Choose one</option><option>Now</option><option>Within 3 months</option><option>3 to 6 months</option><option>Exploring</option></select></div>
+<div class="field"><label for="{{ fid }}-setup">How it is made today</label>
+<select id="{{ fid }}-setup" name="current_setup" required><option value="">Choose one</option><option>Home or shared kitchen</option><option>Our own facility</option><option>A co-packer</option><option>Not in production yet</option></select></div>
+<div class="field"><label for="{{ fid }}-name">Your name</label><input id="{{ fid }}-name" name="name" required maxlength="120" autocomplete="name"></div>
+<div class="field"><label for="{{ fid }}-company">Brand and website</label><input id="{{ fid }}-company" name="company" required maxlength="200" autocomplete="organization" placeholder="Brand name, brand.com"></div>
+<div class="field"><label for="{{ fid }}-email">Email</label><input id="{{ fid }}-email" name="email" type="email" required maxlength="200" autocomplete="email"></div>
+<div class="field"><label for="{{ fid }}-phone">Phone <span class="opt">(optional)</span></label><input id="{{ fid }}-phone" name="phone" type="tel" maxlength="40" autocomplete="tel"></div>
+<div class="field wide"><label for="{{ fid }}-notes">Anything else <span class="opt">(optional)</span></label><textarea id="{{ fid }}-notes" name="notes" rows="3" maxlength="2000" placeholder="Retailer, launch date, certifications your buyer asked for"></textarea></div>
+<div class="form-foot"><button class="btn" type="submit">Send the capacity check</button><p class="fine">We reply within {{ site.cfg.reply_within }} and use your details only to answer you. <a href="{{ site.url('privacy') }}">Privacy</a></p></div>
+</form>
+{%- endmacro %}
+
+{% macro form_section(page, title="Check capacity for your product", intro="") -%}
+{% set fid = site.anchor_id(page.key, "capacity") %}
+<section class="form-section" id="{{ fid }}" aria-labelledby="{{ fid }}-title">
+<div class="wrap form-layout">
+<div>
+<p class="kicker"><span class="dot" aria-hidden="true"></span>Capacity check</p>
+<h2 id="{{ fid }}-title">{{ title }}</h2>
+<p class="muted">{{ intro or "Four questions about your product, then your contact details. No sales call unless you ask for one." }}</p>
+<ol class="next-steps">
+<li><b>1</b><span>We check line fit with the facility and reply within {{ site.cfg.reply_within }}.</span></li>
+<li><b>2</b><span>If it fits, you send your product or spec for a benchmark sample.</span></li>
+<li><b>3</b><span>You approve the sample, get a written quote, and sign directly with the facility.</span></li>
+</ol>
+</div>
+{{ capacity_form(page, fid) }}
+</div>
+</section>
+{%- endmacro %}
+
+{% macro cta_band(title, text, label="Check capacity") -%}
+<section class="cta-band"><div class="wrap">
+<div><h2>{{ title }}</h2><p>{{ text }}</p></div>
+<a class="btn" href="{{ site.url('contact') }}">{{ label }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
+</div></section>
+{%- endmacro %}
+
+{% macro guide_cards(guides, cols=3) -%}
+<div class="ruled cols-{{ cols }}">
+{% for guide in guides %}
+<a class="cell guide-card" href="{{ site.url('guides/' ~ guide.slug) }}">
+<span class="label">Guide &middot; {{ guide.reading_minutes }} min read</span>
+<h3>{{ guide.title|nobreak }}</h3>
+<p>{{ guide.description }}</p>
+<span class="more">Read the guide <span class="arrow" aria-hidden="true">&rarr;</span></span>
+</a>
+{% endfor %}
+</div>
+{%- endmacro %}
+
+{% macro faq_list(items) -%}
+<div class="faq">
+{% for item in items %}
+<details>
+<summary>{{ item.question }}</summary>
+<p>{{ item.answer }}</p>
+</details>
+{% endfor %}
+</div>
+{%- endmacro %}
+
+{% macro section_head(number, title, text="") -%}
+<div class="section-head">
+<span class="label">{{ "%02d"|format(number) }}</span>
+<h2>{{ title }}</h2>
+{% if text %}<p>{{ text }}</p>{% endif %}
+</div>
+{%- endmacro %}

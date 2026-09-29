@@ -57,7 +57,7 @@
 - Nombase ep. 121: team "unpacks key decisions around manufacturing, reformulation for scale, retail sequencing, capital discipline" (https://www.nombase.com/podcast/lessons-from-investors-who-decided-to-build-their-own-cpg-brand). Trading Secrets ep. 322 (URL above).
 
 **Proposed give**
-- A nut-free, organic, seed-oil-free sweet line extension (kids' mini cookie or "cadootz sweet cracker") sampled in weeks, positioned as second-source overflow for Target snack-packs.
+- A nut-free, organic, seed-oil-free sweet line extension (kids' mini cookie or "cadootz sweet cracker") sampled without a production backlog in the way, positioned as second-source overflow for Target snack-packs.
 
 **Risks**
 - Crackers are outside the seller's stated cookie/baked-goods core. Investor-founders "modeled margins from day one" and likely have a settled co-man. Single retailer; no expansion news since June.

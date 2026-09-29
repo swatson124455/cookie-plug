@@ -1,0 +1,21 @@
+{% extends layout %}
+{% import "partials/macros.html" as m with context %}
+{% block main %}
+<section class="page-head"><div class="wrap">
+<p class="kicker"><span class="dot" aria-hidden="true"></span>Capacity check received</p>
+<h1>Thanks, we have it.</h1>
+<p class="lead">Here is what happens next.</p>
+</div></section>
+<section class="section"><div class="wrap center-block">
+<ol class="next-steps">
+<li><b>1</b><span>We check line fit with the facility and reply within {{ site.cfg.reply_within }}.</span></li>
+<li><b>2</b><span>If it fits, you send your product or spec for a benchmark sample.</span></li>
+<li><b>3</b><span>You approve the sample, get a written quote, and sign directly with the facility.</span></li>
+</ol>
+<div class="section-gap"></div>
+<h2>While you wait</h2>
+<ul class="link-list">
+{% for guide in site.guides[:3] %}<li><a href="{{ site.url('guides/' ~ guide.slug) }}">{{ guide.title }} <span class="arrow" aria-hidden="true">&rarr;</span></a></li>{% endfor %}
+</ul>
+</div></section>
+{% endblock %}

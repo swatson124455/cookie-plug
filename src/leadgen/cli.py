@@ -14,7 +14,6 @@ import os
 import sys
 from datetime import date
 from pathlib import Path
-from pathlib import Path
 from typing import Callable
 
 from leadgen import __version__
@@ -25,12 +24,13 @@ from leadgen.discover import import_csv, search_queries
 from leadgen.discovery import brand_to_lead, discover
 from leadgen.dossier import build_dossier, find_website, save_dossier
 from leadgen.htmlimport import import_html_file
+from leadgen.inbound import FormSubmission, NetlifyError, fetch_netlify_submissions, filter_since, import_submissions, load_csv
 from leadgen.economics import FunnelAssumptions, ReferralTerms, account_value, funnel_plan
 from leadgen.enrich import WebsiteEnricher
 from leadgen.facility import load_facility
 from leadgen.models import Category, Lead, Stage
 from leadgen.outreach import SenderIdentity, load_sequence, render_sequence
-from leadgen.report import build_report, email_report, render_report, save_report
+from leadgen.report import REPORT_DIR, build_report, email_report, render_report, save_report
 from leadgen.schedule import due_touches, log_touch
 from leadgen.sources import build_sources, default_client, load_feeds, since_date
 from leadgen.triggers import ClaudeExtractor, RuleBasedExtractor, extraction_to_lead
@@ -56,6 +56,57 @@ def cmd_import(args: argparse.Namespace) -> int:
     for row_number, reason in report.skipped:
         print(f"  row {row_number}: {reason}")
     return 0
+
+
+def cmd_import_form(args: argparse.Namespace) -> int:
+    """Import website capacity-check submissions from a CSV export and/or the Netlify API."""
+    if not args.csv and not args.netlify:
+        print("import-form needs a CSV export path or --netlify", file=sys.stderr)
+        return 1
+    try:
+        since = date.fromisoformat(args.since) if args.since else None
+    except ValueError:
+        print(f"--since must be YYYY-MM-DD, got {args.since!r}", file=sys.stderr)
+        return 1
+    submissions = _collect_form_submissions(args, since)
+    if submissions is None:
+        return 1
+    with _store(args) as store:
+        result = import_submissions(store, submissions)
+    for item in result.imported:
+        lead = item.lead
+        print(f"{lead.company} {item.email} {lead.category.value} {lead.segment.value} ({item.status})")
+    for label, reason in result.skipped:
+        print(f"  skipped {label}: {reason}")
+    print(
+        f"import-form: {result.new_count} new, {result.merged_count} merged, {len(result.skipped)} skipped. "
+        "Run `leadgen enrich` then `leadgen score`."
+    )
+    return 0
+
+
+def _collect_form_submissions(args: argparse.Namespace, since: date | None) -> list[FormSubmission] | None:
+    """Read the CSV and/or pull from Netlify; print why and return None when either fails."""
+    token = os.environ.get("NETLIFY_AUTH_TOKEN", "").strip()
+    site_id = os.environ.get("NETLIFY_SITE_ID", "").strip()
+    if args.netlify and not (token and site_id):
+        print("import-form --netlify needs NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID set in the environment (see .env.example)", file=sys.stderr)
+        return None
+    submissions: list[FormSubmission] = []
+    if args.csv:
+        try:
+            submissions.extend(filter_since(load_csv(args.csv), since))
+        except (OSError, UnicodeDecodeError) as exc:
+            reason = "not UTF-8; save the export as a UTF-8 CSV" if isinstance(exc, UnicodeDecodeError) else exc.strerror or str(exc)
+            print(f"cannot read {args.csv}: {reason}", file=sys.stderr)
+            return None
+    if args.netlify:
+        try:
+            submissions.extend(fetch_netlify_submissions(site_id, token, since=since))
+        except NetlifyError as exc:
+            print(f"Netlify import failed: {exc}", file=sys.stderr)
+            return None
+    return submissions
 
 
 def cmd_enrich(args: argparse.Namespace) -> int:
@@ -414,7 +465,7 @@ def cmd_weekly_report(args: argparse.Namespace) -> int:
     with _store(args) as store:
         report = build_report(store, template, days=args.days)
     text = render_report(report)
-    path = save_report(text)
+    path = save_report(text, directory=Path(args.reports_dir))
     print(text)
     print(f"saved {path}")
     if args.email:
@@ -469,6 +520,7 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
     p.add_argument("csv")
     p.add_argument("--source", default="csv")
     p.set_defaults(func=cmd_import)
+    _add_import_form_command(sub)
 
     p = sub.add_parser("enrich", help="fetch public website signals")
     p.add_argument("--all", action="store_true", help="re-enrich every lead, not only new ones")
@@ -562,6 +614,15 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
     p.set_defaults(func=cmd_advance)
 
 
+def _add_import_form_command(sub: argparse._SubParsersAction) -> None:  # type: ignore[type-arg]
+    """The ``import-form`` subcommand, registered next to ``import``."""
+    p = sub.add_parser("import-form", help="import website capacity-check submissions (CSV export or --netlify)")
+    p.add_argument("csv", nargs="?", default="", help="CSV export of the capacity-check form")
+    p.add_argument("--netlify", action="store_true", help="pull from the Netlify API (needs NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID)")
+    p.add_argument("--since", default="", help="YYYY-MM-DD: only submissions from the start of this day (UTC)")
+    p.set_defaults(func=cmd_import_form)
+
+
 def _add_ops_commands(sub: argparse._SubParsersAction) -> None:  # type: ignore[type-arg]
     """Subcommands for research, reporting, and planning."""
     p = sub.add_parser("queries", help="print search queries for a category")
@@ -571,6 +632,7 @@ def _add_ops_commands(sub: argparse._SubParsersAction) -> None:  # type: ignore[
     p = sub.add_parser("weekly-report", help="the week's new leads, retriggers, due touches, funnel; --email sends it")
     p.add_argument("--days", type=int, default=7)
     p.add_argument("--email", action="store_true")
+    p.add_argument("--reports-dir", default=str(REPORT_DIR), help="where to save the report (default data/reports)")
     p.set_defaults(func=cmd_weekly_report)
 
     p = sub.add_parser("report", help="print the pipeline funnel")

@@ -8,7 +8,7 @@
 
 ## 1. The one-paragraph strategy
 
-Contract food manufacturing is a seller's market for capacity: most US co-packers are booked six to twelve months out, push minimums up, and refuse small runs. Brands that are growing (new retail listing, sold-out products, new funding, a line extension into pet or human treats) are the ones who feel that pain today. This facility's edge is not price. It is **speed, room, and one roof**: it can sample in weeks, has open lines now, and can make a cookie and a dog biscuit for the same brand under one food-safety program. The plan is to use AI to find those growing brands at the exact moment they hit a capacity wall, reach them with a specific, evidence-based message, and hand the facility a buyer who is already convinced they need a second source. Because you are paid on repurchases, the plan prioritizes accounts that reorder monthly over one-off projects.
+Contract food manufacturing is a seller's market for capacity: many US co-packers are booked months out, push minimums up, and turn away small runs. Brands that are growing (new retail listing, sold-out products, new funding, a line extension into pet or human treats) are the ones who feel that pain today. This facility's edge is not price. It is **speed, room, and one roof**: it has open lines now (so no long waitlist), and it can make a cookie and a dog biscuit for the same brand under one roof. Sampling speed becomes a claim once the facility commits to a turnaround (pin 17). The plan is to use AI to find those growing brands at the exact moment they hit a capacity wall, reach them with a specific, evidence-based message, and hand the facility a buyer who is already convinced they need a second source. Because you are paid on repurchases, the plan prioritizes accounts that reorder monthly over one-off projects.
 
 ## 2. Why this facility wins a deal (and where it loses)
 
@@ -56,7 +56,7 @@ The governing rule: **a brand that is changing something is a buyer; a brand tha
 | Persona | Typical title | What keeps them up at night | Message angle |
 |---|---|---|---|
 | Founder-operator (Tier B, small Tier A) | Founder, CEO, Co-founder | Cannot keep up with orders, cannot afford a facility, retail buyer wants certifications | "You keep your brand, we solve production" |
-| Operations lead (Tier A) | VP Ops, Head of Supply Chain, Director of Manufacturing | Single-source risk, co-packer lead times, MOQ creep, quality issues | "Second source with open capacity, benchmark sample in weeks" |
+| Operations lead (Tier A) | VP Ops, Head of Supply Chain, Director of Manufacturing | Single-source risk, co-packer lead times, MOQ creep, quality issues | "Second source with open capacity, benchmark sample with no backlog to wait behind" |
 | Brand or product lead (Tier A/C) | Head of Product, Brand Manager, CMO | Speed to launch a new SKU or a pet line | "Formulation to shelf-ready without adding headcount" |
 | Category buyer (retail private label) | Category Manager, Private Brands Director | Margin, compliance, reliability | "Certified, US-based, spare capacity for private label" |
 
@@ -108,7 +108,7 @@ No API key is required to run any of this. With a key, qualification and draftin
 
 ## 8. Messaging framework
 
-**Positioning statement (internal):** For growing cookie, bakery, and pet treat brands that cannot get production capacity fast enough, the facility is a US turnkey manufacturer with open lines today, sampling in weeks, and human and pet products under one roof.
+**Positioning statement (internal):** For growing cookie, bakery, and pet treat brands that cannot get production capacity fast enough, the facility is a US turnkey manufacturer with open lines today, no waitlist to get on the line, and human and pet products under one roof.
 
 **Three claims you can make now** (everything else waits for the data sheet):
 1. Open capacity today, so no waitlist.

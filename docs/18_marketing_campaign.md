@@ -39,7 +39,7 @@ Rules: answer the question fully before mentioning anything; never pitch in the 
 
 ## Podcast and press pitch (one paragraph, reuse)
 
-> Emerging cookie and pet-treat brands are hitting a capacity wall: most US co-packers are booked six to twelve months out and keep raising minimums, so founders who just landed Sprouts or Target cannot make the reorder. I work with a manufacturer that has open lines now and does turnkey production for small brands. Happy to talk about how founders should evaluate a co-packer, what the first call should cover, and the transitions (kitchen to co-packer, fresh to shelf-stable) that trip people up.
+> Emerging cookie and pet-treat brands are hitting a capacity wall: many US co-packers are booked months out and keep raising minimums, so founders who just landed Sprouts or Target cannot make the reorder. I work with a manufacturer that has open lines now and does turnkey production for small brands. Happy to talk about how founders should evaluate a co-packer, what the first call should cover, and the transitions (kitchen to co-packer, fresh to shelf-stable) that trip people up.
 
 ## 90-day milestones
 

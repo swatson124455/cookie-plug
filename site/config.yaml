@@ -1,25 +1,40 @@
-# Site settings. Everything customer-facing on the site comes from here or
-# from config/facility.yaml (confirmed facts only). Fill the placeholders,
-# then `python site/build.py` writes site/dist/.
+# Website settings. Every customer-facing fact on the site comes from this file
+# or from config/facility.yaml, and facility facts render only once confirmed.
+#
+#   python site/build.py                  production build into site/dist/
+#   python site/build.py --draft          same pages, placeholders highlighted, noindex
+#   python site/build.py --preview FILE   one-file preview of the whole site
+#
+# Values starting with TO_FILL are placeholders. The production build lists
+# every one still here and stops, so a half-filled site cannot go live.
 
-brand: "Cookie Plug"                      # decision 12
+brand: "Open Line Co-Packing"       # working name (decision 12): check the trademark and domain before you buy
+brand_short: "Open Line"
 tagline: "Open co-packing capacity for cookies, baked goods, and pet treats"
-domain: "https://example.com"             # TO_FILL: your registered domain, no trailing slash
-capacity_status: "Open capacity as of October 2026: cookie, bakery, and pet-treat lines."
+domain: "TO_FILL https://yourdomain.com"   # the registered domain, https, no trailing slash
+
+capacity:
+  as_of: "2026-09"                  # re-confirm with the facility monthly and update; the build warns after 45 days
+  lines: [cookie, bakery, pet_treat, pet_food]   # lines open this month; must be lines in config/facility.yaml
+
+reply_within: "one business day"    # the promise under every form; keep it true
 
 contact:
   name: "TO_FILL Your Name"
   title: "Partnerships"
-  email: "TO_FILL you@yourdomain.com"
-  phone: "TO_FILL (000) 000-0000"
-  address: "TO_FILL Street, City, State ZIP"   # a physical address builds trust and is required for CAN-SPAM mail
-  linkedin: "https://www.linkedin.com/in/TO_FILL"
+  email: "TO_FILL you@yourdomain.com"      # use the domain mailbox, not a personal address
+  phone: "TO_FILL (555) 010-0000"          # optional: set to "" to leave it off the site
+  address: "TO_FILL Street, City, State ZIP"   # optional: a PO box or virtual mailbox is fine; "" to omit
+  linkedin: "TO_FILL https://www.linkedin.com/in/yourname"   # optional: "" to omit
 
-author_bio: "TO_FILL One sentence: who you are and why you know co-packing."
+author_bio: "TO_FILL One or two sentences: who you are and why you know co-packing."   # shown on every guide
 
-# Form endpoint. Netlify Forms: leave empty and deploy on Netlify (the form
-# has data-netlify="true"). Formspree: paste the endpoint URL.
-form_action: ""
+form:
+  provider: "netlify"               # netlify: works on Netlify with no setup. formspree: paste the endpoint below.
+  action: ""                        # Formspree endpoint URL when provider is formspree
 
-# Optional analytics snippet, pasted verbatim into <head> (Plausible recommended).
+# Optional analytics, pasted verbatim into <head>. Plausible is cookie-free and
+# recommended. Script hosts in the snippet are added to the security policy
+# automatically; list any other hosts the tool calls in analytics_hosts.
 analytics_snippet: ""
+analytics_hosts: []

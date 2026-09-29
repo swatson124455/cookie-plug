@@ -1,0 +1,203 @@
+# Category landing pages, one per production line. Copy only: layout lives in
+# site/templates/category.html. Keep every claim about the facility inside what
+# config/facility.yaml confirms. Formats (wire-cut, kibble, freeze-dried...)
+# are never promised; the page asks and the facility confirms line fit.
+#
+# Answers may use `when_confirmed` to switch to a specific number once the
+# named facility field is confirmed; {value} is replaced with it.
+
+cookie-co-packer:
+  line: cookie
+  h1: "Cookie co-packer with open capacity"
+  title: "Cookie Co-Packer With Open Capacity"
+  crumb: "Cookie co-packing"
+  noun: "cookie"
+  card: "For cookie brands moving from a kitchen or a first co-packer into steady retail volume."
+  description: "Cookie co-packing and private label with open capacity now: formulation, production, packaging, labeling, and nutrition panels under one roof."
+  intro: "For cookie brands that have outgrown a kitchen, landed a retail listing, or need a second source: a US manufacturer with open cookie capacity now, and the whole job under one roof, from formulation to shelf-ready case packs. The first step is a benchmark of your cookie, not a pitch."
+  who_title: "Cookie brands that call us"
+  who:
+    - title: "The kitchen is the ceiling"
+      text: "Demand is there, but every batch is hand-scooped and the founders are still baking. You need a line, not a bigger mixer."
+    - title: "A retail listing just landed"
+      text: "The first order is manageable; the reorder is the business. Production has to be lined up before the shelf is stocked, not after the first stockout."
+    - title: "Fresh to shelf-stable"
+      text: "A bakery-case cookie that has to survive a distribution center and a store shelf is a formulation project. That work is part of the job here."
+    - title: "One co-packer is not enough"
+      text: "If your only plant has a bad month, so do you. A second source that already makes your cookie protects the listing."
+  handles:
+    - label: "Formulation"
+      text: "Your recipe scaled to production, or a new one developed with you, sampled until it matches."
+    - label: "Production"
+      text: "Your cookie made on an open line, to a written spec, run after run."
+    - label: "Packaging"
+      text: "Packed into your retail format."
+    - label: "Labeling and nutrition panels"
+      text: "Ingredient statement, allergen declaration, and the Nutrition Facts panel, checked before anything prints."
+    - label: "Shelf-ready case packs"
+      text: "Cases and pallets built to your retailer's specifications."
+  ready:
+    - "A case of your cookies, so the facility can benchmark the real thing."
+    - "Your recipe or spec sheet, if you have one."
+    - "Pack size, target retail price, and case pack."
+    - "Realistic monthly volume for the next twelve months."
+    - "Your retailer or channel, and any certification the buyer asked for."
+  note: "Cookie formats (drop, wire-cut, bar, sandwich, soft-baked) run on different equipment. Name yours in the capacity check; the facility confirms line fit before anything else."
+  questions:
+    - q: "Can you match my cookie exactly?"
+      a: "That is what the benchmark sample is for. The facility's formulation team works from your recipe or from the cookie itself, and you judge the sample side by side with your own before anything is quoted."
+    - q: "What is the minimum run for cookies?"
+      a: "It depends on the format and the packaging, so the facility confirms it for your cookie on the first call, before any sampling. We will not quote a number that does not apply to your product."
+      when_confirmed:
+        field: commercial.min_order_units
+        a: "Minimum runs start at {value} units; the exact number for your cookie depends on the format and packaging, and the facility confirms it on the first call, before any sampling."
+    - q: "Can you make gluten-free, organic, or allergen-free cookies?"
+      a: "Ask before you plan around it. Claims like these depend on certifications and line controls, and we confirm what the facility can document, in writing, for your product."
+    - q: "Do I need a recipe already?"
+      a: "No. Private label is available: the facility can develop a cookie with you and put your brand on it."
+
+bakery-co-packer:
+  line: bakery
+  h1: "Bakery co-packer for baked goods brands"
+  title: "Bakery Co-Packer for Baked Goods Brands"
+  crumb: "Bakery co-packing"
+  noun: "baked goods"
+  card: "For baked-goods brands ready for retail volume; tell us the format and we confirm line fit first."
+  description: "Baked goods co-packing with open capacity: formulation, contract manufacturing, private label, packaging, and labeling in one place, for brands ready for retail."
+  intro: "Baked goods cover a lot of formats, and each one needs different equipment. Tell us yours, and the facility confirms line fit before anything else. When it fits, you get the whole job under one roof: formulation, production, packaging, labeling, and nutrition panels, with open capacity now."
+  who_title: "Baked-goods brands that call us"
+  who:
+    - title: "Moving out of a commissary"
+      text: "A shared kitchen got you to market. A buyer's audit requirement, a second region, or a wholesale account you had to decline says it is time for a plant."
+    - title: "A product that has to travel"
+      text: "Moving from fresh to shelf-stable changes the recipe, the packaging, and the label. Formulation is included."
+    - title: "Private label"
+      text: "No recipe yet, or a retailer wants its own brand? The facility develops a product with you and puts your name on it."
+    - title: "Growing past a first co-packer"
+      text: "Your current plant raised the minimum or pushed your run back. Open capacity means you are not waiting behind bigger customers."
+  handles:
+    - label: "Formulation"
+      text: "Your recipe scaled to production, or a new one developed with you, sampled until you approve it."
+    - label: "Contract manufacturing"
+      text: "Your recipe, made to your written spec."
+    - label: "Private label"
+      text: "A product developed with you, under your brand."
+    - label: "Packaging and labeling"
+      text: "Packed into your retail format, with the ingredient statement, allergen declaration, and Nutrition Facts panel handled."
+    - label: "Shelf-ready case packs"
+      text: "Cases and pallets built to your retailer's specifications."
+  ready:
+    - "A case of your product, so the facility can benchmark the real thing."
+    - "Your recipe or spec sheet, if you have one."
+    - "Pack size, target retail price, and case pack."
+    - "Realistic monthly volume for the next twelve months."
+    - "Shelf-life target, and whether the product is fresh, frozen, or shelf-stable today."
+  note: "Brownies, bars, muffins, granola, crackers, and cakes each run on different equipment. Name your format in the capacity check, and the facility confirms fit first."
+  questions:
+    - q: "Which baked goods can the facility make?"
+      a: "Formats differ in equipment, so the honest answer is product by product. Name your format in the capacity check, and we confirm line fit with the facility before anything else."
+    - q: "Can you make my product shelf-stable?"
+      a: "It is a formulation project: the recipe, the packaging, and the label all change, and shelf life has to be tested before launch. Tell us about the product, and we confirm what the facility can do for it."
+    - q: "Is there a minimum order?"
+      a: "Yes, and it depends on the format and the packaging. The facility confirms the number for your product on the first call, before any sampling."
+      when_confirmed:
+        field: commercial.min_order_units
+        a: "Minimum runs start at {value} units; the exact number depends on your format and packaging, and the facility confirms it on the first call."
+
+dog-treat-co-packer:
+  line: pet_treat
+  h1: "Dog treat co-packer and manufacturer"
+  title: "Dog Treat Co-Packer and Manufacturer"
+  crumb: "Dog treat co-packing"
+  noun: "dog treat"
+  card: "For pet-treat brands that need production, packaging, and labeling in one place."
+  description: "Dog treat co-packing with open capacity: formulation, production, packaging, and labeling, with pet lines under the same roof as bakery lines."
+  intro: "For dog treat brands moving from a home kitchen or a first manufacturer to steady production: a US manufacturer with open pet-treat capacity now, pet lines under the same roof as its bakery lines, and the whole job handled in one place, from formulation to shelf-ready case packs."
+  who_title: "Treat brands that call us"
+  who:
+    - title: "Baking in a home kitchen"
+      text: "Pet treats are regulated as animal feed, and growth brings registrations, labels, and a buyer asking about your facility. A manufacturer takes that weight off."
+    - title: "A marketplace or retail listing"
+      text: "An online pet retailer or a specialty chain says yes, and the reorder arrives faster than the first order did. Production has to be ready first."
+    - title: "A food brand adding a pet line"
+      text: "Cookie and snack brands extending into treats need a plant that runs both. Here, human and pet lines share a roof."
+    - title: "Leaving a manufacturer"
+      text: "Quality drifted, minimums rose, or the plant stopped returning calls. A second source that already matches your treat protects the business."
+  handles:
+    - label: "Formulation"
+      text: "Your recipe scaled to production, or a new treat developed with you, sampled until you approve it."
+    - label: "Production"
+      text: "Your treat made on an open pet-treat line, to a written spec."
+    - label: "Packaging"
+      text: "Packed into your retail format."
+    - label: "Labeling"
+      text: "The pet-food label, including the guaranteed analysis and the ingredient statement."
+    - label: "Shelf-ready case packs"
+      text: "Cases and pallets built to your retailer's specifications."
+  ready:
+    - "A case of your treats, so the facility can benchmark the real thing."
+    - "Your recipe, ingredient list, and current guaranteed analysis, if you have them."
+    - "Pack size, target retail price, and case pack."
+    - "Realistic monthly volume for the next twelve months."
+    - "Your channels (online, pet specialty, grocery) and the states you sell in, because feed registrations are state by state."
+  note: "Treat formats run on different equipment: baked biscuits, soft-baked treats, jerky, freeze-dried, and extruded treats are different lines. Name yours in the capacity check; the facility confirms line fit before anything else."
+  questions:
+    - q: "Do you handle pet-food labeling?"
+      a: "Labeling is part of the turnkey service, and for pet products that means the pet-food label, including the guaranteed analysis. Ask who handles state feed registrations for your product, and we tell you what the facility covers and what stays with you."
+    - q: "Can my treats carry a human-grade claim?"
+      a: "Only if the product and every ingredient are stored, handled, processed, and transported to human-food standards, in a facility licensed to make human food; that is the AAFCO standard for the claim. Ask, and we confirm with the facility whether your product can qualify."
+    - q: "Can the same facility make my cookies and my dog treats?"
+      a: "Yes. The facility runs human bakery lines and pet lines under one roof, which is useful for brands that sell to people and their dogs."
+    - q: "What is the minimum run for treats?"
+      a: "It depends on the format and the packaging, so the facility confirms it for your treat on the first call, before any sampling."
+      when_confirmed:
+        field: commercial.min_order_units
+        a: "Minimum runs start at {value} units; the exact number for your treat depends on the format and packaging, and the facility confirms it on the first call."
+
+pet-food-co-packer:
+  line: pet_food
+  h1: "Pet food co-packer with open capacity"
+  title: "Pet Food Co-Packer With Open Capacity"
+  crumb: "Pet food co-packing"
+  noun: "pet food"
+  card: "For pet-food brands; the lines share a roof with the facility's treat and bakery lines."
+  description: "Pet food co-packing with open capacity: formulation, contract manufacturing, private label, packaging, and labeling, under one roof with pet-treat and bakery lines."
+  intro: "For pet food brands that need a manufacturer with room: a US facility with open pet-food capacity now, under one roof with its pet-treat and bakery lines. Pet food formats vary more than most, so the first step is confirming your format fits; then the whole job is handled in one place."
+  who_title: "Pet food brands that call us"
+  who:
+    - title: "A first manufacturer"
+      text: "You have a formula and early customers, and a kitchen or a small-batch partner cannot keep up."
+    - title: "A retail or marketplace launch"
+      text: "Volume is about to step up, and the reorder cannot wait behind a bigger customer's run."
+    - title: "Private label"
+      text: "A retailer, a veterinary practice, or a brand extension needs a product under its own name."
+    - title: "A second source"
+      text: "One plant is a single point of failure for a product customers feed every day."
+  handles:
+    - label: "Formulation"
+      text: "Your formula taken to production, or a new one developed with you, sampled until you approve it."
+    - label: "Contract manufacturing and private label"
+      text: "Your formula made to your spec, or one developed with you under your brand."
+    - label: "Packaging"
+      text: "Packed into your retail format."
+    - label: "Labeling"
+      text: "The pet-food label, including the guaranteed analysis and the ingredient statement."
+    - label: "Shelf-ready case packs"
+      text: "Cases and pallets built to your retailer's specifications."
+  ready:
+    - "Your formula and ingredient list, and the current label if you have one."
+    - "The format: baked, kibble, freeze-dried, or another."
+    - "Species and life stage, and whether the food is complete and balanced or for intermittent or supplemental feeding."
+    - "Realistic monthly volume for the next twelve months."
+    - "Your channels and the states you sell in."
+  note: "Pet food formats (baked, extruded kibble, freeze-dried, wet) run on very different equipment. Name yours in the capacity check; the facility confirms line fit before anything else."
+  questions:
+    - q: "Which pet food formats can the facility make?"
+      a: "Formats run on different equipment, so the answer is product by product. Name your format in the capacity check, and we confirm line fit with the facility first."
+    - q: "Who makes sure the food meets nutritional standards?"
+      a: "Nutritional adequacy is a formulation and documentation question for your specific product. Formulation is part of the turnkey service; tell us what your label needs to claim, and we confirm with the facility what it provides."
+    - q: "Is there a minimum order?"
+      a: "Yes, and it depends on the format and the packaging. The facility confirms the number for your product on the first call, before any sampling."
+      when_confirmed:
+        field: commercial.min_order_units
+        a: "Minimum runs start at {value} units; the exact number depends on your format and packaging, and the facility confirms it on the first call."

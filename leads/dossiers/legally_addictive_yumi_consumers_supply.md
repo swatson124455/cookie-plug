@@ -84,7 +84,7 @@
 - None found beyond recall notice; unknown.
 
 **Proposed give**
-- US-made, SQF-certified replacement biscuit program: match Original Meaty and Meaty w/ Chicken formulas in 4 lb and 20 lb, with lot-level Salmonella testing/COA and sampling in weeks.
+- US-made replacement biscuit program (certifications only as confirmed on the facility data sheet): match Original Meaty and Meaty w/ Chicken formulas in 4 lb and 20 lb, with lot-level Salmonella testing/COA and sampling without a production backlog.
 
 **Risks**
 - May self-manufacture (two plants); recall completed, urgency fading; feed-channel price points; CHS JV governance.

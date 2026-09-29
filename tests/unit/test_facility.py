@@ -19,8 +19,9 @@ def test_unconfirmed_fields_flags_placeholders(facility):
 
 
 def test_confirmed_certifications_excludes_placeholders(facility):
-    certs = facility.confirmed_certifications()
-    assert certs == ["fda_registered"]
+    assert facility.confirmed_certifications() == []
+    assert "certifications.fda_registered" in facility.unconfirmed_fields()
+    assert "location.ships_nationwide" in facility.unconfirmed_fields()
 
 
 def test_confirmed_certifications_includes_string_values():

@@ -16,7 +16,7 @@ Congrats on the round. Most of that money usually goes into inventory, and inven
 
 Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -38,7 +38,7 @@ Congrats on the retail expansion at Mightylicious Gluten Free. The first reorder
 
 Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -60,7 +60,7 @@ Congrats on the retail expansion at Brune Kitchen. The first reorders are where 
 
 Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -82,7 +82,7 @@ Congrats on the retail expansion at Dog Treat Naturals. The first reorders are w
 
 Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -104,7 +104,7 @@ Congrats on the retail expansion at Elavi. The first reorders are where most bra
 
 Most bakery brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for bakery production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for bakery production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -126,7 +126,7 @@ Congrats on the round. Most of that money usually goes into inventory, and inven
 
 Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -148,7 +148,7 @@ Congrats on the retail expansion at Dupe Loops. The first reorders are where mos
 
 Most bakery brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for bakery production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for bakery production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -170,7 +170,7 @@ Congrats on the retail expansion at Champ's Pet Kitchen. The first reorders are 
 
 Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -192,7 +192,7 @@ Congrats on the round. Most of that money usually goes into inventory, and inven
 
 Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -214,7 +214,7 @@ Congrats on the retail expansion at Let's Sprinkle by MG. The first reorders are
 
 Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -236,7 +236,7 @@ Congrats on the retail expansion at Chewy. The first reorders are where most bra
 
 Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -258,7 +258,7 @@ Congrats on the retail expansion at Tractor Supply Company. The first reorders a
 
 Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -280,7 +280,7 @@ Congrats on the retail expansion at A Better Treat. The first reorders are where
 
 Most pet treat brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for pet treat production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -302,7 +302,7 @@ Congrats on the retail expansion at cadootz!. The first reorders are where most 
 
 Most bakery brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for bakery production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for bakery production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 
@@ -324,7 +324,7 @@ Saw Bombolo Biscotti (Sotto I Trulli Inc.) sells wholesale. Retail accounts tend
 
 Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 
-I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
 Worth a 15-minute call to see if the capacity and the specs line up?
 

@@ -7,7 +7,7 @@ name: "Partner Facility"           # TO_CONFIRM - the name you are allowed to us
 location:
   city: "TO_CONFIRM"
   state: "TO_CONFIRM"
-  ships_nationwide: true
+  ships_nationwide: "TO_CONFIRM"
 
 # Production lines the facility runs. Categories drive lead scoring.
 categories:
@@ -28,7 +28,7 @@ services:
 
 # Certifications. Buyers ask about these on the first call.
 certifications:
-  fda_registered: true             # TO_CONFIRM
+  fda_registered: "TO_CONFIRM"     # registration number and last inspection date
   sqf: "TO_CONFIRM"                # e.g. "SQF Level 2"
   organic: "TO_CONFIRM"
   gluten_free: "TO_CONFIRM"

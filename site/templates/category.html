@@ -1,0 +1,55 @@
+{% extends layout %}
+{% import "partials/macros.html" as m with context %}
+{% block main %}
+<section class="page-head"><div class="wrap">
+{{ m.crumbs(page) }}
+<p class="kicker">{% if line and line.open %}<span class="status-pill">Open capacity, {{ site.facts.as_of }}</span>{% else %}<span class="status-pill ask">Ask about this line</span>{% endif %}</p>
+<h1>{{ spec.h1|nobreak }}</h1>
+<p class="lead">{{ spec.intro }}</p>
+<div class="actions">
+<a class="btn" href="{{ site.url(page.key, 'capacity') }}">Check capacity for your {{ spec.noun }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
+<a class="btn ghost" href="{{ site.url('capabilities') }}">Capabilities</a>
+</div>
+</div></section>
+
+<section class="section"><div class="wrap">
+{{ m.section_head(1, spec.who_title) }}
+<div class="ruled cols-2">
+{% for item in spec.who %}
+<div class="cell"><h3>{{ item.title }}</h3><p>{{ item.text }}</p></div>
+{% endfor %}
+</div>
+</div></section>
+
+<section class="section"><div class="wrap split">
+<div>
+{{ m.section_head(2, "What the facility handles") }}
+<dl class="spec-list">
+{% for item in spec.handles %}
+<div><dt>{{ item.label }}</dt><dd>{{ item.text }}</dd></div>
+{% endfor %}
+</dl>
+<div class="section-gap"></div>
+{{ m.section_head(3, "What to have ready") }}
+<ul class="checks">
+{% for item in spec.ready %}<li>{{ item }}</li>{% endfor %}
+</ul>
+{% if spec.note %}<p class="muted">{{ spec.note }}</p>{% endif %}
+</div>
+<div class="aside">{{ m.facts_panel() }}</div>
+</div></section>
+
+{% if spec.questions %}
+<section class="section"><div class="wrap">
+{{ m.section_head(4, "Questions " ~ spec.noun ~ " brands ask") }}
+{{ m.faq_list(spec.questions) }}
+</div></section>
+{% endif %}
+
+<section class="section"><div class="wrap">
+{{ m.section_head(5, "Read next") }}
+{{ m.guide_cards(site.guides_for(page.key, 3), 3) }}
+</div></section>
+
+{{ m.form_section(page, "Check capacity for your " ~ spec.noun) }}
+{% endblock %}

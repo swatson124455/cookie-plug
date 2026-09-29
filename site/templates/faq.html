@@ -1,0 +1,18 @@
+{% extends layout %}
+{% import "partials/macros.html" as m with context %}
+{% block main %}
+<section class="page-head"><div class="wrap">
+{{ m.crumbs(page) }}
+<h1>Frequently asked questions</h1>
+<p class="lead">Straight answers about co-packing, the facility, and how we work. If yours is not here, <a href="{{ site.url('contact') }}">ask</a>.</p>
+</div></section>
+<section class="section"><div class="wrap">
+{% for group, items in site.faq_groups() %}
+<div class="faq-group">
+<h2>{{ group }}</h2>
+{{ m.faq_list(items) }}
+</div>
+{% endfor %}
+</div></section>
+{{ m.cta_band("Still deciding?", "Send the capacity check. It is four questions, and there is no cost to ask.") }}
+{% endblock %}

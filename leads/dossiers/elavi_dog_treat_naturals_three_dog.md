@@ -54,7 +54,7 @@
 - Cronin: "As we continue to expand our presence in the pet specialty channel... bringing premium, functional treats to more dogs and pet parents throughout the Midwest and Ohio Valley" (petage.com, above).
 
 **Proposed give**
-- Baked-treat second source: match Superfood Bites (soft, turmeric/honey/fruit) and an SQF/GMP-certified soft-baked sample in weeks, positioned as overflow for new distributor demand.
+- Baked-treat second source: match Superfood Bites (soft, turmeric/honey/fruit) and a soft-baked benchmark sample (certifications only as confirmed on the facility data sheet), positioned as overflow for new distributor demand.
 
 **Risks**
 - Small revenue base; brand identity tied to solar-powered Midwest SQF facility (switching story cost); sensitive-stomach limited-ingredient positioning constrains formulation.
@@ -83,7 +83,7 @@
 - Ross: facility "marks a pivotal investment in our long-term growth strategy"; will "increase operational efficiency, strengthen our supply chain, and enhance our ability to serve our retail partners" (https://www.einpresswire.com/article/883059091/).
 
 **Proposed give**
-- Overflow/bridge capacity for the soft-baked SKUs (Bacon Egg & Cheese Biscuit, Blueberry Muffin, Small Dog cookies) while KC ramps and the plant-manager role is filled; sample in weeks.
+- Overflow/bridge capacity for the soft-baked SKUs (Bacon Egg & Cheese Biscuit, Blueberry Muffin, Small Dog cookies) while KC ramps and the plant-manager role is filled; sampling without a production backlog.
 
 **Risks**
 - Actively building own plant (strongest risk); PE cost focus; dehydrated chips are the growth engine and not a cookie fit.

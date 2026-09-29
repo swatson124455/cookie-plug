@@ -32,7 +32,7 @@ Example day-0 output for a lead that the enricher found on Whole Foods shelves:
 >
 > Most cookie brands at your stage hit the same wall: the next retail order or launch needs more volume than the current setup can produce, and every co-packer they call is booked out or wants a huge minimum.
 >
-> I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+> I work with a US manufacturer that runs cookie, bakery, pet treat, pet food lines under one roof and is a strong fit for cookie production. They have open capacity right now, so a new brand does not wait behind a long production backlog, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 >
 > Worth a 15-minute call to see if the capacity and the specs line up?
 >

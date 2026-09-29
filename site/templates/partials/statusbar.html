@@ -1,0 +1,6 @@
+<div class="statusbar"><div class="wrap">
+<span class="label"><span class="dot" aria-hidden="true"></span>Lines open</span>
+<span class="label dim">Status as of {{ site.facts.as_of }}</span>
+<span class="label dim hide-sm">{% for line in site.facts.open_lines %}{{ line.label }}{% if not loop.last %} · {% endif %}{% endfor %}</span>
+<span class="label dim hide-sm">Replies within {{ site.cfg.reply_within }}</span>
+</div></div>

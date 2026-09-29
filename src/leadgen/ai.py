@@ -16,6 +16,7 @@ from typing import Protocol
 import anthropic
 from pydantic import BaseModel, Field
 
+from leadgen.prompting import UNTRUSTED_NOTICE, fenced
 from leadgen.facility import FacilityProfile
 from leadgen.models import AiAssessment, Lead
 from leadgen.outreach import SenderIdentity, personal_line_from_signals
@@ -54,18 +55,18 @@ def lead_facts(lead: Lead, facility: FacilityProfile) -> str:
     active = [name for name, value in signals.model_dump().items() if value is True]
     return "\n".join(
         [
-            f"Company: {lead.company}",
-            f"Website: {lead.website or 'unknown'}",
+            f"Company: {fenced(lead.company, 200)}",
+            f"Website: {fenced(lead.website or 'unknown', 200)}",
             f"Category: {lead.category.value}",
             f"Segment: {lead.segment.value}",
-            f"Contact: {lead.contact_name or 'unknown'} ({lead.contact_title or 'unknown title'})",
-            f"Site title: {signals.site_title or 'n/a'}",
-            f"Site description: {signals.site_description or 'n/a'}",
+            f"Contact: {fenced(lead.contact_name or 'unknown', 120)} ({fenced(lead.contact_title or 'unknown title', 120)})",
+            f"Site title: {fenced(signals.site_title or 'n/a', 300)}",
+            f"Site description: {fenced(signals.site_description or 'n/a', 600)}",
             f"Observed signals: {', '.join(active) or 'none'}",
-            f"Retailers mentioned: {', '.join(signals.retailers_mentioned) or 'none'}",
+            f"Retailers mentioned: {fenced(', '.join(signals.retailers_mentioned) or 'none', 300)}",
             f"Product count (Shopify): {signals.product_count if signals.product_count is not None else 'unknown'}",
             f"Rule-based score: {lead.score} ({'; '.join(lead.score_reasons) or 'no reasons'})",
-            f"Notes: {lead.notes or 'none'}",
+            f"Notes: {fenced(lead.notes or 'none')}",
             f"Facility lines: {', '.join(c.value for c in facility.categories)}",
             f"Facility confirmed certifications: {', '.join(facility.confirmed_certifications()) or 'none confirmed'}",
             f"Facility spare capacity: {facility.spare_capacity_pct()}%",
@@ -90,7 +91,7 @@ class ClaudeQualifier:
     def assess(self, lead: Lead, facility: FacilityProfile) -> AiAssessment:
         """Ask Claude for a structured fit assessment."""
         return self._parse(
-            system=_read_prompt("qualify.md"),
+            system=_read_prompt("qualify.md") + "\n\n" + UNTRUSTED_NOTICE,
             user=f"Assess this company.\n\n{lead_facts(lead, facility)}",
             schema=AiAssessment,
             max_tokens=MAX_TOKENS_ASSESSMENT,
@@ -103,7 +104,7 @@ class ClaudeQualifier:
             f"Company facts:\n{lead_facts(lead, facility)}"
         )
         return self._parse(
-            system=_read_prompt("draft_email.md"),
+            system=_read_prompt("draft_email.md") + "\n\n" + UNTRUSTED_NOTICE,
             user=user,
             schema=OutreachDraft,
             max_tokens=MAX_TOKENS_EMAIL,

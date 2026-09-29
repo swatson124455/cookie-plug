@@ -1,0 +1,10 @@
+{% import "partials/macros.html" as m with context %}
+<header class="site-header"><div class="wrap">
+<a class="brand" href="{{ site.url('') }}" aria-label="{{ site.cfg.brand }}, home">{{ m.lockup() }}</a>
+<nav class="nav" aria-label="Main">
+{% for key, label in [("capabilities", "Capabilities"), ("guides", "Guides"), ("faq", "FAQ"), ("about", "About")] %}
+<a href="{{ site.url(key) }}" data-nav="{{ key }}"{% if page is defined and page.nav == key %} aria-current="page"{% endif %}>{{ label }}</a>
+{% endfor %}
+</nav>
+<a class="btn small header-cta" href="{{ site.url('contact') }}">Check capacity</a>
+</div></header>

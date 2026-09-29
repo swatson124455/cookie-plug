@@ -15,6 +15,7 @@ from pathlib import Path
 
 import anthropic
 
+from leadgen.prompting import UNTRUSTED_NOTICE, fenced
 from leadgen.ai import QualifierError
 from leadgen.facility import FacilityProfile
 from leadgen.models import Lead
@@ -36,11 +37,11 @@ def dossier_path(lead: Lead, directory: Path = DOSSIER_DIR) -> Path:
 
 def _lead_brief(lead: Lead, facility: FacilityProfile) -> str:
     lines = [
-        f"Company: {lead.company}",
-        f"Website: {lead.website or 'unknown'}",
+        f"Company: {fenced(lead.company, 200)}",
+        f"Website: {fenced(lead.website or 'unknown', 200)}",
         f"Category: {lead.category.value}",
-        f"Known contact: {lead.contact_name or 'unknown'} ({lead.contact_title or 'unknown'})",
-        f"What we already know: {lead.notes or 'nothing'}",
+        f"Known contact: {fenced(lead.contact_name or 'unknown', 120)} ({fenced(lead.contact_title or 'unknown', 120)})",
+        f"What we already know: {fenced(lead.notes or 'nothing')}",
         f"Facility lines: {', '.join(c.value for c in facility.categories)}",
         f"Today's date: {date.today().isoformat()}",
     ]
@@ -49,7 +50,7 @@ def _lead_brief(lead: Lead, facility: FacilityProfile) -> str:
 
 def build_dossier(lead: Lead, facility: FacilityProfile, client: anthropic.Anthropic, model: str = DEFAULT_MODEL) -> str:
     """Research one lead and return the dossier Markdown."""
-    system = PROMPT_PATH.read_text(encoding="utf-8")
+    system = PROMPT_PATH.read_text(encoding="utf-8") + "\n\n" + UNTRUSTED_NOTICE
     messages: list[dict[str, object]] = [{"role": "user", "content": f"Research this company.\n\n{_lead_brief(lead, facility)}"}]
     response = _create(client, model, system, messages)
     continuations = 0
@@ -84,14 +85,15 @@ WEBSITE_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses":
 WEBSITE_PROMPT = (
     "Find the official website domain of the company below. Use web search. "
     "Reply with only the bare domain (for example brand.com) or the single word UNKNOWN. "
-    "Never reply with a retailer, marketplace, social network, or news site."
+    "Never reply with a retailer, marketplace, social network, or news site. "
+    + UNTRUSTED_NOTICE
 )
 _DOMAIN_RE = re.compile(r"^(?:https?://)?(?:www\.)?([a-z0-9-]+(?:\.[a-z0-9-]+)+)/?$", re.IGNORECASE)
 
 
 def find_website(lead: Lead, client: anthropic.Anthropic, model: str = DEFAULT_MODEL) -> str:
     """Ask Claude, with two web searches, for the company's own domain; empty if unknown."""
-    user = f"Company: {lead.company}\nCategory: {lead.category.value}\nContext: {lead.notes[:300] or 'none'}"
+    user = f"Company: {fenced(lead.company, 200)}\nCategory: {lead.category.value}\nContext: {fenced(lead.notes or 'none', 300)}"
     messages: list[dict[str, object]] = [{"role": "user", "content": user}]
     try:
         response = client.messages.create(model=model, max_tokens=200, system=WEBSITE_PROMPT, messages=messages, tools=[WEBSITE_TOOL])

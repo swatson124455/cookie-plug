@@ -1,0 +1,5 @@
+# What the site build needs (Netlify installs this; the lead engine is not required).
+pydantic>=2.5
+pyyaml>=6.0
+jinja2>=3.1
+markdown>=3.5

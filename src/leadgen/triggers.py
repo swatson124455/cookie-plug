@@ -16,6 +16,7 @@ from typing import Protocol
 import anthropic
 from pydantic import BaseModel, Field
 
+from leadgen.prompting import UNTRUSTED_NOTICE, fenced
 from leadgen.models import Category, Lead, LeadSignals, Segment
 from leadgen.sources import RawItem
 
@@ -118,14 +119,15 @@ class ClaudeExtractor:
     def __init__(self, client: anthropic.Anthropic, model: str = "claude-opus-5", prompt_path: str = "prompts/extract_trigger.md") -> None:
         self._client = client
         self._model = model
-        self._system = Path(prompt_path).read_text(encoding="utf-8")
+        self._system = Path(prompt_path).read_text(encoding="utf-8") + "\n\n" + UNTRUSTED_NOTICE
         self._fallback = RuleBasedExtractor()
 
     def __repr__(self) -> str:
         return f"ClaudeExtractor(model={self._model!r})"
 
     def extract(self, item: RawItem) -> TriggerExtraction:
-        user = f"Source: {item.source}\nTitle: {item.title}\nSummary: {item.summary}\nURL: {item.url}\nCompany named by the feed: {item.company_hint or 'none'}"
+        user = (f"Source: {item.source}\nTitle: {fenced(item.title, 300)}\nSummary: {fenced(item.summary)}\n"
+                f"URL: {fenced(item.url, 500)}\nCompany named by the feed: {fenced(item.company_hint or 'none', 200)}")
         try:
             response = self._client.messages.parse(
                 model=self._model, max_tokens=512, system=self._system,

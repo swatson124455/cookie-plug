@@ -53,8 +53,8 @@ def test_ai_personal_line_overrides_default(strong_lead, facility, sender, seque
 
 def test_proof_line_only_uses_confirmed_certifications(facility):
     line = proof_line(facility)
-    assert "fda_registered" in line
-    assert "TO_CONFIRM" not in line
+    assert "Certification details on request" in line
+    assert "TO_CONFIRM" not in line and "fda" not in line.lower()
 
 
 def test_facility_line_names_lines(facility):
@@ -65,3 +65,22 @@ def test_facility_line_names_lines(facility):
 def test_empty_template_renders_nothing(strong_lead, facility, sender):
     assert render_sequence(strong_lead, facility, sender, SequenceTemplate()) == []
     assert "touches=0" in repr(SequenceTemplate())
+
+
+def test_speed_claim_waits_for_a_confirmed_sampling_commitment(facility):
+    from leadgen.facility import FacilityProfile
+    from leadgen.outreach import speed_line, speed_short
+
+    assert "backlog" in speed_line(facility) and "days" not in speed_line(facility)
+    assert speed_short(facility) == "no production backlog to wait behind"
+    committed = FacilityProfile(**{**facility.model_dump(), "commercial": {**facility.commercial, "sampling_turnaround_days": 10}})
+    assert speed_line(committed).endswith("about 10 days after we have your product or spec")
+    assert speed_short(committed) == "a benchmark sample in about 10 days"
+
+
+def test_rendered_sequences_make_no_unconfirmed_speed_claims(strong_lead, facility, sender, sequence_template):
+    from leadgen.outreach import load_sequence
+
+    for template in (sequence_template, load_sequence("config/templates/spear_sequence.yaml")):
+        for touch in render_sequence(strong_lead, facility, sender, template):
+            assert "in weeks" not in touch.body and "6 to 12" not in touch.body and "{" not in touch.body

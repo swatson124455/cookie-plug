@@ -39,6 +39,7 @@ leadgen watch --days 7          # pull triggers from FDA recalls, EDGAR filings,
 leadgen discover cookie pet_treat  # Claude web-search discovery of emerging brands (needs a key)
 leadgen import my_list.csv --source expo_west
 leadgen import-html saved_exhibitor_page.html --source expo_west_2027 --category cookie
+leadgen import-form capacity_checks.csv   # website form submissions (or --netlify with a token)
 leadgen websites --min-score 40  # fill missing domains with Claude web search (needs a key)
 leadgen enrich                  # reads public homepages and Shopify catalogs
 leadgen score                   # ranks by ICP weights in config/icp.yaml
@@ -63,7 +64,16 @@ CSV format: see `tests/fixtures/sample_leads.csv`. Only `company` is required; `
 
 ## Website
 
-`python site/build.py` renders a static site into `site/dist/` from `site/config.yaml` and the confirmed facts in `config/facility.yaml`: home with a capacity-check form, capabilities, four category pages, four guides, FAQ with schema markup, contact, `llms.txt`, sitemap. Deploy on Netlify or Cloudflare Pages. Plan in `docs/17`, campaign in `docs/18`.
+A finished static site for inbound leads, under the working name Open Line Co-Packing (decision 12): home with a Capacity Facts panel, capabilities, four line pages, eight sourced guides, a twenty-question FAQ, about, contact, and privacy, with JSON-LD, `llms.txt`, `llms-full.txt`, a sitemap, and strict security headers. No JavaScript on the live site.
+
+```bash
+python site/build.py                  # production build into site/dist/ (stops while site/config.yaml has placeholders)
+python site/build.py --draft          # same pages, placeholders highlighted, noindex
+python site/build.py --preview p.html # the whole site as one file for review
+leadgen import-form export.csv        # website capacity checks into the pipeline (or --netlify)
+```
+
+Facility facts reach the pages only once confirmed in `config/facility.yaml`. Deploy on Netlify with the root `netlify.toml`. Plan and upkeep in `docs/17` (section 11), campaign in `docs/18`, launch pins 20 to 26.
 
 ## Fully automated
 
@@ -78,15 +88,17 @@ No key yet? Paste `prompts/qualify.md` or `prompts/draft_email.md` into claude.a
 ## Layout
 
 ```
-src/leadgen/      engine: models, facility, discover, sources, triggers, enrich, scoring, ai, dossier, outreach, crm, schedule, contacts, economics, cli
+src/leadgen/      engine: models, facility, discover, inbound, sources, triggers, enrich, scoring, ai, prompting, dossier, outreach, crm, schedule, contacts, economics, cli
+src/leadgen/website/  static site generator: config, facts, content, pages, render, seo, images, build
 config/           facility.yaml (partner facts), icp.yaml (scoring weights), feeds.yaml (public sources), templates/sequence.yaml
 prompts/          system prompts used by the AI layer and usable by hand
 docs/             strategy documents
 leads/            researched seed list (scored), overrides, and day-0 drafts
 scripts/          weekly_pipeline.sh, install_cron.sh, build_seed_list.py, check_dns.py
-site/             static website: config.yaml, build.py, content/ (guides, FAQ), static/, netlify.toml
-tests/            unit, integration, fixtures (offline, 99% coverage)
+site/             website: config.yaml, build.py, content/ (guides, FAQ, line pages), templates/, static/ (css, fonts, images)
+tests/            unit, integration, fixtures (offline, about 97% coverage)
 data/             local SQLite pipeline (git-ignored)
+netlify.toml      site deploy settings (base site/, publish site/dist/)
 ```
 
 ## Tests

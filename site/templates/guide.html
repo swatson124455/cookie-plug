@@ -1,0 +1,53 @@
+{% extends layout %}
+{% import "partials/macros.html" as m with context %}
+{% block main %}
+<article>
+<header class="page-head"><div class="wrap">
+{{ m.crumbs(page) }}
+<p class="kicker">Guide &middot; {{ guide.reading_minutes }} min read &middot; Updated {{ guide.updated|month }}</p>
+<h1>{{ guide.title|nobreak }}</h1>
+<p class="byline label">By {{ site.field(site.cfg.contact.name) }}, {{ site.cfg.brand }}</p>
+</div></header>
+<div class="section"><div class="wrap split">
+<div>
+<div class="answer"><span class="label">Short answer</span><p>{{ guide.summary }}</p></div>
+<div class="prose">
+{{ guide.html|safe }}
+</div>
+{% if guide.sources %}
+<section class="sources" aria-label="Sources">
+<h2 class="label">Sources</h2>
+<ol>
+{% for source in guide.sources %}<li><a href="{{ source.url }}" rel="noopener">{{ source.title }}</a></li>{% endfor %}
+</ol>
+</section>
+{% endif %}
+<div class="author">
+<p class="label">About the author</p>
+<p><strong>{{ site.field(site.cfg.contact.name) }}</strong>, {{ site.cfg.contact.title }} at {{ site.cfg.brand }}. {{ site.field(site.cfg.author_bio) if site.cfg.author_bio else "" }}</p>
+</div>
+</div>
+<div class="aside">
+{% if guide.toc|length > 1 %}
+<nav class="box toc" aria-label="On this page"><h2 class="label">On this page</h2>
+<ol>
+{% for entry in guide.toc %}<li><a href="#{{ entry.anchor }}">{{ entry.text }}</a></li>{% endfor %}
+</ol>
+</nav>
+{% endif %}
+<div class="box signal"><h3>Capacity is open now</h3><p>{{ site.facts.open_line_labels() }}: status confirmed for {{ site.facts.as_of }}.</p><p><a class="btn small" href="{{ site.url(page.key, 'capacity') }}">Check capacity</a></p></div>
+{% if guide.related %}
+<div class="box"><h2 class="label">Related guides</h2>
+<ul class="link-list">
+{% for slug in guide.related %}{% set other = site.guide(slug) %}<li><a href="{{ site.url('guides/' ~ slug) }}">{{ other.short_title }} <span class="arrow" aria-hidden="true">&rarr;</span></a></li>{% endfor %}
+</ul>
+</div>
+{% endif %}
+{% if guide.category != "general" and site.categories.get(guide.category) %}
+<div class="box"><h2 class="label">Line</h2><p><a href="{{ site.url(guide.category) }}">{{ site.categories[guide.category].h1 }}</a></p></div>
+{% endif %}
+</div>
+</div></div>
+</article>
+{{ m.form_section(page, "Is capacity your constraint?", "If this guide describes where your brand is, send the four questions. We confirm line fit with the facility first.") }}
+{% endblock %}

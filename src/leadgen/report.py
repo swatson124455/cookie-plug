@@ -16,6 +16,8 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 from leadgen.crm import LeadStore
+from leadgen.inbound import ACTIVITY_KIND as INBOUND_KIND
+from leadgen.inbound import parse_activity_detail
 from leadgen.models import Lead, Stage
 from leadgen.outreach import SequenceTemplate
 from leadgen.schedule import due_touches
@@ -24,11 +26,24 @@ REPORT_DIR = Path("data/reports")
 TOP_N = 10
 
 
+class InboundEntry(BaseModel):
+    """One lead that asked for a capacity check through the website in the report window."""
+
+    company: str
+    email: str
+    category: str
+    summary: str
+
+    def __repr__(self) -> str:
+        return f"InboundEntry(company={self.company!r}, category={self.category!r})"
+
+
 class WeeklyReport(BaseModel):
     """Everything the report prints, so it can be tested without parsing text."""
 
     generated_on: date
     days: int
+    inbound: list[InboundEntry] = Field(default_factory=list)
     new_leads: list[Lead] = Field(default_factory=list)
     retriggered: list[Lead] = Field(default_factory=list)
     due_count: int = 0
@@ -36,7 +51,10 @@ class WeeklyReport(BaseModel):
     spear_activity: list[str] = Field(default_factory=list)
 
     def __repr__(self) -> str:
-        return f"WeeklyReport(new={len(self.new_leads)}, retriggered={len(self.retriggered)}, due={self.due_count})"
+        return (
+            f"WeeklyReport(inbound={len(self.inbound)}, new={len(self.new_leads)}, "
+            f"retriggered={len(self.retriggered)}, due={self.due_count})"
+        )
 
 
 def build_report(store: LeadStore, template: SequenceTemplate, days: int = 7, today: date | None = None) -> WeeklyReport:
@@ -49,10 +67,33 @@ def build_report(store: LeadStore, template: SequenceTemplate, days: int = 7, to
     retriggered = [l for l in leads if (l.domain or l.company.lower()) not in new_keys and _has_recent(store, l, ("trigger", "discovered"), cutoff)]
     spear = [f"{l.company}: {_last_activity(store, l)}" for l in store.list(tag="spear", limit=100) if _has_recent(store, l, None, cutoff)]
     return WeeklyReport(
-        generated_on=today, days=days, new_leads=new, retriggered=retriggered,
-        due_count=len(due_touches(store, template, today)), funnel=dict(store.pipeline_report()),
-        spear_activity=spear,
+        generated_on=today, days=days, inbound=_inbound_entries(store, cutoff), new_leads=new,
+        retriggered=retriggered, due_count=len(due_touches(store, template, today)),
+        funnel=dict(store.pipeline_report()), spear_activity=spear,
     )
+
+
+def _inbound_entries(store: LeadStore, cutoff: datetime) -> list[InboundEntry]:
+    """Leads with a website capacity check logged since ``cutoff``: one line each, newest first.
+
+    The email is the submitter's, which can differ from a researched lead's main contact.
+    """
+    latest: dict[str, dict[str, str]] = {}
+    for activity in store.activities_by_kind(INBOUND_KIND):  # oldest first
+        if datetime.fromisoformat(activity["created_at"]) >= cutoff:
+            latest.pop(activity["domain_key"], None)  # re-insert so dict order is by latest activity
+            latest[activity["domain_key"]] = activity
+    entries: list[InboundEntry] = []
+    for key, activity in reversed(latest.items()):
+        lead = store.get(key)
+        if lead is None:
+            continue
+        record = parse_activity_detail(activity["detail"])
+        entries.append(InboundEntry(
+            company=lead.company, email=record.get("email") or lead.email,
+            category=lead.category.value, summary=record.get("summary") or activity["detail"][:140],
+        ))
+    return entries
 
 
 def _has_recent(store: LeadStore, lead: Lead, kinds: tuple[str, ...] | None, cutoff: datetime) -> bool:
@@ -71,6 +112,7 @@ def _last_activity(store: LeadStore, lead: Lead) -> str:
 def render_report(report: WeeklyReport) -> str:
     """Plain-text rendering."""
     lines = [f"cookie-plug weekly report, {report.generated_on.isoformat()} (last {report.days} days)", ""]
+    lines.extend(_render_inbound(report))
     lines.append(f"New leads found: {len(report.new_leads)}")
     for lead in report.new_leads[:TOP_N]:
         lines.append(f"  {lead.score:>3}  {lead.company} [{lead.category.value}] {lead.website or 'no site'}")
@@ -90,6 +132,14 @@ def render_report(report: WeeklyReport) -> str:
         lines.append("")
     lines.append("Funnel: " + ", ".join(f"{stage} {count}" for stage, count in report.funnel.items() if count))
     return "\n".join(lines) + "\n"
+
+
+def _render_inbound(report: WeeklyReport) -> list[str]:
+    """The first section: every website capacity check in the window, since these are the hottest leads."""
+    lines = [f"Inbound (website): {len(report.inbound)}"]
+    lines.extend(f"  {e.company}, {e.email} [{e.category}] {e.summary[:140]}" for e in report.inbound)
+    lines.append("")
+    return lines
 
 
 def save_report(text: str, today: date | None = None, directory: Path = REPORT_DIR) -> Path:

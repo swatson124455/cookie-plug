@@ -63,9 +63,9 @@ Each one has a recommendation. Nothing here blocks the build; each blocks a spec
 - Con: your name is attached to the facility's promises, so the claims discipline matters.
 
 ## 12. Website brand and domain (blocks the site launch)
-**Recommendation:** your own brand, not the facility's, working name "Cookie Plug" on a .com or .co you register this week.
-- Pro: you control it, launch needs no partner approval, rankings stay yours if the partnership changes; the name is memorable and already the repo's.
-- Con: "Cookie Plug" reads casual to a retail buyer; a second option is a plainer name such as "Open Capacity Partners". Either works; pick one and stop.
+**Recommendation:** your own brand, not the facility's, under the working name **Open Line Co-Packing** (`brand_short: Open Line`), on a .com you register once the checks below come back clean. **Changed from the earlier "Cookie Plug" recommendation:** Cookie Plug is already a cookie bakery franchise (cookieplug.com, 35+ locations), so a cookie site under that name would compete with an existing brand for its own name and invite a trademark dispute.
+- Pro: "open line" says the one thing that matters (a production line with room) and doubles as "an open line to call"; it reads as a B2B service to a retail buyer, not a bakery; searches in September 2026 found no food company using it. The site renders it from one field in `site/config.yaml`, so changing it later costs minutes.
+- Con: it is not yet cleared. Before you buy the domain, run a free trademark search at tmsearch.uspto.gov (classes 35 and 40) and check the .com; if either is taken, fall back to a plain descriptive name such as "Open Capacity Partners" and change the two brand fields.
 - Alternative: the facility's own site. Pro: buyers trust a named plant. Con: needs the data sheet, the partner's approval on every claim, and you do not own it.
 
 ## 13. Paid search at day 60 (blocks nothing yet)

@@ -255,16 +255,18 @@ def test_discover_command(run, monkeypatch, capsys):
     assert "added 0, updated 1" in capsys.readouterr().out
 
 
-def test_weekly_report_command(run, sample_csv, monkeypatch, capsys):
+def test_weekly_report_command(run, sample_csv, monkeypatch, capsys, tmp_path):
     from leadgen import cli
 
+    reports = str(tmp_path / "reports")
     run("import", str(sample_csv))
     capsys.readouterr()
-    assert run("weekly-report") == 0
+    assert run("weekly-report", "--reports-dir", reports) == 0
     out = capsys.readouterr().out
-    assert "New leads found: 2" in out and "saved" in out
+    assert "New leads found: 2" in out and f"saved {reports}" in out
+    assert len(list((tmp_path / "reports").glob("*.txt"))) == 1
     monkeypatch.setattr(cli, "email_report", lambda text, subject: False)
-    assert run("weekly-report", "--email") == 2
+    assert run("weekly-report", "--email", "--reports-dir", reports) == 2
     monkeypatch.setattr(cli, "email_report", lambda text, subject: True)
-    assert run("weekly-report", "--email") == 0
+    assert run("weekly-report", "--email", "--reports-dir", reports) == 0
     assert "emailed" in capsys.readouterr().out

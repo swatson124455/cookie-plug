@@ -25,7 +25,7 @@ touches:
 
       {pain_line}
 
-      {facility_line} They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+      {facility_line} They have open capacity right now, {speed_line}, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
 
       {cta_line}
 
@@ -48,7 +48,7 @@ touches:
 
       I wrote to {first_name} last week about a US manufacturer with open {category_noun} capacity. Writing to you separately because the operational questions are yours: lead time from PO, minimum run, changeover, and what a second source has to match on quality systems.
 
-      The short version: open lines now, sampling in weeks, formulation through shelf-ready packaging under one roof. Happy to send the capabilities sheet and answer the certification questions first, before anyone spends a call on it.
+      The short version: open lines now, {speed_short}, formulation through shelf-ready packaging under one roof. Happy to send the capabilities sheet and answer the certification questions first, before anyone spends a call on it.
 
       {sender_name}
 

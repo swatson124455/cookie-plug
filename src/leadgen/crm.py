@@ -137,6 +137,14 @@ class LeadStore:
         ).fetchall()
         return [dict(r) for r in rows]
 
+    def activities_by_kind(self, kind: str) -> list[dict[str, str]]:
+        """Every activity of one kind across all leads, oldest first, each with its lead key."""
+        rows = self._conn.execute(
+            "SELECT domain_key, kind, detail, created_at FROM activities WHERE kind = ? ORDER BY id",
+            (kind,),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
     def pipeline_report(self) -> "OrderedDict[str, int]":
         """Count of leads in each stage, in funnel order, including zeros."""
         rows = self._conn.execute("SELECT stage, COUNT(*) AS n FROM leads GROUP BY stage").fetchall()

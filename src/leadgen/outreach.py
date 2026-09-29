@@ -96,6 +96,27 @@ def proof_line(facility: FacilityProfile) -> str:
     return f"Formulation, production, packaging, labeling, and nutrition panels are all in-house. {cert_text}"
 
 
+def confirmed_sampling_days(facility: FacilityProfile) -> int:
+    """Sampling turnaround in days once the facility has confirmed it, else 0."""
+    if "commercial.sampling_turnaround_days" in facility.unconfirmed_fields():
+        return 0
+    return int(facility.commercial.get("sampling_turnaround_days") or 0)
+
+
+def speed_line(facility: FacilityProfile) -> str:
+    """The speed clause: a number only once the facility commits to one (pin 17)."""
+    days = confirmed_sampling_days(facility)
+    if days:
+        return f"so a benchmark sample can ship about {days} days after we have your product or spec"
+    return "so a new brand does not wait behind a long production backlog"
+
+
+def speed_short(facility: FacilityProfile) -> str:
+    """The same claim as a short phrase for lists."""
+    days = confirmed_sampling_days(facility)
+    return f"a benchmark sample in about {days} days" if days else "no production backlog to wait behind"
+
+
 def cta_line() -> str:
     return "Worth a 15-minute call to see if the capacity and the specs line up?"
 
@@ -116,6 +137,8 @@ def render_sequence(
         "pain_line": pain_line(lead),
         "facility_line": facility_line(facility, lead),
         "proof_line": proof_line(facility),
+        "speed_line": speed_line(facility),
+        "speed_short": speed_short(facility),
         "cta_line": cta_line(),
         "sender_name": sender.name,
         "sender_title": sender.title,

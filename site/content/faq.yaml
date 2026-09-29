@@ -1,26 +1,100 @@
-- q: "What does a co-packer actually do?"
-  a: "A co-packer (contract manufacturer) makes your product in their facility, under your brand, to your recipe or one they develop with you. You keep the brand, the customers, and the margin; they run the ovens, the packaging line, and the food-safety program."
-- q: "Do I need to have a recipe already?"
-  a: "No. Turnkey manufacturing includes formulation: you bring a product, a prototype, or a concept, and the facility develops a production-ready recipe, then samples it back to you until it matches."
-- q: "What is the minimum order?"
-  a: "Minimums depend on the line and the format, and they are one of the first things we confirm on a call. Most co-packers quote minimums in units per SKU per run; a facility with open capacity can usually be flexible on a first run."
-- q: "How fast can I get a sample?"
-  a: "Because the lines are not booked out, sampling happens in weeks rather than after a six to twelve month waitlist. Send the product or the spec; the facility benchmarks it and ships the result with a spec sheet."
-- q: "Can you make both cookies and dog treats?"
-  a: "Yes. The facility runs cookie, bakery, pet-treat, and pet-food lines under one roof and one food-safety program, which is unusual and useful for brands that sell to people and their dogs."
-- q: "What certifications does the facility hold?"
-  a: "We list only certifications we can document. The capabilities page shows the confirmed ones; ask and we will send the certificates."
-- q: "Do you do private label?"
-  a: "Yes. Private label (your brand on a recipe the facility owns or develops) and contract manufacturing (your recipe, produced by the facility) are both available."
-- q: "Is the product shelf-stable?"
-  a: "The facility produces shelf-stable baked goods. If your product is refrigerated or frozen today, converting it to shelf-stable is a formulation project we can sample."
-- q: "Where does the product ship from?"
-  a: "From the facility in the United States, case-packed and palletized to your retailer's specification. Nationwide shipping."
-- q: "What does it cost?"
-  a: "Per-unit pricing depends on the recipe, the format, and the run size. After a sample and a spec, you get a written quote; there is no cost to ask."
-- q: "I already have a co-packer. Why talk to you?"
-  a: "Most brands we work with keep their primary and add a second source for 20 percent of volume so a hiccup never stops shipments. A second line that has already matched your product is cheap insurance."
-- q: "How small is too small?"
-  a: "If you are selling at farmers markets only, it is probably early. If you have a retail listing, a wholesale channel, or a launch date you cannot meet from your current kitchen, it is the right time."
-- q: "Who is behind this site?"
-  a: "A partnerships lead who refers brands to a US manufacturer with open capacity. We are paid by the facility, not by you, and we stay on every account through the first production run."
+# The FAQ. Each answer stands alone (AI assistants quote single answers).
+# Keep facility claims inside what config/facility.yaml confirms.
+#   group:          section heading on /faq/
+#   featured: true  also shown on the home page (keep it to about five)
+#   when_confirmed: answer used only once `field` is confirmed; {value} is its value
+# {reply_within} is replaced with the promise in site/config.yaml.
+
+- group: "Getting started"
+  q: "What does a co-packer actually do?"
+  featured: true
+  a: "A co-packer, or contract manufacturer, makes your product in its facility, under your brand, to your recipe or one it develops with you. You keep the brand, the customers, and the margin; it runs the production line, the packaging, and the plant's food-safety program."
+
+- group: "Getting started"
+  q: "Do I need a recipe already?"
+  featured: true
+  a: "No. Formulation is part of the turnkey service: bring a product, a kitchen recipe, or a concept, and the facility develops a production recipe and samples it until you approve it."
+
+- group: "Getting started"
+  q: "How small is too small?"
+  featured: true
+  a: "If you sell only at farmers markets, it is probably early. If you have a retail listing, a wholesale channel, or a launch date you cannot meet from your current kitchen, it is the right time to talk."
+
+- group: "Getting started"
+  q: "What does it cost to ask?"
+  a: "Nothing. The capacity check and the fit conversation are free, and we never charge brands. If sampling or formulation carries a fee for your product, the facility tells you before any work starts."
+
+- group: "Getting started"
+  q: "What happens after I send the capacity check?"
+  a: "We check line fit with the facility and reply within {reply_within}. If it fits, you send your product or spec for a benchmark sample; then the facility quotes in writing and you sign directly with it."
+
+- group: "Production"
+  q: "What is the minimum order?"
+  featured: true
+  a: "Minimums depend on the product, the format, and the packaging, so the facility confirms the number for your product on the first call, before any sampling. A plant with open capacity has more reason to make a first run work than a plant that is full."
+  when_confirmed:
+    field: commercial.min_order_units
+    a: "Minimum runs start at {value} units; the exact number depends on your product, format, and packaging, and the facility confirms it on the first call."
+
+- group: "Production"
+  q: "How fast can I get a sample?"
+  a: "Sampling starts once the facility has your product or spec, and because its lines are not booked out, you are not waiting behind a production backlog. The facility gives you a sample date for your product when it confirms fit."
+  when_confirmed:
+    field: commercial.sampling_turnaround_days
+    a: "The facility ships a benchmark sample about {value} days after it receives your product or spec."
+
+- group: "Production"
+  q: "How long until the first production run?"
+  a: "It depends on sample approval and, most often, on packaging: printed film and cartons are frequently the longest lead time. With open lines, the production schedule is not the bottleneck."
+  when_confirmed:
+    field: commercial.onboarding_weeks
+    a: "About {value} weeks from sample approval to the first run is typical, and printed packaging is often what sets the date."
+
+- group: "Production"
+  q: "What certifications does the facility hold?"
+  a: "We list only certifications we can document with a current certificate, on the capabilities page. Tell us what your buyer requires, and we confirm it with the facility, in writing, before you plan around it."
+
+- group: "Production"
+  q: "Do you do private label?"
+  a: "Yes. Private label (your brand on a recipe the facility develops with you) and contract manufacturing (your recipe, made by the facility) are both available."
+
+- group: "Production"
+  q: "Can you make my product shelf-stable?"
+  a: "It is a formulation project: the recipe, the packaging, and the label all change, and shelf life has to be tested before launch. Tell us about the product, and we confirm what the facility can do for it."
+
+- group: "Production"
+  q: "Where is the product made?"
+  a: "In the United States, at the facility we represent, packed to your retailer's case and pallet specifications. You learn the location, and can see the documents, before you commit to anything."
+
+- group: "Production"
+  q: "What does production cost?"
+  a: "Per-unit pricing depends on the recipe, format, packaging, and run size. After a benchmark sample, the facility quotes in writing. Ask which ingredients and packaging the unit price includes so you can compare quotes fairly."
+
+- group: "Pet products"
+  q: "Can the same facility make cookies and dog treats?"
+  a: "Yes. The facility runs human bakery lines and pet lines under one roof, which is useful for brands that sell to people and their dogs."
+
+- group: "Pet products"
+  q: "Do you handle pet-food labels?"
+  a: "Labeling is part of the turnkey service, and for pet products that means the pet-food label, including the guaranteed analysis. Ask who handles state feed registrations for your product, and we tell you what the facility covers and what stays with you."
+
+- group: "Pet products"
+  q: "Can my pet treats be labeled human grade?"
+  a: "Only if the product and every ingredient are stored, handled, processed, and transported to human-food standards, in a facility licensed to make human food; that is the AAFCO standard for the claim. Ask, and we confirm with the facility whether your product can qualify."
+
+- group: "Working with us"
+  q: "Who are you, and who pays you?"
+  featured: true
+  a: "We are a partnerships service representing a US manufacturer with open capacity. The facility pays us a share of what its customers buy; brands never pay us anything."
+
+- group: "Working with us"
+  q: "Why is the facility not named on this site?"
+  a: "This site is ours, not the plant's, so it states only what the facility has confirmed for publication. Before anything is produced, you know exactly who makes your product, see its documents, and sign with it directly."
+
+- group: "Working with us"
+  q: "I already have a co-packer. Why talk to you?"
+  a: "Because one plant is a single point of failure. A common approach is to keep your primary and qualify a second source on one product, so a missed run, a failed audit, or a capacity squeeze never stops shipments."
+
+- group: "Working with us"
+  q: "What if my product is not a fit?"
+  a: "We tell you plainly, usually within {reply_within}, and if we know where you should look instead, we say so. A fast no is better than a slow maybe."

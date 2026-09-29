@@ -19,7 +19,7 @@ The Tier 1 accounts are small, changing, and public about it. Anyone reading the
 ## What to ask the facility for (pins 16 and 17)
 
 - **A capacity-hold letter:** for named accounts, the facility commits to reserve line time for a first production run within a stated number of weeks of an approved sample. That sentence beats every "we're booked until spring" a founder has heard, and no one else can say it.
-- **A sampling commitment:** benchmark sample shipped within ten business days of receiving the product or spec. Put it in the agreement. The first email promises "sampling in weeks"; the facility has to make it true.
+- **A sampling commitment:** benchmark sample shipped within ten business days of receiving the product or spec. Put it in the agreement. Until it is committed, emails and the site say only that there is no production backlog; once it is, enter it as `commercial.sampling_turnaround_days` in `config/facility.yaml` and both state the number automatically.
 
 ## What not to do
 

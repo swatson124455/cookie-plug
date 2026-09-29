@@ -1,0 +1,18 @@
+# A filled-in site config (fictional test values) that passes the publish check.
+brand: "Open Line Co-Packing"
+brand_short: "Open Line"
+tagline: "Open co-packing capacity for cookies, baked goods, and pet treats"
+domain: "https://openline.test"
+capacity: {as_of: "2026-09", lines: [cookie, bakery, pet_treat, pet_food]}
+reply_within: "one business day"
+contact:
+  name: "Sam Rivera"
+  title: "Partnerships"
+  email: "sam@openline.test"
+  phone: "(555) 010-2030"
+  address: "PO Box 100, Springfield, IL 62701"
+  linkedin: "https://www.linkedin.com/in/sam-rivera-test"
+author_bio: "Ten years running bakery production and co-packer relationships for emerging brands."
+form: {provider: "netlify", action: ""}
+analytics_snippet: ""
+analytics_hosts: []

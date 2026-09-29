@@ -27,7 +27,7 @@ Confirm on the kickoff call that sub-referrals are allowed under the facility ag
 >
 > Hi [first name],
 >
-> You work with [cookie / pet treat] brands at the stage where production becomes the problem. I represent a US manufacturer with open capacity right now for cookies, baked goods, and pet treats, turnkey from formulation to shelf-ready, sampling in weeks rather than the usual 6 to 12 month wait.
+> You work with [cookie / pet treat] brands at the stage where production becomes the problem. I represent a US manufacturer with open capacity right now for cookies, baked goods, and pet treats, turnkey from formulation to shelf-ready, with no long waitlist to get on the line.
 >
 > When a client of yours needs a second source or has outgrown their kitchen, I would like to be the introduction you make. I pay [25] percent of my referral fee on any account that closes, for as long as it pays, and I report back on every intro.
 >

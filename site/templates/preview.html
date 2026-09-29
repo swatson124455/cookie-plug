@@ -1,0 +1,17 @@
+<title>{{ site.cfg.brand }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{{ fonts_url }}">
+<style>
+{{ css }}
+</style>
+<div class="preview-banner"><div class="wrap"><span class="label">Preview build</span><span>Highlighted text is a placeholder until <code>site/config.yaml</code> is filled. Facility facts show only once confirmed. The form here sends nothing.</span></div></div>
+{% include "partials/statusbar.html" %}
+{% include "partials/header.html" %}
+<main id="main">
+{{ routes }}
+</main>
+{% include "partials/footer.html" %}
+<script>
+{{ script }}
+</script>

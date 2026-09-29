@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }}</title>
+<meta name="description" content="{{ page.description }}">
+{% if page.noindex or site.draft %}
+<meta name="robots" content="noindex, nofollow">
+{% else %}
+<link rel="canonical" href="{{ site.abs_url(page.key) }}">
+{% endif %}
+<meta name="theme-color" content="#0c0e0f">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/libre-franklin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css?v={{ site.css_version }}">
+<meta property="og:site_name" content="{{ site.cfg.brand }}">
+<meta property="og:type" content="{{ 'article' if page.template == 'guide.html' else 'website' }}">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:url" content="{{ site.abs_url(page.key) }}">
+<meta property="og:image" content="{{ site.abs_asset(page.og_image) }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ page.title }}">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{{ jsonld|tojson }}</script>
+{% if not site.draft and site.cfg.analytics_snippet %}
+{{ site.cfg.analytics_snippet|safe }}
+{% endif %}
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+{% if site.draft %}
+<div class="draft-ribbon">Draft build: not indexed, placeholders highlighted</div>
+{% endif %}
+{% include "partials/statusbar.html" %}
+{% include "partials/header.html" %}
+<main id="main">
+{% block main %}{% endblock %}
+</main>
+{% include "partials/footer.html" %}
+</body>
+</html>

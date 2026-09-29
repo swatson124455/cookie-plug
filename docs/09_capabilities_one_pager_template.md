@@ -15,7 +15,7 @@ Send after the first reply, as a PDF. Fill every bracket from the completed faci
 - Formats: [flow wrap, stand-up pouch, tray, box, bulk, club pack]
 
 ## Turnkey, one roof
-Formulation and R&D · Production · Packaging · Labeling · Nutrition panels and label compliance · Case pack and pallet to retailer spec · Human and pet lines in one facility under one food-safety program
+Formulation and R&D · Production · Packaging · Labeling · Nutrition panels and label compliance · Case pack and pallet to retailer spec · Human and pet lines under one roof
 
 ## Certifications
 [SQF Level X, certificate on request] · [FDA registered] · [Organic certifier] · [Gluten-free certification] · [Kosher] · [Non-GMO Project] · [AAFCO-compliant pet formulations] · [Allergen-controlled lines: list]

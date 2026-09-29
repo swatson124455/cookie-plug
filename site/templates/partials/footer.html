@@ -1,0 +1,48 @@
+{% import "partials/macros.html" as m with context %}
+{% set c = site.cfg.contact %}
+<footer class="site-footer"><div class="wrap">
+<div class="foot-grid">
+<div class="foot-brand">
+<a class="brand" href="{{ site.url('') }}" aria-label="{{ site.cfg.brand }}, home">{{ m.lockup() }}</a>
+<p>{{ site.cfg.tagline }}.</p>
+<div class="foot-contact">
+<span>{{ site.field(c.name) }}, {{ c.title }}</span>
+<span>{{ m.email(c.email) }}</span>
+{% if c.phone %}<span>{{ m.phone(c.phone) }}</span>{% endif %}
+{% if c.address %}<span>{{ site.field(c.address) }}</span>{% endif %}
+{% if c.linkedin %}<span>{{ m.linkedin(c.linkedin) }}</span>{% endif %}
+</div>
+</div>
+<div>
+<h2>Lines</h2>
+<ul>
+{% for line in site.facts.lines %}
+<li><a href="{{ site.url(line.slug) }}">{{ line.label }}</a></li>
+{% endfor %}
+<li><a href="{{ site.url('capabilities') }}">Capabilities</a></li>
+</ul>
+</div>
+<div>
+<h2>Guides</h2>
+<ul>
+{% for guide in site.guides[:4] %}
+<li><a href="{{ site.url('guides/' ~ guide.slug) }}">{{ guide.short_title }}</a></li>
+{% endfor %}
+<li><a href="{{ site.url('guides') }}">All guides</a></li>
+</ul>
+</div>
+<div>
+<h2>Company</h2>
+<ul>
+<li><a href="{{ site.url('about') }}">About</a></li>
+<li><a href="{{ site.url('faq') }}">FAQ</a></li>
+<li><a href="{{ site.url('contact') }}">Contact</a></li>
+<li><a href="{{ site.url('privacy') }}">Privacy</a></li>
+</ul>
+</div>
+</div>
+<div class="disclosure">
+<p>We represent a US manufacturer and are paid by the facility, never by brands. Facts on this site are limited to what the facility has confirmed in writing.</p>
+<p>&copy; {{ site.today.year }} {{ site.cfg.brand }}</p>
+</div>
+</div></footer>

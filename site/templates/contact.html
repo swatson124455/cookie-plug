@@ -1,0 +1,26 @@
+{% extends layout %}
+{% import "partials/macros.html" as m with context %}
+{% set c = site.cfg.contact %}
+{% block main %}
+<section class="page-head"><div class="wrap">
+{{ m.crumbs(page) }}
+<h1>Contact</h1>
+<p class="lead">Email or call directly, or send the capacity check below. Founders at small brands often prefer the phone, and that is fine.</p>
+</div></section>
+<section class="section"><div class="wrap split">
+<div>
+<div class="contact-card">
+<span class="label">{{ site.field(c.name) }}, {{ c.title }}</span>
+<span class="big">{{ m.email(c.email) }}</span>
+{% if c.phone %}<span class="big">{{ m.phone(c.phone) }}</span>{% endif %}
+{% if c.address %}<span>{{ site.field(c.address) }}</span>{% endif %}
+{% if c.linkedin %}<span>{{ m.linkedin(c.linkedin) }}</span>{% endif %}
+</div>
+<p class="muted">Replies within {{ site.cfg.reply_within }}. We represent a US manufacturer with open capacity for {{ site.facts.open_line_labels()|lower }}.</p>
+</div>
+<div class="aside">
+<div class="box"><h2 class="label">Quickest path</h2><p>Send the four questions below. We check line fit with the facility before we call, so the first conversation is about your product, not a pitch.</p></div>
+</div>
+</div></section>
+{{ m.form_section(page, "Send the capacity check") }}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends layout %}
+{% import "partials/macros.html" as m with context %}
+{% block main %}
+<section class="page-head"><div class="wrap">
+<p class="kicker">Error 404</p>
+<h1>This page is not on the line.</h1>
+<p class="lead">The link may be old or mistyped. One of these will get you where you were going.</p>
+</div></section>
+<section class="section"><div class="wrap center-block">
+<ul class="link-list">
+<li><a href="{{ site.url('') }}">Home <span class="arrow" aria-hidden="true">&rarr;</span></a></li>
+<li><a href="{{ site.url('capabilities') }}">Capabilities <span class="arrow" aria-hidden="true">&rarr;</span></a></li>
+<li><a href="{{ site.url('guides') }}">Guides <span class="arrow" aria-hidden="true">&rarr;</span></a></li>
+<li><a href="{{ site.url('faq') }}">FAQ <span class="arrow" aria-hidden="true">&rarr;</span></a></li>
+<li><a href="{{ site.url('contact') }}">Contact and capacity check <span class="arrow" aria-hidden="true">&rarr;</span></a></li>
+</ul>
+</div></section>
+{% endblock %}

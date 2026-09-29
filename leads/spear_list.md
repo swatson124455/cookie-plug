@@ -1,6 +1,6 @@
 # Spear List: Twelve Accounts, Ranked
 
-Researched 2026-09-29 from public sources only; every fact traces to a URL in the dossiers below. Playbook: `docs/14_spear_playbook.md`. Facility claims in the emails are limited to open capacity, turnkey scope, one roof, and sampling in weeks; anything about allergen lines or certifications is phrased as a question until `config/facility.yaml` is confirmed.
+Researched 2026-09-29 from public sources only; every fact traces to a URL in the dossiers below. Playbook: `docs/14_spear_playbook.md`. Facility claims in the emails are limited to open capacity, turnkey scope, one roof, and no production backlog (a sampling turnaround is stated only once the facility commits to one, pin 17); anything about allergen lines or certifications is phrased as a question until `config/facility.yaml` is confirmed.
 
 ## Ranking (re-ranked 2026-09-29 after the "emerging and transitioning first" correction)
 
@@ -61,7 +61,7 @@ The detailed sections below are the original research set (Heavenly Hunks, Elavi
 >
 > Congrats on getting Dupe Loops into Target. A glazed, frosted, allergen-free donut is a different animal from an oatmeal cookie line, and if the test expands, the reorders will want a plant built for it.
 >
-> I work with a US manufacturer that has open capacity now for baked goods and runs formulation, packaging, labeling, and nutrition panels under one roof, so a second source can be sampling in weeks rather than after a 6 to 12 month wait.
+> I work with a US manufacturer that has open capacity now for baked goods and runs formulation, packaging, labeling, and nutrition panels under one roof, so a second source can start sampling without waiting behind a long production backlog.
 >
 > If it would help to have donut capacity lined up before Target asks for more doors, I can have a benchmark of The Babysitter in your hands to judge. Worth 15 minutes?
 >
@@ -120,7 +120,7 @@ The detailed sections below are the original research set (Heavenly Hunks, Elavi
 >
 > I read the Republic filing. Wakefern and Wegmans on top of 1,100 doors, funded by a raise that names supply chain integration as a use of funds. One honest question: does integration mean building your own plant, or locking in capacity you control?
 >
-> If it is the second, I work with a US manufacturer that has open capacity now and does the whole job under one roof, formulation through nutrition panels and shelf-ready packaging, with sampling in weeks. A benchmark of the Brown Butter Chocolate Chip in the new thick spec, with a volume plan for the two new chains, is a cheap way to find out whether it belongs in your plan.
+> If it is the second, I work with a US manufacturer that has open capacity now and does the whole job under one roof, formulation through nutrition panels and shelf-ready packaging, with no production backlog to wait behind. A benchmark of the Brown Butter Chocolate Chip in the new thick spec, with a volume plan for the two new chains, is a cheap way to find out whether it belongs in your plan.
 >
 > If it is the first, tell me and I will get out of your way. Either answer helps me.
 >
@@ -149,7 +149,7 @@ The detailed sections below are the original research set (Heavenly Hunks, Elavi
 >
 > Your Form C says the raise funds production expansion and keeps the option of qualified third-party capacity to supplement Weaverville. After Helene took the kitchen down for ten days, that option is the whole point.
 >
-> I work with a US manufacturer with open capacity now, turnkey from formulation through packaging and labeling, that can bench The O.G. in weeks. The offer is a benchmark you can judge blind, a per-bag cost model, and a surge plan for the JetBlue and grocery volume, so the money you raise goes to selling instead of square footage.
+> I work with a US manufacturer with open capacity now, turnkey from formulation through packaging and labeling, that can start a benchmark of The O.G. without a production backlog in the way. The offer is a benchmark you can judge blind, a per-bag cost model, and a surge plan for the JetBlue and grocery volume, so the money you raise goes to selling instead of square footage.
 >
 > If the toffee cannot be matched, you will know fast and it costs you nothing. Worth 15 minutes?
 >
@@ -207,7 +207,7 @@ The detailed sections below are the original research set (Heavenly Hunks, Elavi
 >
 > The functional cookie is a new baked category for YUMI, and Target exclusivity is a clock: when it ends, Walmart and Sprouts reorders land on whoever is baking it today.
 >
-> I work with a US manufacturer that has open capacity now and does the whole job under one roof, formulation through shelf-ready packaging, sampling in weeks. The useful thing I can offer is a benchmark of the Chunky Chocolate Chip at the 5.6 oz spec and a second-source cost model, so the expansion decision is made with two options instead of one.
+> I work with a US manufacturer that has open capacity now and does the whole job under one roof, formulation through shelf-ready packaging, with no production backlog to wait behind. The useful thing I can offer is a benchmark of the Chunky Chocolate Chip at the 5.6 oz spec and a second-source cost model, so the expansion decision is made with two options instead of one.
 >
 > If the cookie is already covered for the next 18 months, say so and I will check back then. Otherwise, worth 15 minutes?
 >
@@ -217,10 +217,10 @@ The detailed sections below are the original research set (Heavenly Hunks, Elavi
 
 ## Spear later (7 to 10): openers only
 
-- **Dog Treat Naturals (Trevor Cronin, Ryan Jones, Jim Sharp):** "Your site says you don't own a factory, you own the decision about who bakes. With Van Den Bosch opening the Midwest, a second SQF-certified baker who can match Superfood Bites in weeks keeps that decision yours."
-- **cadootz! (Rachel Mansfield, Jordan Carpenter):** "Target exclusivity on the snack packs has lapsed. Before the next retailer, a sweet line extension that meets the same organic, nut-free, seed-oil-free bar, sampled in weeks, is a way to add a SKU without touching your cracker co-man."
-- **Brune Kitchen (Tania Sweis, Jahan Shahryar; hello@brunekitchen.com):** "Sprouts nationwide in the refrigerated set is a great start, and a limit. A shelf-stable version of the Chocolate Chip that keeps the clean label would open the center aisle. I can have a benchmark to you in weeks."
-- **Consumers Supply Distributing (David Patee, Dan Patee, Keith Rees):** one question first: "Does Consumers Supply bake the Country Vet biscuits in Sioux City, or buy them in?" If bought in: a US-made, SQF-certified replacement biscuit program with lot-level Salmonella COAs.
+- **Dog Treat Naturals (Trevor Cronin, Ryan Jones, Jim Sharp):** "Your site says you don't own a factory, you own the decision about who bakes. With Van Den Bosch opening the Midwest, a second baker with open capacity that can benchmark Superfood Bites keeps that decision yours."
+- **cadootz! (Rachel Mansfield, Jordan Carpenter):** "Target exclusivity on the snack packs has lapsed. Before the next retailer, a sweet line extension that meets the same organic, nut-free, seed-oil-free bar, sampled without a production backlog in the way, is a way to add a SKU without touching your cracker co-man."
+- **Brune Kitchen (Tania Sweis, Jahan Shahryar; hello@brunekitchen.com):** "Sprouts nationwide in the refrigerated set is a great start, and a limit. A shelf-stable version of the Chocolate Chip that keeps the clean label would open the center aisle. I can get a benchmark started for you to judge."
+- **Consumers Supply Distributing (David Patee, Dan Patee, Keith Rees):** one question first: "Does Consumers Supply bake the Country Vet biscuits in Sioux City, or buy them in?" If bought in: a US-made replacement biscuit program with lot-level Salmonella COAs (certifications only as the facility confirms them).
 
 ## Nurture (11 and 12)
 
@@ -286,7 +286,7 @@ Full research with URLs: `leads/dossiers/roaring_fork_mill_fat_and_weird_fields_
 >
 > A shelf-stable Chocolate Chip that keeps the organic, grain-free, no-gums spec would open the center aisle and every account without a cold case. I work with a US manufacturer that has open capacity now and does formulation through shelf-ready packaging under one roof; that conversion is exactly the kind of project they take on.
 >
-> I can have a benchmark to you in weeks that you judge blind. Worth fifteen minutes to see whether it is possible?
+> I can get a benchmark started that you judge blind. Worth fifteen minutes to see whether it is possible?
 >
 > [Your name]
 
@@ -322,7 +322,7 @@ Full research with URLs: `leads/dossiers/roaring_fork_mill_fat_and_weird_fields_
 >
 > From a food truck in Scottsdale to 212 Targets is a big year. When Target expands the test, the reorders will need a plant built for glazed, frosted, allergen-free donuts, and I could not find one named anywhere.
 >
-> I work with a US manufacturer that has open baked-goods capacity now and does formulation, packaging, labeling, and nutrition panels under one roof, sampling in weeks. The offer is a benchmark of The Babysitter you can judge blind, and a capacity plan for the next tier of doors so you are never the reason Target waits.
+> I work with a US manufacturer that has open baked-goods capacity now and does formulation, packaging, labeling, and nutrition panels under one roof, with no production backlog to wait behind. The offer is a benchmark of The Babysitter you can judge blind, and a capacity plan for the next tier of doors so you are never the reason Target waits.
 >
 > Worth fifteen minutes?
 >

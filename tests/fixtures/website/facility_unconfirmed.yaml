@@ -1,0 +1,7 @@
+# Facility profile with nothing confirmed beyond lines and services (mirrors the launch state).
+name: "Partner Facility"
+location: {city: "TO_CONFIRM", state: "TO_CONFIRM", ships_nationwide: "TO_CONFIRM"}
+categories: [cookie, bakery, pet_treat, pet_food]
+services: {formulation: true, private_label: true, contract_manufacturing: true, packaging: true, labeling: true, nutrition_panels: true, shelf_ready: true}
+certifications: {fda_registered: "TO_CONFIRM", sqf: "TO_CONFIRM", organic: "TO_CONFIRM", gluten_free: "TO_CONFIRM", kosher: "TO_CONFIRM", non_gmo: "TO_CONFIRM", aafco_pet: "TO_CONFIRM", allergen_controlled_lines: "TO_CONFIRM"}
+commercial: {spare_capacity_pct: 40, min_order_units: 0, typical_lead_time_weeks: 0, sampling_turnaround_days: 0, onboarding_weeks: 0}

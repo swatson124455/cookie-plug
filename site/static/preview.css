@@ -1,0 +1,6 @@
+
+/* Preview-only additions (one-file review build). */
+[data-route][hidden] { display: none !important; }
+.preview-banner { background: var(--todo-bg); color: var(--todo-ink); border-bottom: 2px solid var(--rule); }
+.preview-banner .wrap { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; align-items: baseline; padding-top: 9px; padding-bottom: 9px; font-size: 0.9rem; line-height: 1.4; }
+.preview-banner .label { color: var(--todo-ink); }

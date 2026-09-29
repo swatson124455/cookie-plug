@@ -31,7 +31,7 @@ Source: WebSearch snippets only, gathered 2026-09-29. Anything not seen in a sni
 - Sweis on Sprouts: "This launch with Sprouts is more than just growth... clean, delicious food should be accessible to everyone" (https://commercialbaking.com/brune-kitchen-hits-sprouts-shelves-nationwide/).
 
 **Proposed give**
-- A clean-label (organic, GF, grain-free, no gums/emulsifiers) soft-baked cookie sample run replicating the Chocolate Chip spec, with a shelf-stable variant option so they can exit the refrigerated set; samples in weeks. Email hello@brunekitchen.com.
+- A clean-label (organic, GF, grain-free, no gums/emulsifiers) soft-baked cookie sample run replicating the Chocolate Chip spec, with a shelf-stable variant option so they can exit the refrigerated set; sampling without a production backlog. Email hello@brunekitchen.com.
 
 **Risks**
 - Tiny team (2 employees), likely already on a co-packer post-podcast; low volume. No evidence of own plant.
