@@ -49,6 +49,22 @@ Leads from `watch` arrive without a website, and enrichment needs one. `leadgen 
 - **Email verification.** `leadgen emails` proposes addresses; a free lookup or a single test send confirms them.
 - **Sending.** Deliberately manual in Phase 0. Every send is logged with `leadgen touch`, which is what makes `leadgen due` and the commission record work.
 
+## 2c. `leadgen discover`: finding brands too small for the feeds
+
+The feeds only see brands that reach trade press. `leadgen discover cookie bakery pet_treat` runs a fixed set of discovery searches per category through Claude's web search tool (new brand launches, crowdfunding, "outgrown our kitchen", first regional retail, TikTok Shop traction, "looking for a co-packer"), asks for a JSON list of companies with evidence and URLs, validates every entry, and adds them as emerging leads with the trigger as a signal. It is the research-agent pass that built the seed list, as a command. A few dollars per run. The queries live in `src/leadgen/discovery.py`; the prompt is `prompts/discover.md`.
+
+Two free additions in `config/feeds.yaml` reach the same population continually: Google Alerts delivered as RSS (create an alert, choose "Deliver to RSS feed", paste the URL) and Reddit search feeds for founders asking about co-packers.
+
+## 3b. Fully automated: nothing to run by hand
+
+Two schedulers exist; use either or both.
+
+**Cloud Routine (already created):** "cookie-plug weekly lead pipeline" fires every Monday at 12:52 UTC in this cloud environment. It checks out the branch, checks the feeds are reachable, runs watch, discover (if an API key is in the environment), websites, enrich, score, qualify, dossiers for the top three, and the weekly report; commits the pipeline database (`leads/pipeline.sqlite3`), the report (`leads/reports/<date>.txt`), and new dossiers; pushes; and sends the summary as a push notification and email through the Routine's notifications. Until the environment's network policy allows the feed hosts (pin 15), each run reports that it is blocked and stops. Add `ANTHROPIC_API_KEY` to the environment's settings to enable discover, websites, and dossiers (pin 18).
+
+**Local cron:** `scripts/install_cron.sh` installs a Monday 07:00 job on your machine that runs `scripts/weekly_pipeline.sh` and emails the report through `leadgen weekly-report --email` using the `LEADGEN_SMTP_*` settings in `.env` (Gmail works with an app password). Logs land in `data/logs/`.
+
+The report (`leadgen weekly-report`) lists new leads found with their trigger, existing leads that gained a new trigger, follow-ups due, spear-account activity, and the funnel. It is saved under `data/reports/` every run.
+
 ## 4. The weekly routine, end to end
 
 ```bash

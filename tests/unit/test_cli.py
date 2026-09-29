@@ -232,3 +232,39 @@ def test_websites_command(run, monkeypatch, capsys):
     monkeypatch.setattr(cli, "find_website", lambda lead, client, model: "")
     assert run("websites", "--min-score", "0") == 0
     assert "found 0 of 0" in capsys.readouterr().out
+
+
+def test_discover_command(run, monkeypatch, capsys):
+    from types import SimpleNamespace
+
+    from leadgen import cli
+    from leadgen.discovery import DiscoveredBrand
+    from leadgen.models import Category
+
+    assert run("discover") == 1
+    capsys.readouterr()
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-test")
+    import anthropic
+
+    monkeypatch.setattr(anthropic, "Anthropic", lambda: SimpleNamespace())
+    brands = [DiscoveredBrand(company="Crumb Co", website="crumbco.com", category=Category.COOKIE, trigger="transition", evidence="e", url="u")]
+    monkeypatch.setattr(cli, "discover", lambda category, client, model: brands)
+    assert run("discover", "cookie") == 0
+    assert "added 1, updated 0" in capsys.readouterr().out
+    assert run("discover", "cookie") == 0
+    assert "added 0, updated 1" in capsys.readouterr().out
+
+
+def test_weekly_report_command(run, sample_csv, monkeypatch, capsys):
+    from leadgen import cli
+
+    run("import", str(sample_csv))
+    capsys.readouterr()
+    assert run("weekly-report") == 0
+    out = capsys.readouterr().out
+    assert "New leads found: 2" in out and "saved" in out
+    monkeypatch.setattr(cli, "email_report", lambda text, subject: False)
+    assert run("weekly-report", "--email") == 2
+    monkeypatch.setattr(cli, "email_report", lambda text, subject: True)
+    assert run("weekly-report", "--email") == 0
+    assert "emailed" in capsys.readouterr().out

@@ -9,6 +9,7 @@ DOSSIERS="${2:-5}"
 
 leadgen watch --days "$DAYS"
 if [ -n "${ANTHROPIC_API_KEY:-}${ANTHROPIC_AUTH_TOKEN:-}" ]; then
+  leadgen discover cookie bakery pet_treat
   leadgen websites --min-score 35 --limit 25
 fi
 leadgen enrich
@@ -20,6 +21,6 @@ else
   echo "no API key: skipping dossiers (set ANTHROPIC_API_KEY to enable)"
 fi
 leadgen due
-leadgen report
 leadgen export "data/pipeline_$(date -u +%Y%m%d).csv"
-echo "Pipeline exported. Email the export to yourself and the partner as the timestamped commission record."
+leadgen weekly-report --days "$DAYS" --email || true
+echo "Pipeline done. The export in data/ is the timestamped commission record."

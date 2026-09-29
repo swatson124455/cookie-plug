@@ -22,6 +22,7 @@ from leadgen.ai import QualifierError, build_qualifier, lead_facts
 from leadgen.contacts import email_candidates
 from leadgen.crm import LeadStore, conversion_rates, export_csv
 from leadgen.discover import import_csv, search_queries
+from leadgen.discovery import brand_to_lead, discover
 from leadgen.dossier import build_dossier, find_website, save_dossier
 from leadgen.htmlimport import import_html_file
 from leadgen.economics import FunnelAssumptions, ReferralTerms, account_value, funnel_plan
@@ -29,6 +30,7 @@ from leadgen.enrich import WebsiteEnricher
 from leadgen.facility import load_facility
 from leadgen.models import Category, Lead, Stage
 from leadgen.outreach import SenderIdentity, load_sequence, render_sequence
+from leadgen.report import build_report, email_report, render_report, save_report
 from leadgen.schedule import due_touches, log_touch
 from leadgen.sources import build_sources, default_client, load_feeds, since_date
 from leadgen.triggers import ClaudeExtractor, RuleBasedExtractor, extraction_to_lead
@@ -268,6 +270,45 @@ def _merge_trigger(existing, incoming) -> None:  # type: ignore[no-untyped-def]
         existing.website = incoming.website
 
 
+def cmd_discover(args: argparse.Namespace) -> int:
+    """Find emerging brands per category with Claude web search and add them to the pipeline."""
+    if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
+        print("discover needs ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)", file=sys.stderr)
+        return 1
+    import anthropic
+
+    client = anthropic.Anthropic()
+    model = os.environ.get("LEADGEN_MODEL", "claude-opus-5")
+    try:
+        categories = [Category(c) for c in args.categories] or [Category.COOKIE, Category.BAKERY, Category.PET_TREAT]
+    except ValueError as exc:
+        print(f"unknown category: {exc}", file=sys.stderr)
+        return 1
+    added = updated = 0
+    with _store(args) as store:
+        for category in categories:
+            try:
+                brands = discover(category, client, model=model)
+            except QualifierError as exc:
+                print(f"{category.value}: discovery failed: {exc}", file=sys.stderr)
+                continue
+            for brand in brands:
+                lead = brand_to_lead(brand, category)
+                key = lead.domain or lead.company.lower()
+                existing = store.get(key)
+                if existing is None:
+                    store.upsert(lead)
+                    added += 1
+                else:
+                    _merge_trigger(existing, lead)
+                    store.upsert(existing)
+                    updated += 1
+                store.log_activity(key, "discovered", lead.notes[:300])
+            print(f"{category.value}: {len(brands)} brands found")
+    print(f"discover: added {added}, updated {updated}. Run `leadgen websites`, `leadgen enrich`, then `leadgen score`.")
+    return 0
+
+
 def cmd_dossier(args: argparse.Namespace) -> int:
     """Research a lead with Claude and web search; save Markdown under leads/dossiers/."""
     if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
@@ -364,6 +405,22 @@ def cmd_websites(args: argparse.Namespace) -> int:
             found += 1
             print(f"{lead.company}: {domain}")
     print(f"found {found} of {len(missing)}. Leads with a new domain were re-keyed; run `leadgen enrich` next.")
+    return 0
+
+
+def cmd_weekly_report(args: argparse.Namespace) -> int:
+    """Summarize the week's discoveries, retriggers, due touches, and funnel; optionally email it."""
+    template = load_sequence(args.template)
+    with _store(args) as store:
+        report = build_report(store, template, days=args.days)
+    text = render_report(report)
+    path = save_report(text)
+    print(text)
+    print(f"saved {path}")
+    if args.email:
+        sent = email_report(text, subject=f"cookie-plug weekly report {report.generated_on.isoformat()}")
+        print("emailed" if sent else "email not sent: set LEADGEN_SMTP_HOST, LEADGEN_SMTP_USER, LEADGEN_SMTP_PASSWORD, LEADGEN_REPORT_TO")
+        return 0 if sent else 2
     return 0
 
 
@@ -482,6 +539,10 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
     p.add_argument("--ai", action="store_true", help="use Claude to classify items (needs an API key)")
     p.set_defaults(func=cmd_watch)
 
+    p = sub.add_parser("discover", help="find emerging brands per category with Claude web search (needs a key)")
+    p.add_argument("categories", nargs="*", help="any of cookie, bakery, snack, pet_treat, pet_food; default: cookie bakery pet_treat")
+    p.set_defaults(func=cmd_discover)
+
     p = sub.add_parser("dossier", help="research leads with Claude web search and save Markdown dossiers")
     p.add_argument("leads", nargs="*", help="domains or lowercase company names; default: top leads by score")
     p.add_argument("--min-score", type=int, default=50)
@@ -506,6 +567,11 @@ def _add_ops_commands(sub: argparse._SubParsersAction) -> None:  # type: ignore[
     p = sub.add_parser("queries", help="print search queries for a category")
     p.add_argument("category", choices=[c.value for c in Category])
     p.set_defaults(func=cmd_queries)
+
+    p = sub.add_parser("weekly-report", help="the week's new leads, retriggers, due touches, funnel; --email sends it")
+    p.add_argument("--days", type=int, default=7)
+    p.add_argument("--email", action="store_true")
+    p.set_defaults(func=cmd_weekly_report)
 
     p = sub.add_parser("report", help="print the pipeline funnel")
     p.set_defaults(func=cmd_report)

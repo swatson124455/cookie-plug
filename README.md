@@ -33,7 +33,8 @@ cp .env.example .env            # optional; the engine runs without an API key
 
 leadgen facility-check          # lists what the partner still needs to confirm
 leadgen queries cookie          # search strings to build your first list
-leadgen watch --days 7          # pull triggers from FDA recalls, EDGAR filings, trade press
+leadgen watch --days 7          # pull triggers from FDA recalls, EDGAR filings, trade press, Reddit
+leadgen discover cookie pet_treat  # Claude web-search discovery of emerging brands (needs a key)
 leadgen import my_list.csv --source expo_west
 leadgen import-html saved_exhibitor_page.html --source expo_west_2027 --category cookie
 leadgen websites --min-score 40  # fill missing domains with Claude web search (needs a key)
@@ -50,12 +51,17 @@ leadgen touch crumbco.com 0     # log the day-0 send (marks the lead contacted)
 leadgen due                     # follow-ups owed today, most overdue first
 leadgen touch crumbco.com 3 --channel linkedin
 leadgen advance crumbco.com replied --note "asked for capabilities sheet"
+leadgen weekly-report --email   # the week's new leads, retriggers, due touches, funnel
 leadgen report                  # funnel
 leadgen export pipeline.csv     # for a spreadsheet or a CRM
 leadgen economics --pct 5 --annual-purchases 400000
 ```
 
 CSV format: see `tests/fixtures/sample_leads.csv`. Only `company` is required; `website` unlocks enrichment. Optional boolean columns (`in_national_retail`, `recent_funding`, `recent_retail_launch`, `hiring_ops_or_production`, `sells_wholesale`, `mentions_copacker`) let research-found triggers count toward the score before enrichment runs. The committed seed list lives in `leads/`.
+
+## Fully automated
+
+A cloud Routine runs the whole pipeline every Monday and sends the report as a notification; `scripts/install_cron.sh` does the same on your own machine with an emailed report. Details in `docs/15_infrastructure.md` section 3b.
 
 ## Using the AI layer
 

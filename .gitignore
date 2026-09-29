@@ -1,5 +1,6 @@
 .env
 data/*.sqlite3
+!leads/pipeline.sqlite3
 data/*.csv
 !data/.gitkeep
 __pycache__/

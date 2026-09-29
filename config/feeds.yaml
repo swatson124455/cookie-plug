@@ -16,6 +16,19 @@ rss:
   - name: snack_bakery
     url: https://www.snackandbakery.com/rss/articles
 
+  # Google Alerts delivered as RSS: create an alert at google.com/alerts, choose
+  # "Deliver to: RSS feed", and paste the feed URL here. Free, continual, and it
+  # reaches brands too small for trade press. Suggested alerts:
+  #   "looking for a co-packer"   "cookie brand launches"   "dog treat brand launches"
+  #   "outgrown our kitchen"      "shelf-stable" cookies    "now available at Sprouts" cookies
+  # - name: alert_seeking_copacker
+  #   url: https://www.google.com/alerts/feeds/<your-id>/<alert-id>
+  # Reddit search feeds work the same way and catch founders asking for help:
+  - name: reddit_copacker
+    url: https://www.reddit.com/search.rss?q=%22co-packer%22+cookies+OR+%22dog+treats%22+OR+bakery&sort=new
+  - name: reddit_foodindustry
+    url: https://www.reddit.com/r/foodindustry/search.rss?q=co-packer+OR+co-manufacturer&restrict_sr=1&sort=new
+
 # openFDA enforcement API (recalls). Terms are OR'd inside product_description.
 fda:
   terms: ["cookie", "cookies", "biscuit", "bakery", "brownie", "muffin", "granola", "cracker", "dog treat", "dog treats", "pet food", "cat treat", "pet treat"]
