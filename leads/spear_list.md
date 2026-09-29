@@ -208,6 +208,27 @@ Researched 2026-09-29 from public sources only; every fact traces to a URL in th
 - **PawCo (Dr. Mahsa Vazin; VP Operations role open):** revisit when the VP Ops is hired. The pitch is automated baking of the hand-made Magic Cookie to free the pilot line, not replacement.
 - **Three Dog Brands (Kristi Ross; VP Operations unnamed):** revisit in Q1 2027 when the Kansas City plant is ramping and the Bacon, Egg and Cheese Biscuit launches. Bridge capacity for the soft-baked SKUs only.
 
+## Revenue and addressable spend (researched 2026-09-29)
+
+"Reported" means a figure stated by the company or a named journalist. "Database" means a data-vendor estimate (LeadIQ, Growjo, Owler, Tracxn), which is often stale. "Estimate" is door-count arithmetic and is labeled with its basis. Addressable spend is what the facility could invoice if it won the volume in question, assuming manufacturing cost of roughly 40 percent of net revenue for baked goods; treat it as an order of magnitude.
+
+| # | Account | Annual revenue | Confidence | Basis | Addressable for the facility |
+|---|---|---|---|---|---|
+| 1 | Heavenly Hunks | $4M to $8M (estimate); database says $1M to $10M | Low | 16,000 doors at 1 to 2 units per store-week at about $4 wholesale; 12 employees | Dupe Loops only at first (212 Target doors, six figures); overflow cookie volume is the upside |
+| 2 | Elavi | $2M to $4M run rate (estimate) | Medium | About $2M lifetime by May 2026, 150 percent annual growth, a $1M Costco order, 1,000+ doors | Fully outsourced today: 40 percent of revenue, roughly $1M to $1.5M a year, if won as second source at a share of that |
+| 3 | Mightylicious | $3M to $6M (estimate); exact figures are in the 2026 Form C | Low | 1,100 doors, 12 new chains in Aug 2026; 2021 projection was $2.2M. Form C: https://www.sec.gov/Archives/edgar/data/0002147043/000214704326000002/mighty.pdf | Fully outsourced today: $1.2M to $2.4M a year; zero if "vertical integration" means an owned plant |
+| 4 | Legally Addictive | $1.5M to $3M (estimate); exact figures are in the 2026 Form C | Low to medium | $12M valuation at typical CF multiples, team of 12, about 2,000 points. Form C: https://www.sec.gov/Archives/edgar/data/0002142533/000182198226000029/LAFFormC.pdf | Supplemental only: the overflow above their 7,000 sq ft kitchen, likely low six figures |
+| 5 | Bakeful | $4M to $8M (estimate) | Low | 4,000+ doors, 7 to 9 Target SKUs plus LTOs; over $1M raised | Fully outsourced today: $1.6M to $3.2M a year, gated on a nut-free line |
+| 6 | YUMI | $13M in 2023 (reported by Ben Bergman); $15M to $25M now (estimate) | Medium for 2023, low for now | 11,300 doors, 65 employees; database ranges of $25M to $100M are not credible after the 2024 down round | The cookie line only, a new SKU at Target: low six figures now, more after exclusivity |
+| 7 | Dog Treat Naturals | About $700K | Low | Buzzfile estimate; about 5 employees | Fully outsourced: about $300K a year, all of it switchable |
+| 8 | cadootz! | $1M to $3M first year (estimate) | Low | Launched Jan 2026, 2,000 Target doors from June, $3M seed | A new sweet SKU only; crackers stay with the incumbent |
+| 9 | Brune Kitchen | Under $1M (estimate) | Low | 2 employees, refrigerated set at Sprouts and Erewhon | Fully outsourced: low six figures |
+| 10 | Consumers Supply | $35M (LeadIQ) to $43M (Kona Equity), whole company | Medium | 201 employees, CHS joint venture | The two biscuit lines only, and only if they are bought in rather than baked in-house |
+| 11 | PawCo | $1M ARR in July 2024, 1,000 percent growth; $3M to $6M now (estimate) | Low to medium | 20 percent lift after the Feb 2026 rebrand, Chewy launch, two plants | Treats overflow only; they self-manufacture |
+| 12 | Three Dog Brands | $7.5M (Growjo database) versus roughly $30M to $50M implied by 204 employees and the Kennelmaster acquisition | Low; the two figures conflict | PE-owned, no disclosed revenue; the database figure looks stale | Bridge capacity for soft-baked SKUs while Kansas City ramps; unknown |
+
+Where this matters: the six spear-now accounts together represent roughly $30M to $55M of revenue and $5M to $9M of annual manufacturing spend, of which a realistic first-year share for a second source is 10 to 25 percent. Run `leadgen economics --pct <your rate> --annual-purchases <share>` per account once the referral percentage is pinned (pin 7).
+
 ## Sources
 
 Full dossiers with every URL are in `leads/dossiers/`: product lines, retailers and door counts, who makes it today, scale signals, people, leadership quotes, the give, and the risks for each account.
