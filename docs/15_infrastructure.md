@@ -36,9 +36,15 @@ Cost is roughly one to three dollars per dossier at current pricing, mostly sear
 
 Verify before sending: the dossier says "unknown" where it found nothing, but a found fact can still be stale. Names and emails in a dossier go into `leads/overrides.csv` only after you have looked at the source.
 
+## 2b. `leadgen import-html` and `leadgen websites`: the two gaps around sourcing
+
+Exhibitor directories cannot be fetched by a script, but your browser can save the page. `leadgen import-html saved.html --source expo_west_2027 --category cookie` reads the saved file, keeps every outbound link whose text looks like a company name, drops social networks and the show's own domain, and imports the rest. Use `--dry-run` to review first and `--skip domain` to drop anything the filter missed. A 400-exhibitor page becomes leads in seconds instead of an afternoon.
+
+Leads from `watch` arrive without a website, and enrichment needs one. `leadgen websites --min-score 40` asks Claude, with two web searches each, for the company's own domain and re-keys the lead when it finds one. Cents per lead; run it after `watch` and before `enrich`.
+
 ## 3. What stays manual, and why
 
-- **Exhibitor directories.** Most are JavaScript apps behind a login or a bot wall. Pull them by hand four weeks before each show (`docs/10`).
+- **Exhibitor directories.** Most are JavaScript apps behind a login or a bot wall, so the fetch is manual: open the directory, save the page, run `import-html`.
 - **LinkedIn, Amazon, Faire.** Their terms forbid scraping. The engine gives you the searches; you paste the results.
 - **Email verification.** `leadgen emails` proposes addresses; a free lookup or a single test send confirms them.
 - **Sending.** Deliberately manual in Phase 0. Every send is logged with `leadgen touch`, which is what makes `leadgen due` and the commission record work.
@@ -46,7 +52,7 @@ Verify before sending: the dossier says "unknown" where it found nothing, but a 
 ## 4. The weekly routine, end to end
 
 ```bash
-scripts/weekly_pipeline.sh            # Monday: watch, enrich, score, qualify, dossier top 5, due, report, export
+scripts/weekly_pipeline.sh            # Monday: watch, websites, enrich, score, qualify, dossier top 5, due, report, export
 leadgen due                           # every morning
 leadgen touch <lead> <day>            # as each send goes out
 leadgen advance <lead> replied        # the moment anyone answers

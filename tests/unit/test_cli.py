@@ -183,3 +183,52 @@ def test_dossier_command_requires_key_and_runs_with_fake_client(run, sample_csv,
     assert run("dossier", "nobody.com", "--out", str(tmp_path)) == 1
     run("score")
     assert run("dossier", "--min-score", "0", "--limit", "1", "--out", str(tmp_path)) == 0
+
+
+def test_list_tag_and_thread_draft(run, sample_csv, capsys):
+    run("import", str(sample_csv))
+    run("score")
+    assert run("tag", "crumbco.com", "spear") == 0
+    assert "['spear']" in capsys.readouterr().out
+    assert run("tag", "crumbco.com", "spear") == 0
+    assert "no change" in capsys.readouterr().out
+    assert run("list", "--tag", "spear") == 0
+    out = capsys.readouterr().out
+    assert "Crumb Co" in out and "Barkery" not in out
+    assert run("list", "--tag", "nothing") == 0
+    assert "no leads match" in capsys.readouterr().out
+    assert run("tag", "crumbco.com", "spear", "--remove") == 0
+    assert run("tag", "nobody.com", "x") == 1
+    assert run("--template", "config/templates/spear_sequence.yaml", "draft", "crumbco.com", "--thread", "operator") == 0
+    out = capsys.readouterr().out
+    assert "(operator)" in out and "(founder)" not in out
+
+
+def test_import_html_command(run, capsys):
+    fixture = str(REPO_ROOT / "tests" / "fixtures" / "exhibitors.html")
+    assert run("import-html", fixture, "--source", "expo_test", "--dry-run") == 0
+    assert "3 candidates" in capsys.readouterr().out
+    assert run("import-html", fixture, "--source", "expo_test", "--category", "cookie", "--skip", "barkerylane.com") == 0
+    assert "imported 2 new leads" in capsys.readouterr().out
+    assert run("import-html", fixture, "--source", "expo_test") == 0
+    assert "imported 1 new leads" in capsys.readouterr().out
+
+
+def test_websites_command(run, monkeypatch, capsys):
+    from types import SimpleNamespace
+
+    from leadgen import cli
+
+    assert run("websites") == 1
+    capsys.readouterr()
+    no_site = REPO_ROOT / "tests" / "fixtures" / "sample_leads.csv"
+    run("import", str(no_site))
+    run("score", "--min-score", "0")
+    capsys.readouterr()
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-test")
+    import anthropic
+
+    monkeypatch.setattr(anthropic, "Anthropic", lambda: SimpleNamespace())
+    monkeypatch.setattr(cli, "find_website", lambda lead, client, model: "")
+    assert run("websites", "--min-score", "0") == 0
+    assert "found 0 of 0" in capsys.readouterr().out

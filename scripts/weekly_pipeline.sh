@@ -8,6 +8,9 @@ DAYS="${1:-7}"
 DOSSIERS="${2:-5}"
 
 leadgen watch --days "$DAYS"
+if [ -n "${ANTHROPIC_API_KEY:-}${ANTHROPIC_AUTH_TOKEN:-}" ]; then
+  leadgen websites --min-score 40 --limit 25
+fi
 leadgen enrich
 leadgen score --min-score 40 --top 40
 leadgen qualify --min-score 40 --limit 40

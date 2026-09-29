@@ -22,11 +22,12 @@ from leadgen.ai import QualifierError, build_qualifier, lead_facts
 from leadgen.contacts import email_candidates
 from leadgen.crm import LeadStore, conversion_rates, export_csv
 from leadgen.discover import import_csv, search_queries
-from leadgen.dossier import build_dossier, save_dossier
+from leadgen.dossier import build_dossier, find_website, save_dossier
+from leadgen.htmlimport import import_html_file
 from leadgen.economics import FunnelAssumptions, ReferralTerms, account_value, funnel_plan
 from leadgen.enrich import WebsiteEnricher
 from leadgen.facility import load_facility
-from leadgen.models import Category, Stage
+from leadgen.models import Category, Lead, Stage
 from leadgen.outreach import SenderIdentity, load_sequence, render_sequence
 from leadgen.schedule import due_touches, log_touch
 from leadgen.sources import build_sources, default_client, load_feeds, since_date
@@ -118,7 +119,9 @@ def cmd_draft(args: argparse.Namespace) -> int:
             except QualifierError as exc:
                 print(f"AI personal line unavailable ({exc}); using signal-based line", file=sys.stderr)
         for touch in render_sequence(lead, facility, sender, template, personal_line=personal_line):
-            print(f"--- day {touch.day} [{touch.channel}] {touch.subject}\n{touch.body}\n")
+            if args.thread and touch.thread != args.thread:
+                continue
+            print(f"--- day {touch.day} [{touch.channel}] ({touch.thread}) {touch.subject}\n{touch.body}\n")
     return 0
 
 
@@ -293,6 +296,77 @@ def cmd_dossier(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_list(args: argparse.Namespace) -> int:
+    with _store(args) as store:
+        leads = store.list(stage=Stage(args.stage) if args.stage else None, min_score=args.min_score, limit=args.limit, tag=args.tag or None)
+    if not leads:
+        print("no leads match")
+        return 0
+    print(f"{'score':>5}  {'stage':<14} {'company':<32} {'contact':<24} {'tags'}")
+    for lead in leads:
+        print(f"{lead.score:>5}  {lead.stage.value:<14} {lead.company[:32]:<32} {lead.contact_name[:24]:<24} {','.join(lead.tags)}")
+    return 0
+
+
+def cmd_tag(args: argparse.Namespace) -> int:
+    with _store(args) as store:
+        lead = store.get(args.lead)
+        if lead is None:
+            print(f"no lead found for {args.lead!r}", file=sys.stderr)
+            return 1
+        changed = lead.remove_tag(args.tag) if args.remove else lead.add_tag(args.tag)
+        store.upsert(lead)
+    print(f"{lead.company}: tags {lead.tags}" + ("" if changed else " (no change)"))
+    return 0
+
+
+def cmd_import_html(args: argparse.Namespace) -> int:
+    """Import company links from a saved directory page (exhibitor list, retailer program)."""
+    leads = import_html_file(args.html, source=args.source, category=Category(args.category), extra_skip=tuple(args.skip))
+    if args.dry_run:
+        for lead in leads:
+            print(f"{lead.company:<40} {lead.website}")
+        print(f"{len(leads)} candidates (dry run, nothing imported)")
+        return 0
+    with _store(args) as store:
+        new = 0
+        for lead in leads:
+            if store.get(lead.domain) is None:
+                store.upsert(lead)
+                new += 1
+    print(f"imported {new} new leads from {len(leads)} candidates ({args.source}). Run `leadgen enrich` then `leadgen score`.")
+    return 0
+
+
+def cmd_websites(args: argparse.Namespace) -> int:
+    """Fill missing websites for scored leads using Claude web search (two searches each)."""
+    if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
+        print("websites needs ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)", file=sys.stderr)
+        return 1
+    import anthropic
+
+    client = anthropic.Anthropic()
+    model = os.environ.get("LEADGEN_MODEL", "claude-opus-5")
+    found = 0
+    with _store(args) as store:
+        missing = [lead for lead in store.list(min_score=args.min_score, limit=100_000) if not lead.website][: args.limit]
+        for lead in missing:
+            try:
+                domain = find_website(lead, client, model=model)
+            except QualifierError as exc:
+                print(f"{lead.company}: lookup failed: {exc}", file=sys.stderr)
+                continue
+            if not domain:
+                print(f"{lead.company}: unknown")
+                continue
+            store.upsert(Lead(**{**lead.model_dump(), "website": domain}))
+            store.log_activity(domain, "website_found", f"was {lead.company.lower()}; found {domain}")
+            found += 1
+            print(f"{lead.company}: {domain}")
+    print(f"found {found} of {len(missing)}. Leads with a new domain were re-keyed; run `leadgen enrich` next.")
+    return 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     with _store(args) as store:
         report = store.pipeline_report()
@@ -358,6 +432,7 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
     p = sub.add_parser("draft", help="render the outreach sequence for one lead")
     p.add_argument("lead", help="domain or lowercase company name")
     p.add_argument("--ai", action="store_true", help="use Claude for the personal line")
+    p.add_argument("--thread", default="", choices=["", "founder", "operator", "sales"], help="only this thread's touches")
     p.set_defaults(func=cmd_draft)
 
     p = sub.add_parser("touch", help="log a sent touch (day 0 also marks the lead contacted)")
@@ -373,6 +448,32 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
     p = sub.add_parser("brief", help="one-page call prep for a lead")
     p.add_argument("lead")
     p.set_defaults(func=cmd_brief)
+
+    p = sub.add_parser("list", help="list leads by score, stage, or tag")
+    p.add_argument("--stage", default="", choices=["", *[s.value for s in Stage]])
+    p.add_argument("--tag", default="")
+    p.add_argument("--min-score", type=int, default=0)
+    p.add_argument("--limit", type=int, default=50)
+    p.set_defaults(func=cmd_list)
+
+    p = sub.add_parser("tag", help="add or remove a tag on a lead (e.g. spear, bench, nurture)")
+    p.add_argument("lead")
+    p.add_argument("tag")
+    p.add_argument("--remove", action="store_true")
+    p.set_defaults(func=cmd_tag)
+
+    p = sub.add_parser("import-html", help="import company links from a saved directory page")
+    p.add_argument("html", help="path to the page saved from your browser")
+    p.add_argument("--source", required=True, help="tag such as expo_west_2027")
+    p.add_argument("--category", default="other", choices=[c.value for c in Category])
+    p.add_argument("--skip", action="append", default=[], help="extra domain to ignore, repeatable")
+    p.add_argument("--dry-run", action="store_true")
+    p.set_defaults(func=cmd_import_html)
+
+    p = sub.add_parser("websites", help="fill missing websites with Claude web search (needs a key)")
+    p.add_argument("--min-score", type=int, default=40)
+    p.add_argument("--limit", type=int, default=25)
+    p.set_defaults(func=cmd_websites)
 
     p = sub.add_parser("watch", help="poll public feeds (FDA recalls, EDGAR filings, trade press) for new triggers")
     p.add_argument("--days", type=int, default=7)

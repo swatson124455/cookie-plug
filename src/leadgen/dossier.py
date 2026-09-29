@@ -9,6 +9,7 @@ the same conversation is resent and it resumes.
 
 from __future__ import annotations
 
+import re
 from datetime import date
 from pathlib import Path
 
@@ -77,6 +78,34 @@ def _create(client: anthropic.Anthropic, model: str, system: str, messages: list
         raise QualifierError(f"Anthropic API error {exc.status_code}: {exc.message}") from exc
     except anthropic.APIConnectionError as exc:
         raise QualifierError("could not reach the Anthropic API") from exc
+
+
+WEBSITE_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses": 2}
+WEBSITE_PROMPT = (
+    "Find the official website domain of the company below. Use web search. "
+    "Reply with only the bare domain (for example brand.com) or the single word UNKNOWN. "
+    "Never reply with a retailer, marketplace, social network, or news site."
+)
+_DOMAIN_RE = re.compile(r"^(?:https?://)?(?:www\.)?([a-z0-9-]+(?:\.[a-z0-9-]+)+)/?$", re.IGNORECASE)
+
+
+def find_website(lead: Lead, client: anthropic.Anthropic, model: str = DEFAULT_MODEL) -> str:
+    """Ask Claude, with two web searches, for the company's own domain; empty if unknown."""
+    user = f"Company: {lead.company}\nCategory: {lead.category.value}\nContext: {lead.notes[:300] or 'none'}"
+    messages: list[dict[str, object]] = [{"role": "user", "content": user}]
+    try:
+        response = client.messages.create(model=model, max_tokens=200, system=WEBSITE_PROMPT, messages=messages, tools=[WEBSITE_TOOL])
+        if response.stop_reason == "pause_turn":
+            messages.append({"role": "assistant", "content": response.content})
+            response = client.messages.create(model=model, max_tokens=200, system=WEBSITE_PROMPT, messages=messages, tools=[WEBSITE_TOOL])
+    except anthropic.APIStatusError as exc:
+        raise QualifierError(f"Anthropic API error {exc.status_code}: {exc.message}") from exc
+    except anthropic.APIConnectionError as exc:
+        raise QualifierError("could not reach the Anthropic API") from exc
+    text = " ".join(block.text for block in response.content if getattr(block, "type", "") == "text").strip()
+    last_token = text.split()[-1].strip(".,;") if text else ""
+    match = _DOMAIN_RE.match(last_token)
+    return match.group(1).lower() if match and last_token.upper() != "UNKNOWN" else ""
 
 
 def save_dossier(lead: Lead, text: str, directory: Path = DOSSIER_DIR) -> Path:

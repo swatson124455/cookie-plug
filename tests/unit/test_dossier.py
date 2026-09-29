@@ -70,3 +70,18 @@ def test_save_dossier_writes_file(tmp_path):
     assert path == dossier_path(lead, tmp_path) and path.name == "crumbco_com.md"
     assert "leadgen dossier" in path.read_text(encoding="utf-8")
     assert dossier_path(Lead(company="No Site Co"), tmp_path).name == "no_site_co.md"
+
+
+def test_find_website_parses_domain_and_unknown(monkeypatch):
+    from leadgen.dossier import find_website
+
+    lead = Lead(company="Crumb Co")
+    good = _FakeMessages([SimpleNamespace(stop_reason="end_turn", content=[SimpleNamespace(type="text", text="The site is https://www.crumbco.com/")])])
+    assert find_website(lead, SimpleNamespace(messages=good)) == "crumbco.com"
+    unknown = _FakeMessages([SimpleNamespace(stop_reason="end_turn", content=[SimpleNamespace(type="text", text="UNKNOWN")])])
+    assert find_website(lead, SimpleNamespace(messages=unknown)) == ""
+    paused = _FakeMessages([_resp("pause_turn"), SimpleNamespace(stop_reason="end_turn", content=[SimpleNamespace(type="text", text="crumbco.com")])])
+    assert find_website(lead, SimpleNamespace(messages=paused)) == "crumbco.com" and len(paused.calls) == 2
+    request = httpx.Request("POST", "https://api.anthropic.com/v1/messages")
+    with pytest.raises(QualifierError):
+        find_website(lead, SimpleNamespace(messages=_FakeMessages([anthropic.APIConnectionError(request=request)])))

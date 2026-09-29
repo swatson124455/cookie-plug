@@ -96,6 +96,10 @@ class Lead(BaseModel):
     contact_name: str = ""
     contact_title: str = ""
     email: str = ""
+    operator_name: str = ""   # second thread: operations, supply chain, or production lead
+    operator_title: str = ""
+    sales_name: str = ""      # third thread: sales or wholesale lead
+    sales_title: str = ""
     linkedin_url: str = ""
     city: str = ""
     state: str = ""
@@ -105,6 +109,7 @@ class Lead(BaseModel):
     score: int = 0
     score_reasons: list[str] = Field(default_factory=list)
     stage: Stage = Stage.NEW
+    tags: list[str] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -148,6 +153,21 @@ class Lead(BaseModel):
         """Bump ``updated_at``; call after any mutation before persisting."""
         self.updated_at = datetime.now(timezone.utc)
 
+    def add_tag(self, tag: str) -> bool:
+        """Add a normalized tag; return False if it was already present."""
+        cleaned = tag.strip().lower()
+        if not cleaned or cleaned in self.tags:
+            return False
+        self.tags.append(cleaned)
+        return True
+
+    def remove_tag(self, tag: str) -> bool:
+        cleaned = tag.strip().lower()
+        if cleaned not in self.tags:
+            return False
+        self.tags.remove(cleaned)
+        return True
+
     def __repr__(self) -> str:
         return (
             f"Lead(company={self.company!r}, domain={self.domain!r}, "
@@ -176,6 +196,7 @@ class OutreachTouch(BaseModel):
     channel: str
     subject: str
     body: str
+    thread: str = "founder"  # who this touch is for: founder, operator, sales
 
     def __repr__(self) -> str:
         return f"OutreachTouch(day={self.day}, channel={self.channel}, subject={self.subject!r})"

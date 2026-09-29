@@ -58,3 +58,11 @@ def test_signals_default_empty():
     assert signals.product_count is None
     assert signals.detected_categories == []
     assert Category.COOKIE.value == "cookie"
+
+
+def test_tags_add_and_remove():
+    lead = Lead(company="A")
+    assert lead.add_tag(" Spear ") and lead.tags == ["spear"]
+    assert not lead.add_tag("spear") and not lead.add_tag("  ")
+    assert lead.remove_tag("SPEAR") and lead.tags == []
+    assert not lead.remove_tag("spear")

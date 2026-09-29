@@ -94,17 +94,20 @@ class LeadStore:
         ).fetchone()
         return Lead.model_validate_json(row["payload"]) if row else None
 
-    def list(self, stage: Stage | None = None, min_score: int = 0, limit: int = 500) -> list[Lead]:
-        """Leads ordered by score, optionally filtered by stage and minimum score."""
+    def list(self, stage: Stage | None = None, min_score: int = 0, limit: int = 500, tag: str | None = None) -> list[Lead]:
+        """Leads ordered by score, optionally filtered by stage, minimum score, and tag."""
         query = "SELECT payload FROM leads WHERE score >= ?"
         params: list[object] = [min_score]
         if stage is not None:
             query += " AND stage = ?"
             params.append(stage.value)
-        query += " ORDER BY score DESC, company ASC LIMIT ?"
-        params.append(limit)
+        query += " ORDER BY score DESC, company ASC"
         rows = self._conn.execute(query, params).fetchall()
-        return [Lead.model_validate_json(r["payload"]) for r in rows]
+        leads = [Lead.model_validate_json(r["payload"]) for r in rows]
+        if tag:
+            wanted = tag.strip().lower()
+            leads = [lead for lead in leads if wanted in lead.tags]
+        return leads[:limit]
 
     def count(self) -> int:
         return int(self._conn.execute("SELECT COUNT(*) FROM leads").fetchone()[0])

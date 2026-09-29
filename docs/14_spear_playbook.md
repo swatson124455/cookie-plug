@@ -31,7 +31,7 @@ Twelve is what one person can hold in their head alongside the daily sends. Sele
 | 5 | Founder email with something new: a relevant article, a retailer program, a tariff note. | Founder |
 | 6 | Close-the-loop email; move to quarterly with a new give each quarter. | Founder |
 
-Log every touch with `leadgen touch <lead> <day> --channel <email|linkedin|mail>`. Add a `spear` tag in the lead's notes so `leadgen list` and the export separate them.
+Mark each account with `leadgen tag <lead> spear` (and the bench with `bench`); `leadgen list --tag spear` shows them. The cadence above is `config/templates/spear_sequence.yaml`, with each touch assigned to a thread; render one thread with `leadgen draft <lead> --template config/templates/spear_sequence.yaml --thread operator`. Store the operator and sales contacts in `leads/overrides.csv` (they map to the lead's operator and sales fields). Log every touch with `leadgen touch <lead> <day> --channel <email|linkedin|mail>`.
 
 ## Multi-threading rules
 

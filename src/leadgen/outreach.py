@@ -119,6 +119,8 @@ def render_sequence(
         "cta_line": cta_line(),
         "sender_name": sender.name,
         "sender_title": sender.title,
+        "operator_name": lead.operator_name or "there",
+        "sales_name": lead.sales_name or "there",
     }
     rendered: list[OutreachTouch] = []
     for touch in template.touches:
@@ -128,6 +130,7 @@ def render_sequence(
                 channel=str(touch.get("channel", "email")),
                 subject=str(touch.get("subject", "")).format(**fields),
                 body=str(touch.get("body", "")).format(**fields).strip(),
+                thread=str(touch.get("thread", "founder")),
             )
         )
     return rendered

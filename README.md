@@ -34,10 +34,14 @@ leadgen facility-check          # lists what the partner still needs to confirm
 leadgen queries cookie          # search strings to build your first list
 leadgen watch --days 7          # pull triggers from FDA recalls, EDGAR filings, trade press
 leadgen import my_list.csv --source expo_west
+leadgen import-html saved_exhibitor_page.html --source expo_west_2027 --category cookie
+leadgen websites --min-score 40  # fill missing domains with Claude web search (needs a key)
 leadgen enrich                  # reads public homepages and Shopify catalogs
 leadgen score                   # ranks by ICP weights in config/icp.yaml
 leadgen qualify                 # AI fit + opening line (rule-based without a key)
 leadgen draft crumbco.com       # five-touch sequence for one lead (--ai sharpens it)
+leadgen tag crumbco.com spear   # mark a spear account; then --template config/templates/spear_sequence.yaml --thread operator
+leadgen list --tag spear        # leads by score, stage, or tag
 leadgen emails crumbco.com      # ranked, unverified address candidates for the contact
 leadgen dossier crumbco.com     # Claude + web search writes the account dossier (needs a key)
 leadgen brief crumbco.com       # one-page call prep: facts, fit, history

@@ -1,0 +1,115 @@
+# Six-week, three-thread cadence for spear accounts (docs/14_spear_playbook.md).
+# Each touch names its thread: founder, operator, or sales. Render one thread
+# with `leadgen draft <lead> --template config/templates/spear_sequence.yaml --thread operator`.
+# The founder day-0 email for a spear account should be hand-written from the
+# dossier; this template's day-0 is the fallback when no custom email exists.
+#
+# Extra placeholders: {operator_name} {sales_name}
+
+touches:
+  - day: 0
+    channel: linkedin
+    thread: founder
+    subject: "Comment on their latest post"
+    body: |
+      Leave a considered comment on {first_name}'s or {company}'s most recent post. No pitch, no link. One specific observation about the product or the launch.
+
+  - day: 0
+    channel: email
+    thread: founder
+    subject: "{company} x spare {category_noun} capacity"
+    body: |
+      Hi {first_name},
+
+      {personal_line}
+
+      {pain_line}
+
+      {facility_line} They have open capacity right now, so we can sample in weeks, not quarters, and we handle formulation, packaging, labeling, and nutrition panels so the product lands shelf-ready.
+
+      {cta_line}
+
+      {sender_name}
+      {sender_title}
+
+  - day: 1
+    channel: linkedin
+    thread: operator
+    subject: "Connection request"
+    body: |
+      Hi {operator_name}, I sent {first_name} a note this week about a US {category_noun} manufacturer with open capacity and full turnkey. Thought the operations side of {company} might want the same information.
+
+  - day: 7
+    channel: email
+    thread: operator
+    subject: "second source for {company}"
+    body: |
+      Hi {operator_name},
+
+      I wrote to {first_name} last week about a US manufacturer with open {category_noun} capacity. Writing to you separately because the operational questions are yours: lead time from PO, minimum run, changeover, and what a second source has to match on quality systems.
+
+      The short version: open lines now, sampling in weeks, formulation through shelf-ready packaging under one roof. Happy to send the capabilities sheet and answer the certification questions first, before anyone spends a call on it.
+
+      {sender_name}
+
+  - day: 9
+    channel: email
+    thread: founder
+    subject: "Re: {company} x spare {category_noun} capacity"
+    body: |
+      Hi {first_name},
+
+      Rather than trade emails, I can have a benchmark of your hero SKU in your hands to judge blind, with a per-unit cost sheet next to it. Say the word and I will get it moving.
+
+      {sender_name}
+
+  - day: 16
+    channel: mail
+    thread: founder
+    subject: "Physical touch: sample or product with a handwritten note"
+    body: |
+      Once the facility data sheet is complete: ship the benchmark sample, or the facility's own product, to {first_name} at {company} with a three-line handwritten note referencing the trigger. Log it as day 16 mail.
+
+  - day: 18
+    channel: email
+    thread: sales
+    subject: "your next reorder"
+    body: |
+      Hi {sales_name},
+
+      Quick one from the supply side. The fastest way to lose a retail slot is missing a reorder because the plant is full. I work with a US manufacturer with open {category_noun} capacity now that can serve as a second line for {company}, so the answer to a buyer's "can you ship more?" is always yes.
+
+      If that is ever the constraint on your side, I am one reply away.
+
+      {sender_name}
+
+  - day: 25
+    channel: linkedin
+    thread: operator
+    subject: "One question"
+    body: |
+      {operator_name}, one question, no pitch: who makes {company}'s product today, and what would a second source need to match for you to consider it?
+
+  - day: 32
+    channel: email
+    thread: founder
+    subject: "something useful for {company}"
+    body: |
+      Hi {first_name},
+
+      Sharing something relevant rather than following up for its own sake: [a retailer program, a tariff note, or an article about their category, chosen from the dossier].
+
+      Still have capacity if the timing ever lines up.
+
+      {sender_name}
+
+  - day: 42
+    channel: email
+    thread: founder
+    subject: "Closing the loop"
+    body: |
+      Hi {first_name},
+
+      I will move {company} to a quarterly check-in so I am not in your inbox every week. If production capacity, a second source, or a new SKU ever becomes the problem, I am one reply away.
+
+      {sender_name}
