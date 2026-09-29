@@ -33,8 +33,9 @@ def check_spf(domain: str) -> tuple[bool, str]:
     if len(spf) > 1:
         return False, f"{len(spf)} SPF records found; there must be exactly one"
     record = spf[0]
-    verdict = "ok" if ("~all" in record or "-all" in record) else "missing ~all or -all"
-    return verdict == "ok", f"{record} ({verdict})"
+    terminated = "~all" in record or "-all" in record or "redirect=" in record
+    verdict = "ok" if terminated else "missing ~all, -all, or redirect="
+    return terminated, f"{record} ({verdict})"
 
 
 def check_dkim(domain: str, selector: str) -> tuple[bool, str]:
@@ -50,8 +51,8 @@ def check_dmarc(domain: str) -> tuple[bool, str]:
         return False, "no DMARC record"
     record = records[0]
     policy = next((p.split("=")[1] for p in record.replace(" ", "").split(";") if p.startswith("p=")), "")
-    note = "ok" if policy in ("none", "quarantine", "reject") else "missing p= policy"
-    return note == "ok", f"{record} (policy {policy or 'unset'})"
+    note = f"policy {policy}" if policy in ("none", "quarantine", "reject") else "missing p= policy"
+    return note.startswith("policy"), f"{record} ({note})"
 
 
 def main(argv: list[str] | None = None) -> int:
