@@ -29,6 +29,8 @@ def test_classify_category_pet_before_human():
 
 
 def test_classify_trigger_priority():
+    assert classify_trigger("Brand is looking for a co-packer after outgrowing its kitchen") == "seeking_copacker"
+    assert classify_trigger("Brand moves production out of the commissary") == "transition"
     assert classify_trigger("Brand recalls cookies after launching at Target") == "recall"
     assert classify_trigger("Brand raises $2M seed") == "funding"
     assert classify_trigger("Brand launches at Whole Foods") == "retail_launch"

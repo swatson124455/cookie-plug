@@ -14,7 +14,7 @@ import yaml
 from pydantic import BaseModel, Field
 
 from leadgen.facility import FacilityProfile
-from leadgen.models import Category, Lead, LeadSignals
+from leadgen.models import Category, Lead, LeadSignals, Segment
 
 
 class IcpWeights(BaseModel):
@@ -23,6 +23,7 @@ class IcpWeights(BaseModel):
     category_fit: dict[str, int] = Field(default_factory=dict)
     segment: dict[str, int] = Field(default_factory=dict)
     signals: dict[str, int] = Field(default_factory=dict)
+    penalties: dict[str, int] = Field(default_factory=dict)
     hard_disqualifiers: list[str] = Field(default_factory=list)
 
     def __repr__(self) -> str:
@@ -61,6 +62,8 @@ def _signal_points(signals: LeadSignals, weights: dict[str, int]) -> list[tuple[
         ("recent_retail_launch", signals.recent_retail_launch),
         ("recent_recall", signals.recent_recall),
         ("new_product_launch", signals.new_product_launch),
+        ("seeking_copacker", signals.seeking_copacker),
+        ("transitioning", signals.transitioning),
         ("has_pet_and_human_lines", signals.has_pet_and_human_lines),
         ("product_count_20_plus", (signals.product_count or 0) >= 20),
         ("product_count_under_3", signals.product_count is not None and signals.product_count < 3),
@@ -79,6 +82,13 @@ def _is_disqualified(lead: Lead, weights: IcpWeights) -> str | None:
         if rules.get(name, False):
             return name
     return None
+
+
+def likely_contracted(lead: Lead) -> bool:
+    """An established brand in national retail with nothing changing is probably locked in."""
+    signals = lead.signals
+    changing = signals.transitioning or signals.seeking_copacker or signals.recent_recall or signals.mentions_copacker
+    return lead.segment == Segment.ESTABLISHED_BRAND and signals.in_national_retail and not changing
 
 
 def score_lead(lead: Lead, weights: IcpWeights, facility: FacilityProfile) -> ScoreResult:
@@ -110,6 +120,11 @@ def score_lead(lead: Lead, weights: IcpWeights, facility: FacilityProfile) -> Sc
     for name, points in _signal_points(lead.signals, weights.signals):
         reasons.append(f"{name} ({points:+d})")
         total += points
+
+    penalty = weights.penalties.get("likely_contracted", 0)
+    if penalty and likely_contracted(lead):
+        reasons.append(f"likely under co-manufacturer contract ({penalty:+d})")
+        total += penalty
 
     return ScoreResult(score=max(0, min(100, total)), reasons=reasons)
 

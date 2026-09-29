@@ -11,19 +11,24 @@ category_fit:            # lead's product category vs facility lines
   snack: 10              # adjacent, may extend into cookies
   other: 0
 
-segment:                 # who the lead is
-  emerging_brand: 10     # under ~$1M, outgrowing kitchen
-  established_brand: 16  # $1M-$50M, wants white label / second source
-  retailer_private_label: 14
-  non_food_brand_extension: 8   # coffee brand, influencer, hospitality
+segment:                 # who the lead is. Emerging and changing brands are the
+                         # realistic buyers; brands already in national retail
+                         # usually have a co-manufacturer under contract.
+  emerging_brand: 16     # under ~$2M, outgrowing a kitchen or a first co-packer
+  established_brand: 8   # $2M-$50M; only worth it with a transition signal
+  retailer_private_label: 10
+  non_food_brand_extension: 12  # a new product line with no manufacturing yet
   subscription_box: 10
-  distributor_or_broker: 6
-  unknown: 4
+  distributor_or_broker: 8
+  unknown: 6
 
 signals:                 # observed on their website or in public data
   is_shopify: 4          # DTC-native, usually growing, easy to reach
   sells_wholesale: 8     # already sells B2B, understands MOQ and specs
-  in_national_retail: 12 # Whole Foods, Target, Chewy etc. => volume pain
+  in_national_retail: 4  # volume, but usually already contracted; small weight
+  seeking_copacker: 18   # says so in public: a filing, a post, a job ad
+  transitioning: 14      # changing format, channel, or maker: fresh to shelf-stable,
+                         # DTC to retail, own kitchen to outsourced, first packaged SKU
   mentions_copacker: 10  # already outsources or says they are looking
   mentions_private_label: 8
   hiring_ops_or_production: 10   # growth trigger
@@ -31,10 +36,13 @@ signals:                 # observed on their website or in public data
   product_count_20_plus: 4
   product_count_under_3: -6      # too small to matter yet
   recent_funding: 10
-  recent_retail_launch: 10
+  recent_retail_launch: 8  # a first or regional launch; national chains carry the penalty below
   recent_recall: 8         # a recall or a co-packer closure means the current supply chain failed
   new_product_launch: 6    # a new SKU or format needs a line to run on
   has_pet_and_human_lines: 6     # facility can consolidate both under one roof
+
+penalties:               # subtracted when the pattern matches
+  likely_contracted: -10 # established brand in national retail with no transition, recall, or seeking signal
 
 hard_disqualifiers:      # any of these sets the score to 0
   - category_other_no_signals

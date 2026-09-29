@@ -75,6 +75,8 @@ class LeadSignals(BaseModel):
     recent_retail_launch: bool = False
     recent_recall: bool = False
     new_product_launch: bool = False
+    seeking_copacker: bool = False   # publicly looking for a manufacturer
+    transitioning: bool = False      # changing format, channel, or maker
     has_pet_and_human_lines: bool = False
     explicit_own_facility_only: bool = False
     detected_categories: list[Category] = Field(default_factory=list)

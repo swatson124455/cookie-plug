@@ -426,7 +426,7 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
     p = sub.add_parser("qualify", help="AI (or rule-based) qualification")
     p.add_argument("--min-score", type=int, default=40)
     p.add_argument("--limit", type=int, default=50)
-    p.add_argument("--threshold", type=int, default=55)
+    p.add_argument("--threshold", type=int, default=50)
     p.set_defaults(func=cmd_qualify)
 
     p = sub.add_parser("draft", help="render the outreach sequence for one lead")
@@ -484,7 +484,7 @@ def _add_pipeline_commands(sub: argparse._SubParsersAction) -> None:  # type: ig
 
     p = sub.add_parser("dossier", help="research leads with Claude web search and save Markdown dossiers")
     p.add_argument("leads", nargs="*", help="domains or lowercase company names; default: top leads by score")
-    p.add_argument("--min-score", type=int, default=55)
+    p.add_argument("--min-score", type=int, default=50)
     p.add_argument("--limit", type=int, default=5)
     p.add_argument("--out", default="leads/dossiers")
     p.set_defaults(func=cmd_dossier)

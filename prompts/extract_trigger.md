@@ -5,7 +5,8 @@ Given one feed item (a headline, a summary, and sometimes the company the feed n
 - company: the company the item is about, as a clean name without suffixes like Inc. or LLC.
 - website: the company's own domain only if it literally appears in the item; otherwise empty.
 - category: cookie, bakery, snack, pet_treat, pet_food, or other.
-- trigger: one of recall, closure, funding, retail_launch, hiring, new_product, or empty if none applies.
+- trigger: the strongest that applies, in this priority: seeking_copacker (publicly looking for a manufacturer), transition (changing format, channel, kitchen, or maker: fresh to shelf-stable, food truck or farmers market to packaged, commissary to outsourced, raising money for production expansion), recall, closure, funding, retail_launch, hiring, new_product; or empty if none applies.
+- Prefer emerging and changing brands. A brand already in thousands of national retail doors with nothing changing is low priority; set trigger to empty unless a transition, recall, or closure is described.
 - evidence: one sentence quoting the item's own words.
 
 Never invent a company or a website. When unsure, set is_relevant to false.

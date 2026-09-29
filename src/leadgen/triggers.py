@@ -28,6 +28,8 @@ CATEGORY_KEYWORDS: dict[Category, tuple[str, ...]] = {
 }
 
 TRIGGER_KEYWORDS: dict[str, tuple[str, ...]] = {
+    "seeking_copacker": ("looking for a co-packer", "seeking a co-packer", "seeking co-manufacturer", "looking for a manufacturer", "co-packer wanted", "rfp for co-manufacturing"),
+    "transition": ("outgrown", "outgrowing", "moves production", "moving production", "transitions to", "shelf-stable version", "now shelf-stable", "first packaged", "from food truck", "from the food truck", "from farmers market", "commissary", "shared kitchen", "cottage", "expand production capacity", "production expansion", "scale production", "new facility", "pivots to", "pivot to", "enters retail", "first retail"),
     "recall": ("recall", "recalls", "recalled"),
     "closure": ("closing", "closes plant", "to close", "shuts down", "shutting down", "bankruptcy", "chapter 11", "layoffs", "ceases production"),
     "funding": ("raises", "raised", "funding", "seed round", "series a", "series b", "investment", "closes round", "secures $", "crowdfunding", "reg cf", "form c"),
@@ -137,6 +139,8 @@ class ClaudeExtractor:
 
 
 TRIGGER_SIGNALS: dict[str, str] = {
+    "seeking_copacker": "seeking_copacker",
+    "transition": "transitioning",
     "retail_launch": "recent_retail_launch",
     "funding": "recent_funding",
     "hiring": "hiring_ops_or_production",

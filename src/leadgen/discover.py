@@ -29,6 +29,7 @@ SIGNAL_COLUMNS = (
     "hiring_ops_or_production", "sells_wholesale", "mentions_copacker",
     "mentions_private_label", "out_of_stock", "has_pet_and_human_lines",
     "explicit_own_facility_only", "recent_recall", "new_product_launch",
+    "seeking_copacker", "transitioning",
 )
 TRUE_VALUES = {"true", "yes", "y", "1", "x"}
 

@@ -28,28 +28,25 @@ Contract food manufacturing is a seller's market for capacity: most US co-packer
 
 ## 3. Ideal Customer Profile (ICP)
 
-Prioritize in this order. The tier drives how much time each lead gets.
+The governing rule: **a brand that is changing something is a buyer; a brand that is comfortable is not.** A brand already in 2,000 national doors almost always has a co-manufacturer under contract and a buyer who is not looking. The realistic account is the one outgrowing a kitchen, moving from fresh to shelf-stable, launching its first packaged product, raising money for production, or whose maker just failed it. Prioritize in this order.
 
-### Tier A: established brands with a live capacity trigger (60% of effort)
-- Revenue roughly $2M to $50M, in cookies, baked goods, snacks that could be baked, dog/cat treats, or pet food.
-- Already sells through retail or wholesale, so they understand specs, MOQs, and lead times.
-- **Trigger visible in public:** new national retail listing, products sold out on their site, hiring production or ops staff, recent funding, announced line extension, co-packer publicly closed or recalled, tariff-driven reshoring.
-- Buying motives: capacity, second source, faster launch of a new SKU, offloading in-house production to free cash.
-- Why they matter to you: they reorder monthly. One account here can be worth more than ten small ones over the two-year referral window.
+### Tier A: emerging and transitioning brands (60% of effort)
+- Revenue roughly $300k to $5M, in cookies, baked goods, snacks that bake, dog and cat treats, or pet food.
+- **Something is changing:** outgrew a shared kitchen or commissary; moving from a food truck, farmers market, or DTC into packaged retail; going from refrigerated to shelf-stable; first regional retail listing; a crowdfunding or seed raise that names production; a first co-packer that is late, expensive, or gone; a recall.
+- Buying motives: "I can't make enough," "the buyer wants a certified facility," "my co-packer let me down."
+- Why they matter: no incumbent contract, a decision-maker who answers email, and a two-year referral window that starts while they are small and grows with them.
 
-### Tier B: emerging brands outgrowing their kitchen (25% of effort)
-- Revenue $300k to $2M, DTC or Amazon first, often Shopify.
-- Making product in a commissary or shared kitchen, no SQF, cannot get into retail without a certified facility.
-- Buying motives: "I can't make enough" and "the buyer at Sprouts asked for my audit certificate."
-- Risk: small first orders, may not meet MOQ. Qualify hard on volume before spending call time.
+### Tier B: established brands with a genuine change (25% of effort)
+- Revenue $2M to $50M, already in national or regional retail, and one of: a public raise for supply-chain change, a single co-manufacturer and no plant (second-source risk), a new format or category the current maker cannot run, a recall, or a co-packer closure.
+- Fewer of these, larger, slower. One or two on the spear list at a time. Without a change signal they belong in Tier C.
 
-### Tier C: brand extensions and private label (15% of effort)
-- Non-food brands with an audience: coffee roasters, breweries, influencers and creators, hospitality groups, sports teams, pet retailers wanting a store brand, veterinary groups, subscription boxes, corporate gifting companies, fundraising companies.
-- Buying motive: a new product line with zero manufacturing knowledge. Turnkey is the whole pitch.
-- Longer, less predictable cycle, but the facility does the formulation, so it captures the whole margin.
+### Tier C: big swings and long cycles (15% of effort)
+- National brands with no visible change (nurture quarterly; the contract will end someday).
+- Retail private label (PLMA and ECRM, not cold email).
+- Brand extensions: coffee roasters, pet retailers, creators, hospitality groups launching a first product with zero manufacturing knowledge. Turnkey is the whole pitch and the cycle is unpredictable.
 
 ### Not worth pursuing
-- Brands that state they manufacture in their own plant and show no growth signal.
+- Brands that state they manufacture in their own plant with no growth or transition signal.
 - Products the facility cannot run (frozen, refrigerated, raw pet food, beverages). Confirm the line list first.
 - Anything under roughly $300k revenue with no retail or wholesale traction. Nurture, do not chase.
 - Regulated or gray-area functional ingredients unless the facility explicitly agrees.

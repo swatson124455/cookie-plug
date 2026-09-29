@@ -5,11 +5,30 @@ from leadgen.models import Category, Lead, LeadSignals, Segment
 from leadgen.scoring import IcpWeights, apply_score, score_lead
 
 
-def test_strong_lead_scores_high(strong_lead, weights, facility):
+def test_established_national_retail_lead_carries_contract_penalty(strong_lead, weights, facility):
     result = score_lead(strong_lead, weights, facility)
-    assert result.score >= 70
+    assert 40 <= result.score < 55
     assert not result.disqualified
-    assert any("in_national_retail" in r for r in result.reasons)
+    assert any("likely under co-manufacturer contract" in r for r in result.reasons)
+
+
+def test_transitioning_emerging_brand_outscores_established_retail(strong_lead, weights, facility):
+    emerging = Lead(company="Fresh Start", category=Category.COOKIE, segment=Segment.EMERGING_BRAND,
+                    signals=LeadSignals(transitioning=True, recent_funding=True))
+    assert score_lead(emerging, weights, facility).score > score_lead(strong_lead, weights, facility).score
+
+
+def test_seeking_copacker_is_the_strongest_signal(weights, facility):
+    seeking = Lead(company="Ask", category=Category.PET_TREAT, segment=Segment.EMERGING_BRAND, signals=LeadSignals(seeking_copacker=True))
+    assert score_lead(seeking, weights, facility).score >= 50
+
+
+def test_penalty_lifted_when_something_is_changing(strong_lead, weights, facility):
+    base = score_lead(strong_lead, weights, facility).score
+    strong_lead.signals.transitioning = True
+    changed = score_lead(strong_lead, weights, facility)
+    assert changed.score > base + 10
+    assert not any("contract" in r for r in changed.reasons)
 
 
 def test_weak_lead_disqualified(weak_lead, weights, facility):

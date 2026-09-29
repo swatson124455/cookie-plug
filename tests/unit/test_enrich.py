@@ -22,6 +22,12 @@ def test_extract_signals_from_shopify_homepage(shopify_html):
     assert "Whole Foods" in signals.site_description
 
 
+def test_extract_signals_transition_language():
+    html = "<html><body><p>We have outgrown our shared kitchen and are looking for a co-packer.</p></body></html>"
+    signals = extract_signals(html)
+    assert signals.transitioning and signals.seeking_copacker
+
+
 def test_extract_signals_plain_page_has_nothing():
     signals = extract_signals("<html><body><p>Hello world</p></body></html>")
     assert not signals.is_shopify

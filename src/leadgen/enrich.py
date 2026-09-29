@@ -32,6 +32,8 @@ KEYWORDS: dict[str, tuple[str, ...]] = {
     "private_label": ("private label", "white label"),
     "hiring": ("production manager", "operations manager", "plant manager", "production associate", "we're hiring", "we are hiring", "join our team"),
     "own_facility": ("our own facility", "made in our own", "our own bakery", "we own our factory"),
+    "seeking": ("looking for a co-packer", "seeking a co-packer", "looking for a manufacturer", "seeking a manufacturer", "co-packer wanted"),
+    "transition": ("outgrown", "outgrowing", "shared kitchen", "commissary", "cottage food", "moving production", "now shelf-stable", "now shelf stable", "coming soon to stores", "first retail", "new format", "we're growing", "we are growing", "expanding production"),
 }
 
 CATEGORY_TERMS: dict[Category, tuple[str, ...]] = {
@@ -116,6 +118,8 @@ def extract_signals(html: str) -> LeadSignals:
         hiring_ops_or_production=_has_any(text, KEYWORDS["hiring"]),
         out_of_stock=bool(re.search(r"sold out|out of stock|back in stock", text)),
         explicit_own_facility_only=_has_any(text, KEYWORDS["own_facility"]),
+        seeking_copacker=_has_any(text, KEYWORDS["seeking"]),
+        transitioning=_has_any(text, KEYWORDS["transition"]),
         has_pet_and_human_lines=has_pet and has_human,
         detected_categories=detected,
         site_title=title[:200],

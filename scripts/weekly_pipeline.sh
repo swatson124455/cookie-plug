@@ -9,13 +9,13 @@ DOSSIERS="${2:-5}"
 
 leadgen watch --days "$DAYS"
 if [ -n "${ANTHROPIC_API_KEY:-}${ANTHROPIC_AUTH_TOKEN:-}" ]; then
-  leadgen websites --min-score 40 --limit 25
+  leadgen websites --min-score 35 --limit 25
 fi
 leadgen enrich
-leadgen score --min-score 40 --top 40
-leadgen qualify --min-score 40 --limit 40
+leadgen score --min-score 35 --top 40
+leadgen qualify --min-score 35 --limit 40
 if [ -n "${ANTHROPIC_API_KEY:-}${ANTHROPIC_AUTH_TOKEN:-}" ]; then
-  leadgen dossier --min-score 55 --limit "$DOSSIERS"
+  leadgen dossier --min-score 50 --limit "$DOSSIERS"
 else
   echo "no API key: skipping dossiers (set ANTHROPIC_API_KEY to enable)"
 fi

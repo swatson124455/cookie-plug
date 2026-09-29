@@ -2,22 +2,43 @@
 
 Researched 2026-09-29 from public sources only; every fact traces to a URL in the dossiers below. Playbook: `docs/14_spear_playbook.md`. Facility claims in the emails are limited to open capacity, turnkey scope, one roof, and sampling in weeks; anything about allergen lines or certifications is phrased as a question until `config/facility.yaml` is confirmed.
 
-## Ranking
+## Ranking (re-ranked 2026-09-29 after the "emerging and transitioning first" correction)
 
-| # | Account | Tier | Trigger | Why this rank |
+A brand already in thousands of national doors has a co-manufacturer under contract; the realistic buyer is the one changing something. Tiers below reflect that. Dossiers exist for the original twelve; the six new Tier 1 entries are queued for `leadgen dossier`.
+
+**Tier 1, spear now: emerging or transitioning, no contract in the way**
+
+| # | Account | Score | What is changing | Evidence |
 |---|---|---|---|---|
-| 1 | Heavenly Hunks | Spear now | Sept 21, 2026: Dupe Loops glazed mini donuts at 212 Target stores, its first non-cookie format | 16,000-door brand whose Minneapolis bakery is built for oatmeal cookies; no donut maker named anywhere |
-| 2 | Elavi | Spear now | May 28, 2026: national at Whole Foods with an exclusive SKU, seven weeks after Wegmans pushed it past 1,000 doors | Bootstrapped, no plant, one unnamed US co-manufacturer; a second source is risk management, not a nice-to-have |
-| 3 | Mightylicious | Spear now | Sept 24, 2026: Republic raise for Wakefern and Wegmans entry and "full vertical integration of its supply chain" | 1,100 doors; currently baked on shared nut and soy lines; a documented history of co-packer delays. Ask build-or-buy directly |
-| 4 | Legally Addictive Foods | Spear now | 2026 Form C reserves "the option to utilize qualified third-party manufacturing capacity" to supplement in-house | The only account with a filed statement that outside capacity is on the table; JetBlue Mint and 2,000 points on a 7,000 sq ft kitchen |
-| 5 | Bakeful | Spear now | Sept 24, 2026: three fall LTOs across Target, Walmart, HEB, Kroger, Amazon on top of 7 Target SKUs | 4,000+ doors, founder publicly said co-manufacturing donuts "was challenging"; gate: dedicated nut-free facility |
-| 6 | YUMI | Spear now | June 22, 2026: first cookie, Target nationwide | 11,300 doors, no known bakery, hiring a Head of Sales for the next expansion; cash-disciplined after a down round |
-| 7 | Dog Treat Naturals | Spear later | June 25, 2026: Van Den Bosch distribution deal | Fully outsourced to a Midwest SQF co-packer, so switching is possible; small (~$700K) and brand tied to its solar-powered plant story |
-| 8 | cadootz! | Spear later | Target snack-pack exclusivity lapsed around Sept 2026 | Funded, 2,000 Target doors, but crackers with a settled co-man; the opening is a sweet line extension |
-| 9 | Brune Kitchen | Spear later | Sprouts nationwide, Apr 2025; already moved to co-packing per the founder's podcast | Two-person team, refrigerated set; small volume, easy conversation, low ceiling |
-| 10 | Consumers Supply Distributing | Spear later | Dec 2025 Salmonella recall of two private-label biscuit lines (now terminated) | $35M distributor; owns two plants, so first find out who bakes the biscuits |
-| 11 | PawCo | Nurture | June 2026 Chewy launch of hand-made Magic Cookies | Owns plants in San Francisco and Indiana and is hiring production; only an automation or overflow pitch |
-| 12 | Three Dog Brands | Nurture | SUPERZOO 2026: seven new SKUs incl. a 2027 soft-baked biscuit | Opened an 87,000 sq ft Kansas City plant in Jan 2026; bridge capacity only while it ramps |
+| 1 | Legally Addictive Foods | 86 | Raising to expand production; Form C keeps the option of third-party capacity to supplement its 7,000 sq ft kitchen | SEC Form C; Kingscrowd; WLOS (JetBlue Mint) |
+| 2 | Farm to Pet | 68 | Bootstrapped to $5M+, opened a StartEngine raise in June 2026 explicitly "to expand production capacity" | petfoodindustry.com 15828901 |
+| 3 | Nowhere Bakery | 66 | Wholesale now about 35 percent of the business and growing; Sprouts California; moving from DTC to retail | second cookie research pass |
+| 4 | Spoiled Pets | 66 | Founded 2024; SUPERZOO Emerging Brands Pavilion; Chewy launch 2026; on Faire | petfoodprocessing.net 20658, 20669 |
+| 5 | Brune Kitchen | 62 | Two-person brand already co-packing; refrigerated set at Sprouts; a shelf-stable version is the next move | Shelf Talks podcast; NOSH Apr 2025 |
+| 6 | Dog Treat Naturals | 62 | Fully outsourced to a Midwest co-packer; new Van Den Bosch distribution adds volume | petage.com; dogtreatnaturals.com |
+| 7 | Roaring Fork Mill | 60 | A flour mill launching its first packaged cookie line, NEXTY finalist, with no bakery of its own | snackandbakery.com NEXTY 2026 |
+| 8 | Fat & Weird Cookie | 58 | Bakes ~40,000 cookies a week in its own 10,000 sq ft space and just entered a frozen retail format at H-E-B | fatandweirdcookie.com batch report |
+| 9 | Dupe Loops | 56 | Food-truck donut made shelf-stable for 212 Target stores; no manufacturer named | NOSH Sept 21, 2026 |
+| 10 | Fields Good | 52 | Launched May 2026 with a $1.8M pre-seed to build toward national retail; functional cookies | prnewswire 302782578 |
+
+**Tier 2, established but something is genuinely changing: fewer, bigger, slower**
+
+| # | Account | Score | The change | Caveat |
+|---|---|---|---|---|
+| 11 | Mightylicious | 72 | Raising for "supply chain integration"; currently on shared allergen lines with a history of co-packer delays | 1,100 doors; may mean an owned plant. One email: build or buy? |
+| 12 | Elavi | 60 | No plant, one unnamed co-manufacturer, went national at Whole Foods | Second-source pitch only; unit-economics discipline means price pressure |
+
+**Tier 3, big swing: national retail, likely contracted, nurture with a quarterly note**
+
+Bakeful (4,000 doors, nut-free gate), Heavenly Hunks cookies (16,000 doors; the Dupe Loops entry above is the real opening), YUMI (11,300 doors, cash-constrained), cadootz! (Target exclusive, settled co-man), Consumers Supply (owns plants), PawCo (owns plants), Three Dog Brands (new 87,000 sq ft plant). Keep the dossiers; do not spend spear hours here until a transition signal appears.
+
+**Bench (next up when a Tier 1 slot opens):** Champ's Pet Kitchen, Let's Sprinkle by MG, A Better Treat, Lexington Bakes, The Graceful Cookie Co., Doich Foods, Whoa Dough, Rescue Treats, Just Paw Naturals, Yumkies.
+
+---
+
+## Dossiers
+
+The detailed sections below are the original research set (Heavenly Hunks, Elavi, Mightylicious, Legally Addictive, Bakeful, YUMI, then the spear-later and nurture notes). Their custom emails still stand for the accounts that remain in Tier 1 or 2; Bakeful, Heavenly Hunks, and YUMI emails are parked with their Tier 3 status.
 
 ---
 

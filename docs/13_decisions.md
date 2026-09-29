@@ -20,10 +20,10 @@ Each one has a recommendation. Nothing here blocks the build; each blocks a spec
 - Con: needs the partner's sign-off and their agreement to field inbound you did not originate.
 - Alternative: "a US manufacturer" until the first handoff. Pro: no approval needed. Con: lower reply rate during the proof month, when you need replies most.
 
-## 4. Contact Mightylicious first despite its "supply chain integration" raise (blocks the top of the send list)
-**Recommendation:** yes, first, and ask the question directly: are you building or buying capacity?
-- Pro: highest-scoring lead; if they are buying, the deal is large; if building, you learn it in one email.
-- Con: a wasted top slot if they have already decided to build.
+## 4. Where the first spear hours go (blocks the top of the send list)
+**Recommendation:** the ten Tier 1 accounts in `leads/spear_list.md` (Legally Addictive, Farm to Pet, Nowhere Bakery, Spoiled Pets, Brune Kitchen, Dog Treat Naturals, Roaring Fork Mill, Fat & Weird, Dupe Loops, Fields Good) plus one Tier 2 question to Mightylicious: are you building or buying capacity?
+- Pro: every Tier 1 account has a documented change and no incumbent contract in the way; small accounts grow inside the two-year referral window.
+- Con: smaller first orders; the proof memo will show more replies and smaller dollar figures than a big-brand list would.
 
 ## 5. Referral share for partners who introduce brands (blocks partner outreach)
 **Recommendation:** 25 percent of what you receive, flat, for as long as you receive it.

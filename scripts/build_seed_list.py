@@ -28,7 +28,7 @@ from leadgen.scoring import apply_score, load_weights  # noqa: E402
 LEADS_DIR = Path("leads")
 OVERRIDES_PATH = LEADS_DIR / "overrides.csv"
 TOP_N = 15
-WEAK_FIT_CAP = 39  # weak product fits never outrank a real fit; they stay in nurture
+WEAK_FIT_CAP = 34  # weak product fits never outrank a real fit; they stay in nurture
 
 # Companies the research surfaced as triggers but that are not realistic
 # buyers for this facility: national conglomerates, retailers whose recall
@@ -96,6 +96,10 @@ def apply_overrides(leads: list[Lead], path: Path) -> list[Lead]:
         note = (row.get("fit_note") or "").strip()
         if note:
             lead.notes = f"{lead.notes} || {note}".strip(" |")
+            if "TRANSITION:" in note.upper() or "CHANGE:" in note.upper():
+                lead.signals.transitioning = True
+            if "seeking" in note.lower() or "looking for a co-packer" in note.lower() or "third-party manufacturing" in note.lower():
+                lead.signals.seeking_copacker = True
         kept.append(lead)
     return kept
 
@@ -187,7 +191,7 @@ def main(argv: list[str]) -> int:
     write_seed_csv(leads, LEADS_DIR / "seed_list.csv")
     write_scored_csv(leads, LEADS_DIR / "seed_list_scored.csv")
     write_top_drafts(leads, LEADS_DIR / "top_drafts.md")
-    buckets = {"55+": sum(l.score >= 55 for l in leads), "40-54": sum(40 <= l.score < 55 for l in leads), "<40": sum(l.score < 40 for l in leads)}
+    buckets = {"50+": sum(l.score >= 50 for l in leads), "35-49": sum(35 <= l.score < 50 for l in leads), "<35": sum(l.score < 35 for l in leads)}
     print(f"scored {len(leads)} leads: {buckets}")
     return 0
 

@@ -1,6 +1,6 @@
 # Seed lead list (built 2026-09-28)
 
-**185 leads, 169 with websites, 89 with a named contact, 35 with a public email address (20 of the top 25).** Score buckets: 26 at 55 and up, 52 at 40 to 54, 107 under 40.
+**185 leads, 169 with websites, 89 with a named contact, 35 with a public email address (20 of the top 25).** Score buckets: 16 at 50 and up, 76 at 35 to 49, 93 under 35.
 
 Research pass across Expo West 2026, Sweets & Snacks 2026, Fancy Food 2026, SuperZoo 2025/2026, Global Pet Expo 2026, retailer emerging-brand programs, funding news, retail-launch news, recalls, co-packer closures, and job postings. Every row records only facts seen in a search result, with the source URL in `notes`. Nothing here has been enriched from the brand's own website yet.
 
@@ -23,9 +23,11 @@ Research pass across Expo West 2026, Sweets & Snacks 2026, Fancy Food 2026, Supe
 
 ## How to read the scores
 
-- **55 and up:** contact in weeks 2 and 3. Right category, established or funded, with at least one live trigger.
-- **40 to 54:** contact in week 4 or nurture. Right category, weaker or single trigger.
-- **Under 40:** nurture list, or capped because the product is not a baked good (see "WEAK FIT" in notes).
+- **50 and up:** contact in weeks 2 and 3. Right category, emerging or changing, with a transition, seeking, or funding signal. This is the realistic list.
+- **35 to 49:** contact in week 4 or nurture. Right category, one weaker trigger, or an established brand that is likely under contract.
+- **Under 35:** nurture, or capped because the product is not a baked good (see "WEAK FIT" in notes).
+
+The weighting was corrected on 2026-09-29: emerging and transitioning brands outrank established brands in national retail, which carry a "likely under co-manufacturer contract" penalty until a change signal appears.
 
 ## What still needs a human before sending
 
