@@ -4,4 +4,4 @@ location: {city: "Springfield", state: "IL", ships_nationwide: true}
 categories: [cookie, bakery, pet_treat, pet_food]
 services: {formulation: true, private_label: true, contract_manufacturing: true, packaging: true, labeling: true, nutrition_panels: true, shelf_ready: true}
 certifications: {fda_registered: true, sqf: "SQF Level 2", organic: "TO_CONFIRM", gluten_free: "TO_CONFIRM", kosher: "OU", non_gmo: "TO_CONFIRM", aafco_pet: "TO_CONFIRM", allergen_controlled_lines: "TO_CONFIRM"}
-commercial: {spare_capacity_pct: 40, min_order_units: 5000, typical_lead_time_weeks: 4, sampling_turnaround_days: 10, onboarding_weeks: 6}
+commercial: {spare_capacity_pct: 40, min_order_units: 5000, typical_lead_time_weeks: 4, sampling_turnaround_days: 10, onboarding_weeks: 6, multiple_skus_welcome: true}

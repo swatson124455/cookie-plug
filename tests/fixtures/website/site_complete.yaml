@@ -16,3 +16,4 @@ author_bio: "Ten years running bakery production and co-packer relationships for
 form: {provider: "netlify", action: ""}
 analytics_snippet: ""
 analytics_hosts: []
+indexnow_key: "0123456789abcdef0123456789abcdef"

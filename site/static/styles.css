@@ -438,3 +438,6 @@ article .page-head h1 { font-size: clamp(2.1rem, 4.4vw, 3.5rem); max-width: 24ch
 .checks li { position: relative; padding: 0.7rem 0 0.7rem 2rem; border-bottom: 1px solid var(--rule); }
 .checks li::before { content: ""; position: absolute; left: 0.2rem; top: 1.05rem; width: 0.9rem; height: 0.45rem; border-left: 3px solid var(--signal); border-bottom: 3px solid var(--signal); transform: rotate(-45deg); }
 .aside .facts { justify-self: stretch; max-width: none; box-shadow: none; }
+
+.subhead { font-size: clamp(1.3rem, 2.2vw, 1.6rem); margin: 0 0 0.5rem; }
+.landing-points { margin-top: 1.4rem; }

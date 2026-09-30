@@ -51,6 +51,13 @@
     a: "About {value} weeks from sample approval to the first run is typical, and printed packaging is often what sets the date."
 
 - group: "Production"
+  q: "Can I bring more than one product?"
+  a: "Tell us every product you want to make. The facility confirms line fit for each one before sampling."
+  when_confirmed:
+    field: commercial.multiple_skus_welcome
+    a: "Yes. Multiple SKUs are welcome. Tell us every product you want to make, and the facility confirms line fit for each one before sampling."
+
+- group: "Production"
   q: "What certifications does the facility hold?"
   a: "We list only certifications we can document with a current certificate, on the capabilities page. Tell us what your buyer requires, and we confirm it with the facility, in writing, before you plan around it."
 

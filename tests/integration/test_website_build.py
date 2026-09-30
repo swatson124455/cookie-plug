@@ -162,7 +162,7 @@ def test_sitemap_llms_and_headers(production):
     sitemap = (dist / "sitemap.xml").read_text(encoding="utf-8")
     locs = set(re.findall(r"<loc>([^<]+)</loc>", sitemap))
     indexable = {f"https://openline.test/{name.replace('index.html', '')}" for name in parsed
-                 if name not in {"thanks/index.html", "404.html"}}
+                 if name not in {"thanks/index.html", "404.html"} and not name.startswith("lp/")}
     assert locs == indexable
     llms = (dist / "llms.txt").read_text(encoding="utf-8")
     full = (dist / "llms-full.txt").read_text(encoding="utf-8")
@@ -313,3 +313,71 @@ def test_share_images_are_drawn_from_site_fonts(tmp_path):
     assert len(written) == 1 + len(site.categories) + len(site.guides) + 2
     assert Image.open(static / "og" / "default.png").size == (1200, 630)
     assert Image.open(static / "apple-touch-icon.png").size == (180, 180)
+
+
+def test_landing_pages_are_noindex_and_tag_the_channel(production, preview):
+    _, dist, parsed = production
+    page = parsed["lp/google-bakery/index.html"]
+    assert page.find("meta", attrs={"name": "robots"})["content"].startswith("noindex")
+    assert page.find("input", attrs={"name": "source_page"})["value"] == "/lp/google-bakery/"
+    assert "/lp/" not in (dist / "sitemap.xml").read_text(encoding="utf-8")
+    assert "/lp/" not in (dist / "llms.txt").read_text(encoding="utf-8")
+    assert not preview[1].find(id="lp-google-bakery")
+
+
+def test_line_pages_carry_their_extra_sections(production):
+    _, _, parsed = production
+    def text(name: str) -> str:
+        return " ".join(parsed[name].get_text(" ").split())
+
+    assert "Shelf-stable and individually wrapped cookies" in text("cookie-co-packer/index.html")
+    assert "Private label or your own recipe" in text("dog-treat-co-packer/index.html")
+
+
+def test_multiple_skus_show_only_once_confirmed(production, confirmed):
+    _, _, open_pages = production
+    _, confirmed_pages = confirmed
+    assert "Multiple welcome" not in open_pages["index.html"].get_text(" ")
+    assert "facility confirms line fit for each one" in open_pages["faq/index.html"].get_text(" ")
+    assert "Multiple welcome" in confirmed_pages["index.html"].get_text(" ")
+    assert "Yes. Multiple SKUs are welcome." in confirmed_pages["faq/index.html"].get_text(" ")
+
+
+def test_indexnow_key_file_ships_only_in_production(production, tmp_path):
+    _, dist, _ = production
+    assert (dist / "0123456789abcdef0123456789abcdef.txt").read_text(encoding="utf-8") == "0123456789abcdef0123456789abcdef"
+    root = make_root(tmp_path, "site_complete.yaml", "facility_unconfirmed.yaml")
+    assert main(["--draft"], root=root) == 0
+    assert not list((root / "site" / "dist").glob("0123456789abcdef*.txt"))
+
+
+def test_indexnow_ping_submits_every_indexable_url(tmp_path):
+    import httpx
+
+    from leadgen.website.build import submit_indexnow
+
+    seen: list[dict] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(json.loads(request.content))
+        return httpx.Response(202)
+
+    root = make_root(tmp_path, "site_complete.yaml", "facility_unconfirmed.yaml")
+    result = submit_indexnow(root, httpx.Client(transport=httpx.MockTransport(handler)))
+    body = seen[0]
+    assert body["host"] == "openline.test" and body["keyLocation"].endswith("/0123456789abcdef0123456789abcdef.txt")
+    assert "https://openline.test/faq/" in body["urlList"] and not any("/lp/" in url or "/thanks/" in url for url in body["urlList"])
+    assert "IndexNow accepted" in result.message
+
+
+def test_indexnow_ping_reports_refusals_and_placeholders(tmp_path):
+    import httpx
+
+    from leadgen.website.build import submit_indexnow
+
+    root = make_root(tmp_path, "site_complete.yaml", "facility_unconfirmed.yaml")
+    refusing = httpx.Client(transport=httpx.MockTransport(lambda request: httpx.Response(403)))
+    with pytest.raises(SiteConfigError, match="HTTP 403"):
+        submit_indexnow(root, refusing)
+    draft_root = make_root(tmp_path / "draft", "site_placeholders.yaml", "facility_unconfirmed.yaml")
+    assert main(["--indexnow"], root=draft_root) == 2

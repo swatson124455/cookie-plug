@@ -195,3 +195,17 @@ def load_categories(path: Path, facts: FacilityFacts) -> dict[str, dict[str, Any
         spec["questions"] = [FaqItem(str(q["q"]).strip(), resolve_answer(q, facts)) for q in spec.get("questions") or []]
         pages[str(slug)] = spec
     return pages
+
+
+def load_landings(path: Path) -> dict[str, dict[str, Any]]:
+    """Ad landing pages keyed by slug; an absent file means none."""
+    if not path.exists():
+        return {}
+    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    for slug, spec in raw.items():
+        for key in ("title", "description", "h1", "intro", "points"):
+            if not spec.get(key):
+                raise ContentError(f"{path}: {slug} needs {key}")
+        if not re.fullmatch(r"[a-z0-9-]+", str(slug)):
+            raise ContentError(f"{path}: landing page slug {slug!r} must be lowercase letters, digits, and dashes")
+    return {str(slug): dict(spec) for slug, spec in raw.items()}

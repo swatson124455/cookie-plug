@@ -121,10 +121,15 @@ Realistic expectation: first organic leads in 8 to 12 weeks; a steady one to fou
 | `python site/build.py --draft` | The same pages with placeholders highlighted, every page `noindex`, robots.txt closed. For a private look on Netlify before launch |
 | `python site/build.py --preview FILE` | The whole site as one HTML file with in-page navigation, for review anywhere |
 | `python site/build.py --images` | Redraws the share images and icons (needs Pillow); commit the results |
+| `python site/build.py --indexnow` | After a deploy that changed content: tells Bing (which feeds Copilot) and the other IndexNow engines which pages to re-read. Needs the real domain and `indexnow_key` in `site/config.yaml`; the production build publishes the key file |
 
 **What the site may say.** Facility facts come only from `config/facility.yaml`, and only once confirmed. Confirm a certification, a minimum, a lead time, a sampling turnaround, or the location there, rebuild, and the capabilities page, the Capacity Facts panel, the FAQ answers, and `llms.txt` all update. Nothing marked `TO_CONFIRM` can reach a page; the tests check every page for it.
 
-**Monthly upkeep (pin 24).** Confirm the open lines with the facility and update `capacity.as_of` in `site/config.yaml`. The date prints on every page; the build warns once it is 45 days old.
+**Monthly upkeep (pin 24).** Confirm the open lines with the facility and update `capacity.as_of` in `site/config.yaml`. The date prints on every page; the build warns once it is 45 days old. After the deploy, run `python site/build.py --indexnow`.
+
+**Ad landing pages.** `site/content/landing.yaml` defines pages at `/lp/<slug>/` (Google bakery, Google pet, Bing). They are noindex and outside the sitemap, and the form records the page path, so each lead shows which ad channel it came from without any tracking script. Point each ad group's final URL at one.
+
+**Extra sections on line pages.** A line in `site/content/categories.yaml` can carry `extras` (title, intro, points, optional guide slug); the cookie page uses one for shelf-stable, individually wrapped cookies and the dog-treat page one for private label versus your own recipe.
 
 **Adding a guide.** Create `site/content/guides/<slug>.md` with this front matter, then run `python site/build.py --images` and commit both:
 

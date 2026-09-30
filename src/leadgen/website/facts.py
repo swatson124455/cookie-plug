@@ -89,6 +89,7 @@ class FacilityFacts:
     numbers: list[Fact]
     location: str = ""
     ships_nationwide: bool = False
+    multiple_skus: bool = False
     as_of: str = ""
     confirmed: dict[str, Any] = field(default_factory=dict)
 
@@ -167,6 +168,7 @@ def build_facts(facility: FacilityProfile, cfg: SiteConfig) -> FacilityFacts:
         numbers=_numbers(confirmed),
         location=_location(confirmed),
         ships_nationwide=confirmed.get("location.ships_nationwide") is True,
+        multiple_skus=confirmed.get("commercial.multiple_skus_welcome") is True,
         as_of=cfg.capacity.label(),
         confirmed=confirmed,
     )

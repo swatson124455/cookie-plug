@@ -41,6 +41,7 @@ class SiteContext:
         self.guides: list[Guide] = []
         self.faq: list[FaqItem] = []
         self.categories: dict[str, dict[str, Any]] = {}
+        self.landings: dict[str, dict[str, Any]] = {}
         self.css_version = ""
 
     def __repr__(self) -> str:
@@ -61,7 +62,7 @@ class SiteContext:
         """Preview route id for a page key: ``home``, ``faq``, ``guide-<slug>``."""
         if not key:
             return "home"
-        return key.replace("guides/", "guide-") if key.startswith("guides/") else key
+        return key.replace("guides/", "guide-", 1).replace("/", "-")
 
     @staticmethod
     def path(key: str) -> str:

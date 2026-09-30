@@ -43,6 +43,14 @@ cookie-co-packer:
     - "Realistic monthly volume for the next twelve months."
     - "Your retailer or channel, and any certification the buyer asked for."
   note: "Cookie formats (drop, wire-cut, bar, sandwich, soft-baked) run on different equipment. Name yours in the capacity check; the facility confirms line fit before anything else."
+  extras:
+    - title: "Shelf-stable and individually wrapped cookies"
+      intro: "Cookies sold in coffee shops, convenience stores, vending, gift boxes, or meal kits usually have to be shelf-stable, and often individually wrapped. Converting a fresh cookie is a formulation and packaging project, and both are part of the turnkey service. Whether your wrap format fits a line is confirmed first."
+      points:
+        - "Tell us the shelf life you need and where the cookie will be sold."
+        - "Say whether each wrapper must work for single-unit retail sale or only inside a multipack; it changes the packaging and the label."
+        - "Plan for shelf-life testing before launch; it is what proves the date on the pack."
+      guide: refrigerated-to-shelf-stable
   questions:
     - q: "Can you match my cookie exactly?"
       a: "That is what the benchmark sample is for. The facility's formulation team works from your recipe or from the cookie itself, and you judge the sample side by side with your own before anything is quoted."
@@ -141,6 +149,14 @@ dog-treat-co-packer:
     - "Realistic monthly volume for the next twelve months."
     - "Your channels (online, pet specialty, grocery) and the states you sell in, because feed registrations are state by state."
   note: "Treat formats run on different equipment: baked biscuits, soft-baked treats, jerky, freeze-dried, and extruded treats are different lines. Name yours in the capacity check; the facility confirms line fit before anything else."
+  extras:
+    - title: "Private label or your own recipe"
+      intro: "Both are available. Private label means the facility develops a treat with you and you sell it under your brand. Contract manufacturing means it makes your existing recipe to your written spec."
+      points:
+        - "Private label is often the faster start when you have a brand and customers but no finished recipe."
+        - "Your own recipe keeps the product unique to you: bring the formula, your current label, and a case of treats."
+        - "Either way, agree in writing who owns the formula before development starts."
+      guide: private-label-vs-co-packing-dog-treats
   questions:
     - q: "Do you handle pet-food labeling?"
       a: "Labeling is part of the turnkey service, and for pet products that means the pet-food label, including the guaranteed analysis. Ask who handles state feed registrations for your product, and we tell you what the facility covers and what stays with you."

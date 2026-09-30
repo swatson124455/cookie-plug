@@ -38,3 +38,8 @@ form:
 # automatically; list any other hosts the tool calls in analytics_hosts.
 analytics_snippet: ""
 analytics_hosts: []
+
+# IndexNow: the build publishes /<key>.txt so Bing and other IndexNow engines accept
+# change pings from `python site/build.py --indexnow` (run it after a deploy that changed content).
+# The key is public by design; any 8 to 128 letters, digits, or dashes work.
+indexnow_key: "ee3f17956e9b3482a5103f90939a20b0"

@@ -332,3 +332,43 @@ def test_llms_files_state_confirmed_facts_only(complete_cfg, open_facts, confirm
     assert "- Minimum run: 5,000 units" in seo.render_llms_txt(complete_cfg, confirmed_facts, [guide], [])
     full = seo.render_llms_full(complete_cfg, open_facts, [guide], [FaqItem("Q?", "A.")])
     assert "### Q?\n\nA." in full and "Short answer: The short answer." in full
+
+
+def test_indexnow_helpers(complete_cfg):
+    import httpx
+
+    from leadgen.website import indexnow
+
+    assert indexnow.valid_key("0123456789abcdef") and not indexnow.valid_key("short") and not indexnow.valid_key("bad key!!")
+    assert indexnow.key_file(complete_cfg) == (f"{complete_cfg.indexnow_key}.txt", complete_cfg.indexnow_key)
+    assert indexnow.key_file(complete_cfg.model_copy(update={"indexnow_key": ""})) is None
+    body = indexnow.payload(complete_cfg, ["https://openline.test/"])
+    assert body["host"] == "openline.test" and body["urlList"] == ["https://openline.test/"]
+    with pytest.raises(indexnow.IndexNowError, match="indexnow_key"):
+        indexnow.ping(complete_cfg.model_copy(update={"indexnow_key": ""}), ["https://openline.test/"])
+    with pytest.raises(indexnow.IndexNowError, match="no URLs"):
+        indexnow.ping(complete_cfg, [])
+
+    def boom(request: httpx.Request) -> httpx.Response:
+        raise httpx.ConnectError("down")
+
+    with pytest.raises(indexnow.IndexNowError, match="could not reach"):
+        indexnow.ping(complete_cfg, ["https://openline.test/"], httpx.Client(transport=httpx.MockTransport(boom)))
+
+
+def test_preview_tokens_never_contain_slashes():
+    assert SiteContext.token("lp/google-bakery") == "lp-google-bakery"
+    assert SiteContext.token("guides/x") == "guide-x"
+
+
+def test_landing_pages_validate(tmp_path):
+    from leadgen.website.content import load_landings
+
+    assert load_landings(tmp_path / "missing.yaml") == {}
+    bad = tmp_path / "landing.yaml"
+    bad.write_text(yaml.safe_dump({"Bad Slug": {"title": "t", "description": "d", "h1": "h", "intro": "i", "points": ["p"]}}), encoding="utf-8")
+    with pytest.raises(ContentError, match="lowercase"):
+        load_landings(bad)
+    bad.write_text(yaml.safe_dump({"ok": {"title": "t"}}), encoding="utf-8")
+    with pytest.raises(ContentError, match="needs description"):
+        load_landings(bad)

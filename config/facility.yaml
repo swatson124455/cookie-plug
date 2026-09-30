@@ -44,3 +44,4 @@ commercial:
   typical_lead_time_weeks: 0       # TO_CONFIRM - from PO to ship
   sampling_turnaround_days: 0      # TO_CONFIRM - how fast can they sample
   onboarding_weeks: 0              # TO_CONFIRM - first production run
+  multiple_skus_welcome: true      # confirmed by the owner 2026-09-30: a brand can bring several products

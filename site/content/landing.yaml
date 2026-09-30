@@ -1,0 +1,37 @@
+# Landing pages for paid search, served at /lp/<slug>/. They are noindex and
+# stay out of the sitemap; the form records the page path, so every lead shows
+# which ad channel it came from. Point each ad group's final URL at one of these.
+# Facility claims follow the same rule as everywhere: confirmed facts only.
+
+google-bakery:
+  title: "Cookie and Bakery Co-Packer With Open Capacity"
+  description: "Open cookie and bakery lines now. Formulation, production, packaging, and labeling under one roof. Check capacity for your product."
+  h1: "Cookie and bakery co-packing, with open lines now"
+  intro: "A US manufacturer with open cookie and bakery capacity, turnkey from formulation to shelf-ready case packs. Answer four questions and we confirm fit within one business day."
+  points:
+    - "No waitlist to get on the line"
+    - "Formulation, production, packaging, labeling, and nutrition panels in one place"
+    - "Multiple SKUs welcome"
+    - "Free to ask; brands never pay us"
+
+google-pet:
+  title: "Dog Treat and Pet Food Co-Packer With Open Capacity"
+  description: "Open pet-treat and pet-food lines now, under one roof with bakery lines. Formulation, production, packaging, labeling. Check capacity."
+  h1: "Dog treat and pet food co-packing, with open lines now"
+  intro: "A US manufacturer with open pet-treat and pet-food capacity, under one roof with its bakery lines. Answer four questions and we confirm fit within one business day."
+  points:
+    - "No waitlist to get on the line"
+    - "Formulation, production, packaging, and the pet-food label in one place"
+    - "Multiple SKUs welcome"
+    - "Free to ask; brands never pay us"
+
+bing:
+  title: "Co-Packer With Open Capacity for Food and Pet Brands"
+  description: "Open cookie, bakery, pet-treat, and pet-food lines now. Turnkey from formulation to shelf-ready case packs. Check capacity for your product."
+  h1: "A co-packer with open lines for food and pet brands"
+  intro: "Open capacity now on cookie, bakery, pet-treat, and pet-food lines, turnkey from formulation to shelf-ready case packs. Answer four questions and we confirm fit within one business day."
+  points:
+    - "No waitlist to get on the line"
+    - "Human and pet lines under one roof"
+    - "Multiple SKUs welcome"
+    - "Free to ask; brands never pay us"

@@ -17,9 +17,9 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 from leadgen.facility import load_facility
-from leadgen.website import seo
+from leadgen.website import indexnow, seo
 from leadgen.website.config import SiteConfigError, is_placeholder, load_site_config, publish_problems, unknown_lines
-from leadgen.website.content import ContentError, load_categories, load_faq, load_guides
+from leadgen.website.content import ContentError, load_categories, load_faq, load_guides, load_landings
 from leadgen.website.facts import build_facts
 from leadgen.website.pages import Page, all_pages
 from leadgen.website.render import SiteContext, environment, render_page, rewrite_internal_links
@@ -91,6 +91,7 @@ def load_context(options: BuildOptions) -> tuple[SiteContext, list[str]]:
         guide.html = rewrite_internal_links(guide.html, site)
     site.faq = load_faq(content / "faq.yaml", facts, {"reply_within": cfg.reply_within})
     site.categories = load_categories(content / "categories.yaml", facts)
+    site.landings = load_landings(content / "landing.yaml")
     return site, _warnings(site, options)
 
 
@@ -157,6 +158,9 @@ def write_machine_files(site: SiteContext, pages: list[Page], out: Path) -> None
         "llms.txt": seo.render_llms_txt(site.cfg, site.facts, site.guides, page_links(site)),
         "llms-full.txt": seo.render_llms_full(site.cfg, site.facts, site.guides, site.faq),
     }
+    ownership = indexnow.key_file(site.cfg)
+    if ownership and not site.draft:
+        files[ownership[0]] = ownership[1]
     for name, text in files.items():
         (out / name).write_text(text, encoding="utf-8")
 
@@ -188,7 +192,7 @@ def build_preview(options: BuildOptions) -> BuildResult:
         raise ValueError("preview_file is required for a preview build")
     site, warnings = load_context(options)
     env = environment(options.site_dir / "templates")
-    pages = [page for page in all_pages(site) if page.key != "404"]
+    pages = [page for page in all_pages(site) if page.key != "404" and not page.key.startswith("lp/")]
     routes = "\n".join(render_page(env, site, page, "_route.html") for page in pages)
     static = options.site_dir / "static"
     html = env.get_template("preview.html").render(
@@ -200,6 +204,17 @@ def build_preview(options: BuildOptions) -> BuildResult:
     return BuildResult(pages, warnings, options.preview_file)
 
 
+def submit_indexnow(root: Path, client: object | None = None) -> BuildResult:
+    """Ping IndexNow with every indexable URL; needs a publishable config (real domain) and a key."""
+    site, _ = load_context(BuildOptions(root=root, mode="production"))
+    urls = [site.abs_url(page.key) for page in all_pages(site) if page.in_sitemap and not page.noindex]
+    try:
+        status = indexnow.ping(site.cfg, urls, client)  # type: ignore[arg-type]
+    except indexnow.IndexNowError as exc:
+        raise SiteConfigError(str(exc)) from exc
+    return BuildResult([], [], root / "site", f"IndexNow accepted {len(urls)} URLs (HTTP {status})")
+
+
 def parse_args(argv: list[str] | None) -> argparse.Namespace:
     """Command-line flags for ``site/build.py``."""
     parser = argparse.ArgumentParser(prog="site/build.py", description="Build the static website.")
@@ -207,6 +222,7 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     mode.add_argument("--draft", action="store_true", help="build with placeholders highlighted and noindex")
     mode.add_argument("--preview", type=Path, metavar="FILE", help="write the whole site as one HTML file")
     mode.add_argument("--images", action="store_true", help="regenerate share images and icons (needs Pillow)")
+    mode.add_argument("--indexnow", action="store_true", help="after a deploy: tell Bing and other IndexNow engines what changed")
     parser.add_argument("--out", type=Path, help="output directory, must be named dist (default site/dist)")
     return parser.parse_args(argv)
 
@@ -220,6 +236,8 @@ def run(args: argparse.Namespace, root: Path) -> BuildResult:
         written = generate_images(site, root / "site" / "static")
         static = root / "site" / "static"
         return BuildResult([], [], static, f"wrote {len(written)} images into {static} (commit them)")
+    if args.indexnow:
+        return submit_indexnow(root)
     if args.preview:
         return build_preview(BuildOptions(root=root, mode="preview", preview_file=args.preview))
     return build_site(BuildOptions(root=root, mode="draft" if args.draft else "production", dist=args.out))

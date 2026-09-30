@@ -35,6 +35,15 @@
 {% for item in spec.ready %}<li>{{ item }}</li>{% endfor %}
 </ul>
 {% if spec.note %}<p class="muted">{{ spec.note }}</p>{% endif %}
+{% for extra in spec.get("extras", []) %}
+<div class="section-gap"></div>
+<h3 class="subhead">{{ extra.title|nobreak }}</h3>
+<p>{{ extra.intro }}</p>
+<ul class="checks">
+{% for point in extra.points %}<li>{{ point }}</li>{% endfor %}
+</ul>
+{% if extra.guide and site.guide(extra.guide) %}<p><a href="{{ site.url('guides/' ~ extra.guide) }}">{{ site.guide(extra.guide).short_title }} <span class="arrow" aria-hidden="true">&rarr;</span></a></p>{% endif %}
+{% endfor %}
 </div>
 <div class="aside">{{ m.facts_panel() }}</div>
 </div></section>

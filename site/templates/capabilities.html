@@ -51,6 +51,7 @@
 {% else %}
 <p>Minimums and lead times depend on the product, the format, and the packaging, so the facility confirms them for your product on the first call. We do not publish a number we cannot stand behind.</p>
 {% endif %}
+{% if site.facts.multiple_skus %}<p><strong>Multiple SKUs welcome.</strong> Bring your whole line; each product is checked for line fit.</p>{% endif %}
 {% if site.facts.location %}<p>Production location: {{ site.facts.location }}.{% if site.facts.ships_nationwide %} Ships nationwide.{% endif %}</p>{% endif %}
 
 <div class="section-gap"></div>

@@ -106,6 +106,7 @@ class SiteConfig(BaseModel):
     form: FormSettings = Field(default_factory=FormSettings)
     analytics_snippet: str = ""
     analytics_hosts: list[str] = Field(default_factory=list)
+    indexnow_key: str = ""
 
     @property
     def base_url(self) -> str:

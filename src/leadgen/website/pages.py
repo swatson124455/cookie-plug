@@ -140,6 +140,13 @@ def company_pages(site: "SiteContext") -> list[Page]:
     ]
 
 
+def landing_pages(site: "SiteContext") -> list[Page]:
+    """Paid-traffic landing pages under /lp/: noindex, outside the sitemap; the form's source_page names the channel."""
+    return [Page(f"lp/{slug}", "landing.html", titled(site, spec["title"]), spec["description"], context={"spec": spec},
+                 noindex=True, in_sitemap=False) for slug, spec in site.landings.items()]
+
+
 def all_pages(site: "SiteContext") -> list[Page]:
     """Every route on the site, home first."""
-    return [home_page(site), capabilities_page(site), *category_pages(site), *guide_pages(site), *company_pages(site)]
+    return [home_page(site), capabilities_page(site), *category_pages(site), *guide_pages(site), *company_pages(site),
+            *landing_pages(site)]

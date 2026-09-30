@@ -56,6 +56,9 @@
 {% if not site.facts.numbers %}
 <div class="row"><dt>Minimum run</dt><dd>Per product</dd></div>
 {% endif %}
+{% if site.facts.multiple_skus %}
+<div class="row"><dt>SKUs per brand</dt><dd>Multiple welcome</dd></div>
+{% endif %}
 <div class="row"><dt>Cost to ask</dt><dd class="num">$0</dd></div>
 </dl>
 <div class="foot"><p>Status confirmed with the facility for {{ site.facts.as_of }}. Minimums, lead times, and certifications are confirmed for your product on the first call. We are paid by the facility, never by brands.</p></div>
