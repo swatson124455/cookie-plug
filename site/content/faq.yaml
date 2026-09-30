@@ -142,7 +142,7 @@
 - group: "Formulation"
   q: "Can you do formulation only, without production?"
   sites: [formulation, pet-formulation]
-  a: "Formulation here is built to lead to production on the facility's own lines: the recipe is developed for the equipment that will make it. If you want a formula only, say so in the project check, and we ask the facility whether it takes that on and on what terms."
+  a: "No. Formulation here leads to production: the facility develops a recipe for the equipment that will make it, then produces it on its own lines. If you want a formula to take to another manufacturer, we are not the right fit, and we will say so plainly."
 
 - group: "Formulation"
   q: "What does formulation cost?"

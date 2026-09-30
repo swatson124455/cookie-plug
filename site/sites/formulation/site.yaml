@@ -1,7 +1,8 @@
 # The human-food formulation site: recipe and product development for cookie and
 # baked-goods brands, presented as the path to production on the facility's open
 # lines (develop it here, then produce it here). Merged over site/shared.yaml.
-# Never promise formulation-only work, formulation fees, recipe ownership, or
+# Formulation leads to production (confirmed by the owner 2026-09-30): no formulation-only work.
+# Never promise formulation fees, recipe ownership, or
 # timelines: those are confirmed with the facility in writing, per project.
 
 brand: "Open Line Formulation"      # working name (decision 12): check the trademark and domain before you buy

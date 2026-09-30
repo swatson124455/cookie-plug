@@ -55,8 +55,8 @@ fit:
     - name: after_formulation
       label: "Once the recipe is approved, should the facility make it?"
       type: radio
-      hint: "Formulation here is built to lead to production on the facility's lines. If you want a formula only, say so, and we ask the facility whether it takes that on and on what terms."
-      options: ["Yes, produce it on an open line", "Maybe", "No, formulation only"]
+      hint: "Formulation here leads to production: the facility develops recipes for products it then makes on its own lines, and does not take formulation-only projects."
+      options: ["Yes, produce it on an open line", "Not sure yet"]
     - name: storage
       label: "How will it be stored and sold?"
       type: radio

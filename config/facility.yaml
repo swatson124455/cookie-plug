@@ -18,7 +18,7 @@ categories:
 
 # Turnkey services. These are the pitch.
 services:
-  formulation: true                # R&D / recipe development
+  formulation: true                # R&D / recipe development; leads to production (owner, 2026-09-30): no formulation-only projects
   private_label: true              # brand's label, facility's recipe
   contract_manufacturing: true     # brand's recipe, facility produces
   packaging: true
