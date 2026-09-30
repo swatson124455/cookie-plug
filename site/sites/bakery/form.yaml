@@ -1,0 +1,77 @@
+# The baked-goods capacity check. The template adds name, brand, email, phone,
+# notes, the honeypot, and hidden source_page and site fields; list only the
+# audience questions here. Field names are what `leadgen import-form` reads:
+# keep product, volume, timing, and current_setup (their choices map to lead
+# segments), and keep the fit names in step with src/leadgen/inbound.py.
+#   type: text | select | radio | checkboxes   (checkboxes post as name[])
+#   required: core questions default to required, fit questions to optional
+
+title: "Check capacity for your product"
+intro: "Four questions about your product, then your contact details. No sales call unless you ask for one."
+summary: "Four questions about your product, volume, and timing"
+kicker: "Capacity check"
+submit: "Send the capacity check"
+steps:
+  - "We check line fit with the facility and reply within {reply_within}."
+  - "If it fits, you send your product or spec for a benchmark sample."
+  - "You approve the sample, get a written quote, and sign directly with the facility."
+
+fields:
+  - name: product
+    label: "What are you making?"
+    placeholder: "Soft-baked oatmeal cookies, 6 oz bag"
+    wide: true
+  - name: volume
+    label: "Monthly volume, now or needed"
+    type: select
+    options: ["Under 5,000 units", "5,000 to 25,000", "25,000 to 100,000", "Over 100,000"]
+  - name: timing
+    label: "When you need it"
+    type: select
+    options: ["Now", "Within 3 months", "3 to 6 months", "Exploring"]
+  - name: current_setup
+    label: "How it is made today"
+    type: select
+    options: ["Home or shared kitchen", "Our own facility", "A co-packer", "Not in production yet"]
+
+fit:
+  title: "Help us check fit"
+  intro: "About a minute. These answers let the facility rule a mismatch in or out before anyone gets on a call."
+  fields:
+    - name: storage
+      label: "How is it stored and sold?"
+      type: radio
+      options: ["Shelf-stable", "Refrigerated", "Frozen", "Not sure"]
+    - name: recipe_status
+      label: "Where is the recipe?"
+      type: select
+      options: ["Production-ready formula", "Kitchen recipe", "Product to match", "Concept only", "Want a private-label recipe"]
+    - name: sku_count
+      label: "How many products (SKUs)?"
+      type: radio
+      options: ["1", "2 to 3", "4 to 10", "More than 10"]
+    - name: pack_format
+      label: "Pack format"
+      placeholder: "2 oz individually wrapped, 12 per box"
+    - name: target_price
+      label: "Target retail price"
+      placeholder: "$5.99 a bag"
+    - name: allergens
+      label: "Major allergens in the recipe"
+      type: checkboxes
+      hint: "Plants control allergens line by line, so this is the first thing the facility checks."
+      options: ["Peanuts", "Tree nuts", "Dairy", "Eggs", "Wheat", "Soy", "Sesame", "Fish or shellfish", "None"]
+    - name: certifications
+      label: "Certifications your buyers require"
+      type: checkboxes
+      options: ["Organic", "Gluten-free", "Kosher", "Non-GMO", "SQF or other GFSI audit", "None yet"]
+    - name: claims
+      label: "Claims on the pack"
+      type: checkboxes
+      options: ["Vegan", "Keto", "High-protein", "Low or no added sugar", "Plant-based", "None"]
+    - name: channels
+      label: "Where it sells, or will"
+      type: checkboxes
+      options: ["Online or direct", "Farmers markets and events", "Wholesale (cafes, gift shops)", "Grocery chains", "Online marketplaces", "Subscription boxes"]
+
+notes_placeholder: "Retailer, launch date, anything the facility should know"

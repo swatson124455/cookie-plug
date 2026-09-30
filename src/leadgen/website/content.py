@@ -154,6 +154,17 @@ def load_guides(directory: Path, id_prefix: Callable[[str], str] = lambda slug: 
     return sorted(guides, key=lambda guide: (guide.published, guide.title), reverse=True)
 
 
+def select_guides(guides: list[Guide], only: list[str] | None, source: str = "site") -> list[Guide]:
+    """The guides a site carries (None means all), newest first, with related links kept inside the set."""
+    if only is None:
+        return guides
+    by_slug = {guide.slug: guide for guide in guides}
+    chosen = pick(by_slug, only, f"{source}: guides")
+    for guide in chosen.values():
+        guide.related = [slug for slug in guide.related if slug in chosen]
+    return [guide for guide in guides if guide.slug in chosen]
+
+
 def resolve_answer(item: dict[str, Any], facts: FacilityFacts) -> str:
     """Pick the confirmed-fact answer when its field is confirmed, else the default answer."""
     variant = item.get("when_confirmed") or {}
@@ -171,21 +182,33 @@ def fill_tokens(text: str, tokens: dict[str, str] | None) -> str:
     return text
 
 
-def load_faq(path: Path, facts: FacilityFacts, tokens: dict[str, str] | None = None) -> list[FaqItem]:
-    """The FAQ with every answer resolved against confirmed facts and site settings."""
+def load_faq(path: Path, facts: FacilityFacts, tokens: dict[str, str] | None = None, site_id: str = "") -> list[FaqItem]:
+    """The FAQ with every answer resolved; items tagged ``sites: [...]`` appear only on those sites."""
     raw = yaml.safe_load(path.read_text(encoding="utf-8")) or []
     items: list[FaqItem] = []
     for index, item in enumerate(raw):
         if not item.get("q") or not item.get("a"):
             raise ContentError(f"{path}: item {index + 1} needs q and a")
+        if site_id and item.get("sites") and site_id not in item["sites"]:
+            continue
         answer = fill_tokens(resolve_answer(item, facts), tokens)
         items.append(FaqItem(str(item["q"]).strip(), answer, str(item.get("group") or "General"), bool(item.get("featured"))))
     return items
 
 
-def load_categories(path: Path, facts: FacilityFacts) -> dict[str, dict[str, Any]]:
-    """Category page copy keyed by slug, with each page's questions resolved."""
-    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+def pick(available: dict[str, Any], only: list[str] | None, source: str) -> dict[str, Any]:
+    """The entries a site lists, in its order; None means all. Unknown names are an error."""
+    if only is None:
+        return available
+    missing = [name for name in only if name not in available]
+    if missing:
+        raise ContentError(f"{source}: not found: {', '.join(missing)}")
+    return {name: available[name] for name in only}
+
+
+def load_categories(path: Path, facts: FacilityFacts, only: list[str] | None = None) -> dict[str, dict[str, Any]]:
+    """Category page copy keyed by slug (limited to ``only``), with each page's questions resolved."""
+    raw = pick(yaml.safe_load(path.read_text(encoding="utf-8")) or {}, only, str(path))
     pages: dict[str, dict[str, Any]] = {}
     for slug, spec in raw.items():
         for key in ("line", "h1", "title", "description", "intro"):
@@ -197,11 +220,11 @@ def load_categories(path: Path, facts: FacilityFacts) -> dict[str, dict[str, Any
     return pages
 
 
-def load_landings(path: Path) -> dict[str, dict[str, Any]]:
-    """Ad landing pages keyed by slug; an absent file means none."""
+def load_landings(path: Path, only: list[str] | None = None) -> dict[str, dict[str, Any]]:
+    """Ad landing pages keyed by slug (limited to ``only``); an absent file means none."""
     if not path.exists():
         return {}
-    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    raw = pick(yaml.safe_load(path.read_text(encoding="utf-8")) or {}, only, str(path))
     for slug, spec in raw.items():
         for key in ("title", "description", "h1", "intro", "points"):
             if not spec.get(key):

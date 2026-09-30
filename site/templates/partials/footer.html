@@ -17,7 +17,7 @@
 <h2>Lines</h2>
 <ul>
 {% for line in site.facts.lines %}
-<li><a href="{{ site.url(line.slug) }}">{{ line.label }}</a></li>
+<li><a href="{{ site.line_url(line.key) }}">{{ line.label }}</a></li>
 {% endfor %}
 <li><a href="{{ site.url('capabilities') }}">Capabilities</a></li>
 </ul>
@@ -41,6 +41,16 @@
 </ul>
 </div>
 </div>
+{% if site.cfg.family %}
+<div class="family">
+<h2>Also from {{ site.cfg.short_name }}</h2>
+<ul>
+{% for member in site.cfg.family %}
+<li>{% if site.real(member.domain) %}<a href="{{ member.base_url }}/">{{ member.brand }}</a>{% else %}{{ member.brand }} {{ site.field(member.domain) }}{% endif %}{% if member.blurb %}<span>{{ member.blurb }}</span>{% endif %}</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
 <div class="disclosure">
 <p>We represent a US manufacturer and are paid by the facility, never by brands. Facts on this site are limited to what the facility has confirmed in writing.</p>
 <p>&copy; {{ site.today.year }} {{ site.cfg.brand }}</p>

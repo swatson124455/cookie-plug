@@ -3,29 +3,34 @@
 #   group:          section heading on /faq/
 #   featured: true  also shown on the home page (keep it to about five)
 #   when_confirmed: answer used only once `field` is confirmed; {value} is its value
-# {reply_within} is replaced with the promise in site/config.yaml.
+#   sites: [...]    show the item only on these sites (omit for every site)
+# {reply_within} is replaced with the promise in site/shared.yaml.
 
 - group: "Getting started"
   q: "What does a co-packer actually do?"
+  sites: [bakery, pet]
   featured: true
   a: "A co-packer, or contract manufacturer, makes your product in its facility, under your brand, to your recipe or one it develops with you. You keep the brand, the customers, and the margin; it runs the production line, the packaging, and the plant's food-safety program."
 
 - group: "Getting started"
   q: "Do I need a recipe already?"
+  sites: [bakery, pet]
   featured: true
   a: "No. Formulation is part of the turnkey service: bring a product, a kitchen recipe, or a concept, and the facility develops a production recipe and samples it until you approve it."
 
 - group: "Getting started"
   q: "How small is too small?"
+  sites: [bakery, pet]
   featured: true
   a: "If you sell only at farmers markets, it is probably early. If you have a retail listing, a wholesale channel, or a launch date you cannot meet from your current kitchen, it is the right time to talk."
 
 - group: "Getting started"
   q: "What does it cost to ask?"
-  a: "Nothing. The capacity check and the fit conversation are free, and we never charge brands. If sampling or formulation carries a fee for your product, the facility tells you before any work starts."
+  a: "Nothing. The form and the fit conversation are free, and we never charge brands. If sampling or formulation carries a fee for your product, the facility tells you before any work starts."
 
 - group: "Getting started"
   q: "What happens after I send the capacity check?"
+  sites: [bakery, pet]
   a: "We check line fit with the facility and reply within {reply_within}. If it fits, you send your product or spec for a benchmark sample; then the facility quotes in writing and you sign directly with it."
 
 - group: "Production"
@@ -67,6 +72,7 @@
 
 - group: "Production"
   q: "Can you make my product shelf-stable?"
+  sites: [bakery, formulation]
   a: "It is a formulation project: the recipe, the packaging, and the label all change, and shelf life has to be tested before launch. Tell us about the product, and we confirm what the facility can do for it."
 
 - group: "Production"
@@ -79,14 +85,17 @@
 
 - group: "Pet products"
   q: "Can the same facility make cookies and dog treats?"
+  sites: [pet]
   a: "Yes. The facility runs human bakery lines and pet lines under one roof, which is useful for brands that sell to people and their dogs."
 
 - group: "Pet products"
   q: "Do you handle pet-food labels?"
+  sites: [pet, pet-formulation]
   a: "Labeling is part of the turnkey service, and for pet products that means the pet-food label, including the guaranteed analysis. Ask who handles state feed registrations for your product, and we tell you what the facility covers and what stays with you."
 
 - group: "Pet products"
   q: "Can my pet treats be labeled human grade?"
+  sites: [pet, pet-formulation]
   a: "Only if the product and every ingredient are stored, handled, processed, and transported to human-food standards, in a facility licensed to make human food; that is the AAFCO standard for the claim. Ask, and we confirm with the facility whether your product can qualify."
 
 - group: "Working with us"
@@ -100,8 +109,47 @@
 
 - group: "Working with us"
   q: "I already have a co-packer. Why talk to you?"
+  sites: [bakery, pet]
   a: "Because one plant is a single point of failure. A common approach is to keep your primary and qualify a second source on one product, so a missed run, a failed audit, or a capacity squeeze never stops shipments."
 
 - group: "Working with us"
   q: "What if my product is not a fit?"
   a: "We tell you plainly, usually within {reply_within}, and if we know where you should look instead, we say so. A fast no is better than a slow maybe."
+
+- group: "Formulation"
+  q: "What does a formulation project include?"
+  sites: [formulation, pet-formulation]
+  featured: true
+  a: "A production recipe developed from your kitchen recipe, a product to match, or a concept; samples until you approve one; then the label, the packaging, and a first production run on the facility's open lines. Formulation here is the first step toward production, and the terms are confirmed with the facility in writing before any work starts."
+
+- group: "Formulation"
+  q: "Do I need a recipe to start a project?"
+  sites: [formulation, pet-formulation]
+  featured: true
+  a: "No. Bring a kitchen recipe, a product you want matched, or only a concept. The facility's formulation team develops a production recipe with you and samples it until you approve it."
+
+- group: "Formulation"
+  q: "Can I bring a competitor's product to match?"
+  sites: [formulation, pet-formulation]
+  featured: true
+  a: "Yes, as a benchmark, if it is a product you may lawfully use that way. The facility develops a recipe that matches its taste and texture; it does not copy another brand's name, trademarks, or packaging, and your product sells under your own brand."
+
+- group: "Formulation"
+  q: "Who owns the recipe?"
+  sites: [formulation, pet-formulation]
+  a: "Ownership of the recipe is set in the written agreement with the facility. We get it confirmed, in writing, before any development starts, so you know the answer before you share your recipe or approve any work."
+
+- group: "Formulation"
+  q: "Can you do formulation only, without production?"
+  sites: [formulation, pet-formulation]
+  a: "Formulation here is built to lead to production on the facility's own lines: the recipe is developed for the equipment that will make it. If you want a formula only, say so in the project check, and we ask the facility whether it takes that on and on what terms."
+
+- group: "Formulation"
+  q: "What does formulation cost?"
+  sites: [formulation, pet-formulation]
+  a: "It depends on the project, and the facility tells you before any work starts. Ask what the price covers, including samples and revisions, so nothing arrives as a surprise. Asking us costs nothing."
+
+- group: "Formulation"
+  q: "Can you formulate a complete and balanced pet food?"
+  sites: [pet-formulation]
+  a: "A complete and balanced claim has to be substantiated, either by formulating to an AAFCO nutrient profile for the species and life stage or by an AAFCO feeding trial. The facility confirms how it would substantiate the claim for your food, in writing, before development starts. Treats, toppers, and mixers are labeled for intermittent or supplemental feeding instead."

@@ -1,15 +1,17 @@
-"""Build the site: ``python site/build.py [--draft | --preview FILE | --images]``.
+"""Build one site of the family: ``python site/build.py --site ID [--draft | --preview FILE | --images]``.
 
-Production builds refuse to run while ``site/config.yaml`` has placeholders.
-Draft builds render the same pages with placeholders highlighted and
-``noindex`` everywhere. The preview is one HTML fragment with hash routing,
-for review without a server.
+The site comes from ``--site`` or the ``OPEN_LINE_SITE`` environment variable
+(set per Netlify site). Production builds refuse to run while the site's
+merged config has placeholders. Draft builds render the same pages with
+placeholders highlighted and ``noindex`` everywhere. The preview is one HTML
+fragment with hash routing, for review without a server.
 """
 
 from __future__ import annotations
 
 import argparse
 import hashlib
+import os
 import shutil
 import sys
 from dataclasses import dataclass, field
@@ -18,14 +20,16 @@ from pathlib import Path
 
 from leadgen.facility import load_facility
 from leadgen.website import indexnow, seo
-from leadgen.website.config import SiteConfigError, is_placeholder, load_site_config, publish_problems, unknown_lines
-from leadgen.website.content import ContentError, load_categories, load_faq, load_guides, load_landings
+from leadgen.website.config import SiteConfigError, is_placeholder, load_site, publish_problems, site_ids, unknown_lines
+from leadgen.website.content import ContentError, load_categories, load_faq, load_guides, load_landings, select_guides
 from leadgen.website.facts import build_facts
+from leadgen.website.forms import load_form, load_home
 from leadgen.website.pages import Page, all_pages
 from leadgen.website.render import SiteContext, environment, render_page, rewrite_internal_links
 
 STALE_AFTER_DAYS = 45
 DRAFT_DOMAIN = "https://draft.invalid"
+SITE_ENV = "OPEN_LINE_SITE"
 STATIC_FILES = ("favicon.svg", "apple-touch-icon.png", "logo.png")
 STATIC_DIRS = ("fonts", "og")
 GOOGLE_FONTS = ("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..100,500..900"
@@ -37,6 +41,7 @@ class BuildOptions:
     """Where to read, where to write, and which mode to build."""
 
     root: Path
+    site_id: str
     mode: str = "production"
     dist: Path | None = None
     preview_file: Path | None = None
@@ -48,12 +53,17 @@ class BuildOptions:
         return self.root / "site"
 
     @property
+    def own_dir(self) -> Path:
+        """``site/sites/<id>/``: this site's settings, home copy, form, and share images."""
+        return self.site_dir / "sites" / self.site_id
+
+    @property
     def output_dir(self) -> Path:
         """Where multi-page builds go (``site/dist`` unless overridden)."""
         return self.dist or self.site_dir / "dist"
 
     def __repr__(self) -> str:
-        return f"BuildOptions(mode={self.mode!r}, root={str(self.root)!r})"
+        return f"BuildOptions(site_id={self.site_id!r}, mode={self.mode!r}, root={str(self.root)!r})"
 
 
 @dataclass
@@ -71,7 +81,7 @@ class BuildResult:
 
 def load_context(options: BuildOptions) -> tuple[SiteContext, list[str]]:
     """Load config, confirmed facts, and content; return the template context and warnings."""
-    cfg = load_site_config(options.site_dir / "config.yaml")
+    cfg = load_site(options.site_dir, options.site_id)
     facility = load_facility(options.root / "config" / "facility.yaml")
     wrong = unknown_lines(cfg, [category.value for category in facility.categories])
     if wrong:
@@ -79,20 +89,29 @@ def load_context(options: BuildOptions) -> tuple[SiteContext, list[str]]:
     if options.mode == "production":
         problems = publish_problems(cfg)
         if problems:
-            raise SiteConfigError("site/config.yaml is not ready to publish:\n  - " + "\n  - ".join(problems))
+            raise SiteConfigError(f"site {cfg.id} is not ready to publish (site/shared.yaml, site/sites/{cfg.id}/site.yaml):"
+                                  "\n  - " + "\n  - ".join(problems))
     elif is_placeholder(cfg.domain):
         cfg = cfg.model_copy(update={"domain": DRAFT_DOMAIN})
     facts = build_facts(facility, cfg)
-    site = SiteContext(cfg, facts, options.mode, options.today, options.site_dir / "static")
+    site = SiteContext(cfg, facts, options.mode, options.today, options.own_dir / "static")
+    _load_content(site, options)
+    return site, _warnings(site, options)
+
+
+def _load_content(site: SiteContext, options: BuildOptions) -> None:
+    """Shared content filtered to what this site lists, plus its own home copy and questionnaire."""
+    cfg, content = site.cfg, options.site_dir / "content"
+    tokens = {"reply_within": cfg.reply_within}
     prefix = (lambda slug: f"guide-{slug}--") if options.mode == "preview" else (lambda slug: "")
-    content = options.site_dir / "content"
-    site.guides = load_guides(content / "guides", prefix)
+    site.guides = select_guides(load_guides(content / "guides", prefix), cfg.guides, f"site {cfg.id}")
+    site.faq = load_faq(content / "faq.yaml", site.facts, tokens, cfg.id)
+    site.categories = load_categories(content / "categories.yaml", site.facts, cfg.categories)
+    site.landings = load_landings(content / "landing.yaml", cfg.landings)
     for guide in site.guides:
         guide.html = rewrite_internal_links(guide.html, site)
-    site.faq = load_faq(content / "faq.yaml", facts, {"reply_within": cfg.reply_within})
-    site.categories = load_categories(content / "categories.yaml", facts)
-    site.landings = load_landings(content / "landing.yaml")
-    return site, _warnings(site, options)
+    site.home = load_home(options.own_dir / "home.yaml", tokens)
+    site.form = load_form(options.own_dir / "form.yaml", tokens)
 
 
 def _warnings(site: SiteContext, options: BuildOptions) -> list[str]:
@@ -126,21 +145,22 @@ def reset_output(path: Path) -> None:
     path.mkdir(parents=True)
 
 
-def copy_static(static_dir: Path, out: Path) -> None:
-    """Copy fonts, share images, and icons into the output."""
-    for name in STATIC_DIRS:
-        if (static_dir / name).is_dir():
-            shutil.copytree(static_dir / name, out / name)
-    for name in STATIC_FILES:
-        if (static_dir / name).exists():
-            shutil.copy2(static_dir / name, out / name)
+def copy_static(static_dirs: list[Path], out: Path) -> None:
+    """Copy fonts, share images, and icons into the output; later directories add to or replace earlier ones."""
+    for static_dir in static_dirs:
+        for name in STATIC_DIRS:
+            if (static_dir / name).is_dir():
+                shutil.copytree(static_dir / name, out / name, dirs_exist_ok=True)
+        for name in STATIC_FILES:
+            if (static_dir / name).exists():
+                shutil.copy2(static_dir / name, out / name)
 
 
 def page_links(site: SiteContext) -> list[tuple[str, str, str]]:
     """``(title, path, note)`` for the llms.txt page map."""
     links = [("Capabilities", "capabilities/", "confirmed production lines, services, and certifications")]
     links += [(spec["h1"], f"{slug}/", spec["description"]) for slug, spec in site.categories.items()]
-    links += [("FAQ", "faq/", "minimums, sampling, certifications, pet products, costs, and how we work"),
+    links += [("FAQ", "faq/", site.cfg.wording.faq_description),
               ("About", "about/", "who we are, how the referral model works, who pays us"),
               ("Contact", "contact/", "direct contact details and the capacity-check form")]
     return links
@@ -178,7 +198,7 @@ def build_site(options: BuildOptions) -> BuildResult:
         target = out / page.output_path
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(render_page(env, site, page, "base.html"), encoding="utf-8")
-    copy_static(options.site_dir / "static", out)
+    copy_static([options.site_dir / "static", site.static_dir], out)
     (out / "styles.css").write_text(css, encoding="utf-8")
     write_machine_files(site, pages, out)
     return BuildResult(pages, warnings, out)
@@ -204,9 +224,9 @@ def build_preview(options: BuildOptions) -> BuildResult:
     return BuildResult(pages, warnings, options.preview_file)
 
 
-def submit_indexnow(root: Path, client: object | None = None) -> BuildResult:
+def submit_indexnow(root: Path, site_id: str, client: object | None = None) -> BuildResult:
     """Ping IndexNow with every indexable URL; needs a publishable config (real domain) and a key."""
-    site, _ = load_context(BuildOptions(root=root, mode="production"))
+    site, _ = load_context(BuildOptions(root=root, site_id=site_id, mode="production"))
     urls = [site.abs_url(page.key) for page in all_pages(site) if page.in_sitemap and not page.noindex]
     try:
         status = indexnow.ping(site.cfg, urls, client)  # type: ignore[arg-type]
@@ -217,30 +237,48 @@ def submit_indexnow(root: Path, client: object | None = None) -> BuildResult:
 
 def parse_args(argv: list[str] | None) -> argparse.Namespace:
     """Command-line flags for ``site/build.py``."""
-    parser = argparse.ArgumentParser(prog="site/build.py", description="Build the static website.")
+    parser = argparse.ArgumentParser(prog="site/build.py", description="Build one site of the family.")
+    parser.add_argument("--site", help=f"which site (a folder in site/sites/); default: the {SITE_ENV} environment variable")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--draft", action="store_true", help="build with placeholders highlighted and noindex")
     mode.add_argument("--preview", type=Path, metavar="FILE", help="write the whole site as one HTML file")
-    mode.add_argument("--images", action="store_true", help="regenerate share images and icons (needs Pillow)")
+    mode.add_argument("--images", action="store_true", help="regenerate share images and icons (needs Pillow; every site unless --site)")
     mode.add_argument("--indexnow", action="store_true", help="after a deploy: tell Bing and other IndexNow engines what changed")
     parser.add_argument("--out", type=Path, help="output directory, must be named dist (default site/dist)")
     return parser.parse_args(argv)
 
 
+def chosen_site(args: argparse.Namespace, root: Path) -> str:
+    """The site to build: ``--site``, else ``OPEN_LINE_SITE``; an error lists the choices."""
+    site_id = args.site or os.environ.get(SITE_ENV, "")
+    if not site_id:
+        raise SiteConfigError(f"say which site to build with --site or {SITE_ENV}: {', '.join(site_ids(root / 'site'))}")
+    return site_id
+
+
+def write_images(root: Path, only: str | None) -> BuildResult:
+    """Share images for one site (or every site) and the shared icons."""
+    from leadgen.website.images import generate_icons, generate_images
+
+    written: list[Path] = []
+    for site_id in [only] if only else site_ids(root / "site"):
+        options = BuildOptions(root=root, site_id=site_id, mode="draft")
+        site, _ = load_context(options)
+        written += generate_images(site, options.own_dir / "static", root / "site" / "static" / "fonts")
+    written += generate_icons(root / "site" / "static")
+    return BuildResult([], [], root / "site", f"wrote {len(written)} images under {root / 'site'} (commit them)")
+
+
 def run(args: argparse.Namespace, root: Path) -> BuildResult:
     """Dispatch to the requested build."""
     if args.images:
-        from leadgen.website.images import generate_images
-
-        site, _ = load_context(BuildOptions(root=root, mode="draft"))
-        written = generate_images(site, root / "site" / "static")
-        static = root / "site" / "static"
-        return BuildResult([], [], static, f"wrote {len(written)} images into {static} (commit them)")
+        return write_images(root, args.site or os.environ.get(SITE_ENV) or None)
+    site_id = chosen_site(args, root)
     if args.indexnow:
-        return submit_indexnow(root)
+        return submit_indexnow(root, site_id)
     if args.preview:
-        return build_preview(BuildOptions(root=root, mode="preview", preview_file=args.preview))
-    return build_site(BuildOptions(root=root, mode="draft" if args.draft else "production", dist=args.out))
+        return build_preview(BuildOptions(root=root, site_id=site_id, mode="preview", preview_file=args.preview))
+    return build_site(BuildOptions(root=root, site_id=site_id, mode="draft" if args.draft else "production", dist=args.out))
 
 
 def main(argv: list[str] | None = None, root: Path | None = None) -> int:

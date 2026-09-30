@@ -1,0 +1,34 @@
+# The pet co-packing site: dog-treat and pet-food brands. Merged over site/shared.yaml.
+
+brand: "Open Line Pet Co-Packing"   # working name (decision 12): check the trademark and domain before you buy
+brand_short: "Open Line"
+tagline: "Open co-packing lines for pet treats and pet food"
+domain: "TO_FILL https://yourpetdomain.com"   # the registered domain, https, no trailing slash
+indexnow_key: "0cc6b7c9447e7102633f39fbacd00ab0"
+family_blurb: "Pet treats and pet food"
+
+lines: [pet_treat, pet_food]
+categories: [dog-treat-co-packer, pet-food-co-packer]
+landings: [google-pet, bing-pet]
+guides:
+  - how-to-find-a-dog-treat-co-packer
+  - how-to-find-a-pet-food-co-packer
+  - private-label-vs-co-packing-dog-treats
+  - co-packer-minimums-lead-times-and-costs
+  - what-a-co-packer-quote-includes
+  - questions-to-ask-a-co-packer-before-signing
+  - what-retailers-require-from-a-new-supplier
+  - second-source-co-packer-strategy
+  - small-batch-and-pilot-runs
+
+wording:
+  home_title: "Dog Treat and Pet Food Co-Packer With Open Lines"
+  home_description: "Open pet-treat and pet-food co-packing lines now. Formulation, production, packaging, and the pet-food label under one roof. Check capacity for your product."
+  service_name: "Co-packing for pet-treat and pet-food brands"
+  guides_title: "Co-Packer Guides for Pet Treat and Pet Food Brands"
+  guides_description: "Plain answers for pet founders: finding a dog treat or pet food co-packer, private label versus your own recipe, minimums, quotes, and retailer requirements."
+  guides_h1: "Guides for pet brands choosing a co-packer"
+  faq_title: "Pet Co-Packer FAQ: Minimums, Labels, Samples"
+  faq_description: "Straight answers on pet co-packer minimums, sampling, pet-food labels, human-grade claims, private label, costs, and how working with us works."
+  faq_lead: "Straight answers about pet co-packing, the facility, and how we work."
+  about_lead: "We connect dog-treat and pet-food brands that need production capacity with a US manufacturer that has open pet lines, and we run the process until you sign."

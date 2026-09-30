@@ -4,7 +4,7 @@ Goal: a site that a founder finds when they search "cookie co-packer" at 11pm, t
 
 ## 1. Whose site is it
 
-**Recommendation: your own brand, not the facility's.** You control it, you can launch it without partner approval, and it can only make the confirmed claims (open capacity, turnkey, one roof). As the data sheet comes back, confirmed certifications, minimums, lead times, sampling turnaround, and location appear on the site automatically. If the partnership ends, the site and its rankings stay yours. Working name: **Open Line Co-Packing** (decision 12; "Cookie Plug" was dropped because it is an existing cookie franchise). The name lives in two fields in `site/config.yaml`.
+**Recommendation: your own brand, not the facility's.** You control it, you can launch it without partner approval, and it can only make the confirmed claims (open capacity, turnkey, one roof). As the data sheet comes back, confirmed certifications, minimums, lead times, sampling turnaround, and location appear on the site automatically. If the partnership ends, the site and its rankings stay yours. Working name: **Open Line Co-Packing** (decision 12; "Cookie Plug" was dropped because it is an existing cookie franchise). Since September 30, 2026 the brand is a family of four sites on four domains (decision 14): Open Line Co-Packing (cookies and baked goods), Open Line Pet Co-Packing, Open Line Formulation, and Open Line Pet Formulation. Each name lives in two fields in its `site/sites/<id>/site.yaml`.
 
 ## 2. What the site must do
 
@@ -43,7 +43,7 @@ Long-tail beats head terms here. "Low MOQ dog treat co-packer with open capacity
 /sitemap.xml  /robots.txt  /_headers
 ```
 
-Static HTML, no framework, no JavaScript on the live site, self-hosted fonts (about 105 KB), no cookie banner needed. Built by `site/build.py` from `site/config.yaml`, `config/facility.yaml`, and `site/content/`; details in section 11.
+Static HTML, no framework, no JavaScript on the live site, self-hosted fonts (about 105 KB), no cookie banner needed. Built by `site/build.py --site <id>` from `site/shared.yaml`, `site/sites/<id>/`, `config/facility.yaml`, and `site/content/`; details in section 11.
 
 ## 5. AIO: getting cited by AI assistants
 
@@ -86,7 +86,7 @@ One new guide every two weeks after launch. Each one answers a question a real f
 
 - **One form, on every page that matters** (home, line pages, guides, contact): what you make, monthly volume (ranges), timing, how it is made today, name, brand and website, email, optional phone and notes. A hidden field records which page it was sent from, so you know which guide produced the lead.
 - **Spam:** a honeypot field plus Netlify's own filtering. No CAPTCHA.
-- **Into the pipeline:** Netlify emails you each submission. Then either download the form's CSV from Netlify and run `leadgen import-form export.csv`, or set `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` (pin 25) and the weekly Routine runs `leadgen import-form --netlify` itself. Each submission becomes a lead with `source=inbound_website`, tags `inbound` and `website`, the seeking-a-co-packer signal, and a segment from "how it is made today"; if the brand is already in the pipeline, the submission is merged into it rather than duplicated. The weekly report lists inbound leads first.
+- **Into the pipeline:** Netlify emails you each submission. Then either download the form's CSV from Netlify and run `leadgen import-form export.csv`, or set `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` (the four Netlify site IDs, comma-separated; pin 25) and the weekly Routine runs `leadgen import-form --netlify` itself, one site at a time (one failing site does not stop the others). Each submission becomes a lead with `source=inbound_<site>` (for example `inbound_pet`), tags `inbound`, `website`, and `site:<id>` plus any fit tags, the seeking-a-co-packer signal, and a segment from "how it is made today"; if the brand is already in the pipeline, the submission is merged into it rather than duplicated. The weekly report lists inbound leads first.
 - **Direct contact on every page:** email, phone, mailing address in the footer. Founders at two-person brands call.
 - **The give, on the page:** "Send us your product; the facility benchmarks it." Same offer as the outreach.
 - **No gated PDF, no chatbot, no popup.** Friction loses these visitors.
@@ -99,7 +99,7 @@ Plausible or GA4 (Plausible is simpler and cookie-free). Track: organic sessions
 
 | Week | Action |
 |---|---|
-| 1 | Clear the name and buy the domain (decision 12, pin 20), fill `site/config.yaml` (pin 21), connect the repo to Netlify (pin 22), connect the domain, submit the sitemap to Search Console and Bing |
+| 1 | Clear the name and buy the domain (decision 12, pin 20), fill `site/shared.yaml` and each `site.yaml` (pin 21), connect the repo to Netlify (pin 22), connect the domain, submit the sitemap to Search Console and Bing |
 | 1 | Turn on Netlify form detection and the email notification; send a test capacity check and import it with `leadgen import-form` |
 | 2 | Directory listings that corroborate the site (Keychain, PartnerSlate, SFA, Pet Food Processing), Google Business Profile if there is a physical address |
 | 2 to 8 | Eight guides are live at launch; add one every two weeks; a LinkedIn post for each; answer three community questions a week linking to the matching guide |
@@ -111,27 +111,40 @@ Realistic expectation: first organic leads in 8 to 12 weeks; a steady one to fou
 
 ## 11. How the site is built and kept current
 
-**Where things live.** Code: `src/leadgen/website/` (config, facts, content, pages, render, SEO output, images). Copy: `site/content/` (guides in Markdown, `faq.yaml`, `categories.yaml`). Layout: `site/templates/`. Styles, fonts, icons, share images: `site/static/`. Settings: `site/config.yaml`.
+**Four sites, one engine.** One set of templates and one content pool build four sites, each on its own domain, each with its own audience wording, lines, guides, landing pages, and questionnaire:
 
-**Three build modes.**
+| Site id | Brand (working) | Audience | Lines | Line pages |
+|---|---|---|---|---|
+| `bakery` | Open Line Co-Packing | cookie and baked-goods brands, and makers of other foods who want to ask | cookie, bakery | `/cookie-co-packer/`, `/bakery-co-packer/` |
+| `pet` | Open Line Pet Co-Packing | dog-treat and pet-food brands | pet treats, pet food | `/dog-treat-co-packer/`, `/pet-food-co-packer/` |
+| `formulation` | Open Line Formulation | founders with a kitchen recipe, a product to match, or a concept (human food) | cookie, bakery | `/cookie-recipe-development/`, `/bakery-product-development/` |
+| `pet-formulation` | Open Line Pet Formulation | the same, for pet treats and pet food | pet treats, pet food | `/dog-treat-formulation/`, `/pet-food-formulation/` |
+
+**Where things live.** Code: `src/leadgen/website/` (config, facts, content, forms, pages, render, SEO output, images). Settings every site shares (contact, capacity status, form provider, the family order): `site/shared.yaml`. One site's own settings, merged over the shared ones: `site/sites/<id>/site.yaml` (brand, domain, IndexNow key, lines, which line pages, guides, and landing pages it carries, and its `wording`). Its home page copy: `site/sites/<id>/home.yaml`. Its questionnaire: `site/sites/<id>/form.yaml`. Its share images: `site/sites/<id>/static/og/`. Shared copy: `site/content/` (guides in Markdown, `faq.yaml` with `sites:` tags on audience-specific answers, `categories.yaml`, `landing.yaml`). Layout: `site/templates/`. Styles, fonts, icons: `site/static/`.
+
+**Build modes.** Every command names a site with `--site <id>`, or reads it from the `OPEN_LINE_SITE` environment variable (how each Netlify site says which one it is).
 
 | Command | What it does |
 |---|---|
-| `python site/build.py` | Production build into `site/dist/`. Stops with a list of every `TO_FILL` placeholder still in `site/config.yaml`, so a half-filled site cannot go live |
-| `python site/build.py --draft` | The same pages with placeholders highlighted, every page `noindex`, robots.txt closed. For a private look on Netlify before launch |
-| `python site/build.py --preview FILE` | The whole site as one HTML file with in-page navigation, for review anywhere |
-| `python site/build.py --images` | Redraws the share images and icons (needs Pillow); commit the results |
-| `python site/build.py --indexnow` | After a deploy that changed content: tells Bing (which feeds Copilot) and the other IndexNow engines which pages to re-read. Needs the real domain and `indexnow_key` in `site/config.yaml`; the production build publishes the key file |
+| `python site/build.py --site bakery` | Production build into `site/dist/`. Stops with a list of every `TO_FILL` placeholder still in `site/shared.yaml` or that site's `site.yaml`, so a half-filled site cannot go live. A sibling's placeholders never block it |
+| `python site/build.py --site bakery --draft` | The same pages with placeholders highlighted, every page `noindex`, robots.txt closed. For a private look on Netlify before launch |
+| `python site/build.py --site bakery --preview FILE` | The whole site as one HTML file with in-page navigation, for review anywhere |
+| `python site/build.py --images` | Redraws every site's share images and the shared icons (needs Pillow; `--site` limits it to one); commit the results |
+| `python site/build.py --site bakery --indexnow` | After a deploy that changed content: tells Bing (which feeds Copilot) and the other IndexNow engines which pages to re-read. Needs the site's real domain and `indexnow_key`; the production build publishes the key file |
+
+**Shared guides, one canonical home.** A guide can appear on several sites. The first site in the `sites:` order of `site/shared.yaml` that lists it, and has a real domain, is its home: the copies on the other sites carry `rel=canonical` to it and stay out of their sitemaps and IndexNow pings, so four domains never compete with copies of one page. Until the home site's domain is set, each copy is its own canonical. A Markdown link to a guide the site does not carry goes to the sibling that does, or becomes plain text while no sibling is live. Every footer links the other live sites.
+
+**Questionnaires.** Each `form.yaml` lists the audience questions: a short required core (what the product is, volume, timing, and how it is made today, or the stage and goal on the formulation sites) and an optional fit section that opens on request (storage, allergens, certifications, claims, recipe status, SKU count, pack format, target price, channels; species and product type on the pet sites; what should happen after formulation). The template adds the contact fields, notes, the honeypot, and hidden `source_page` and `site` fields. Every site posts to the same Netlify form name, `capacity-check`; `leadgen import-form` records the site as a `site:<id>` tag and `inbound_<id>` source, keeps every answer in the lead note, and turns fit answers into tags (`fit:refrigerated`, `fit:peanut`, `need-cert:kosher`, `need:formulation`, `formulation-only`). Field names and choices are read by `src/leadgen/inbound.py`; change them together.
 
 **What the site may say.** Facility facts come only from `config/facility.yaml`, and only once confirmed. Confirm a certification, a minimum, a lead time, a sampling turnaround, or the location there, rebuild, and the capabilities page, the Capacity Facts panel, the FAQ answers, and `llms.txt` all update. Nothing marked `TO_CONFIRM` can reach a page; the tests check every page for it.
 
-**Monthly upkeep (pin 24).** Confirm the open lines with the facility and update `capacity.as_of` in `site/config.yaml`. The date prints on every page; the build warns once it is 45 days old. After the deploy, run `python site/build.py --indexnow`.
+**Monthly upkeep (pin 24).** Confirm the open lines with the facility and update `capacity.as_of` in `site/shared.yaml` (one edit covers all four sites). The date prints on every page; the build warns once it is 45 days old. After the deploys, run `python site/build.py --site <id> --indexnow` for each live site.
 
-**Ad landing pages.** `site/content/landing.yaml` defines pages at `/lp/<slug>/` (Google bakery, Google pet, Bing). They are noindex and outside the sitemap, and the form records the page path, so each lead shows which ad channel it came from without any tracking script. Point each ad group's final URL at one.
+**Ad landing pages.** `site/content/landing.yaml` defines pages at `/lp/<slug>/`, each shown on the site whose `landings` lists it (Google and Bing for bakery and pet, Google for each formulation site). They are noindex and outside the sitemap, and the form records the page path, so each lead shows which ad channel it came from without any tracking script. Point each ad group's final URL at one.
 
 **Extra sections on line pages.** A line in `site/content/categories.yaml` can carry `extras` (title, intro, points, optional guide slug); the cookie page uses one for shelf-stable, individually wrapped cookies and the dog-treat page one for private label versus your own recipe.
 
-**Adding a guide.** Create `site/content/guides/<slug>.md` with this front matter, then run `python site/build.py --images` and commit both:
+**Adding a guide.** Create `site/content/guides/<slug>.md` with this front matter, add its slug to the `guides` list of each site that should carry it (the first in family order is its canonical home), then run `python site/build.py --images` and commit everything:
 
 ```yaml
 ---
@@ -140,7 +153,7 @@ seo_title: "60 characters or less, with the search phrase"
 description: "The meta description, 120 to 155 characters."
 date: 2026-10-13
 updated: 2026-10-13
-category: general          # or cookie-co-packer, bakery-co-packer, dog-treat-co-packer, pet-food-co-packer
+category: general          # or a line page slug from site/content/categories.yaml
 summary: "The direct answer in two or three sentences; AI assistants quote this."
 related: [co-packer-minimums-lead-times-and-costs, second-source-co-packer-strategy]
 sources:
@@ -152,6 +165,6 @@ sources:
 
 Rules: no facility claims beyond the confirmed ones, every fact about a regulation or retailer backed by a listed source, and internal links written as `/guides/<slug>/`. The build refuses a guide with missing fields or a `related` slug that does not exist.
 
-**Deploy (Netlify).** Connect the repository; the root `netlify.toml` builds `site/` with `python build.py` and publishes `site/dist/`. The first build fails on purpose until pin 21 is done. Netlify serves `404.html` and applies `_headers` (security headers and a strict content security policy) automatically. Cloudflare Pages also works (build command `pip install -r site/requirements.txt && python site/build.py`, output `site/dist`), but its forms need Formspree: set `form.provider: formspree` and paste the endpoint.
+**Deploy (Netlify).** Create one Netlify site per domain, each connected to this repository, and set `OPEN_LINE_SITE` in each site's environment variables (`bakery`, `pet`, `formulation`, `pet-formulation`). The root `netlify.toml` builds `site/` with `python build.py` and publishes `site/dist/`. A site's first build fails on purpose until its placeholders are filled (pin 21). Launch the sites in any order; `bakery` first is best, since it is the canonical home of the shared guides. Netlify serves `404.html` and applies `_headers` (security headers and a strict content security policy) automatically. Cloudflare Pages also works (build command `pip install -r site/requirements.txt && python site/build.py`, output `site/dist`), but its forms need Formspree: set `form.provider: formspree` and paste the endpoint.
 
-**Tests.** `tests/unit/test_website_units.py` and `tests/integration/test_website_build.py` build the site in every mode and check every internal link and anchor, one H1 per page, title and description lengths, JSON-LD, the sitemap against the pages, the form wiring against the importer, and that no placeholder or unconfirmed claim appears anywhere.
+**Tests.** `tests/unit/test_website_units.py`, `tests/unit/test_website_family.py`, and `tests/integration/test_website_build.py` build all four sites in every mode and check every internal link and anchor, one H1 per page, title and description lengths, JSON-LD, the sitemap against the pages, the form wiring against the importer, and that no placeholder or unconfirmed claim appears anywhere.

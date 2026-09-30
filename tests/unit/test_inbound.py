@@ -18,13 +18,21 @@ from leadgen.crm import LeadStore
 from leadgen.inbound import (
     FormSubmission,
     NetlifyError,
+    SitePull,
+    extra_key,
+    fetch_netlify_sites,
     fetch_netlify_submissions,
     filter_since,
     import_submissions,
+    inbound_category,
     inbound_note,
+    inbound_segment,
+    inbound_source,
+    inbound_tags,
     load_csv,
     parse_activity_detail,
     parse_company_field,
+    parse_site_ids,
     parse_timestamp,
     submission_to_lead,
 )
@@ -33,6 +41,7 @@ from leadgen.report import InboundEntry, build_report, render_report
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_CSV = REPO_ROOT / "tests" / "fixtures" / "netlify_capacity_check.csv"
+SITES_CSV = REPO_ROOT / "tests" / "fixtures" / "netlify_capacity_check_sites.csv"  # the four-site form, fit columns
 TOKEN = "test-token-not-real"
 UTC = timezone.utc
 
@@ -71,7 +80,8 @@ def test_from_mapping_normalizes_keys_and_ignores_unknown_ones():
     assert (sub.form_name, sub.source_page, sub.website, sub.bot_field) == ("capacity-check", "/guides/x/", "crumbco.com", "")
     assert sub.submission_id == "abc123"
     assert sub.submitted_at == datetime(2026, 10, 3, 14, 22, 5, tzinfo=UTC)
-    assert repr(sub) == "FormSubmission(id='abc123', email='', company='')"
+    assert sub.extras == {} and sub.site == ""  # ip is Netlify metadata and a None key is a stray cell
+    assert repr(sub) == "FormSubmission(id='abc123', email='', company='', site='', extras=0)"
 
 
 @pytest.mark.parametrize("key", ["created_at", "Created at", "date", "_date", "submitted", "Submitted At"])
@@ -491,25 +501,27 @@ def test_cli_import_form_netlify_success_and_api_failure(run: Callable[..., int]
     monkeypatch.setenv("NETLIFY_SITE_ID", "site-1")
     seen: dict[str, Any] = {}
 
-    def fake_fetch(site_id: str, token: str, since: date | None = None) -> list[FormSubmission]:
+    def fake_fetch(site_id: str, token: str, **kwargs: Any) -> list[FormSubmission]:
         """Stand in for the API: record the call and return one submission."""
-        seen.update(site_id=site_id, token_ok=token == TOKEN, since=since)
+        seen.update(site_id=site_id, token_ok=token == TOKEN, since=kwargs["since"])
         return [_sub()]
 
-    monkeypatch.setattr(cli, "fetch_netlify_submissions", fake_fetch)
+    monkeypatch.setattr(inbound, "fetch_netlify_submissions", fake_fetch)
     assert run("import-form", "--netlify", "--since", "2026-09-22") == 0
     assert seen == {"site_id": "site-1", "token_ok": True, "since": date(2026, 9, 22)}
     out = capsys.readouterr().out
+    assert "Netlify site site-1: 1 submissions" in out
     assert "Molasses & Co maya@molassesco.com cookie emerging_brand (new)" in out and TOKEN not in out
 
-    def failing_fetch(site_id: str, token: str, since: date | None = None) -> list[FormSubmission]:
+    def failing_fetch(site_id: str, token: str, **kwargs: Any) -> list[FormSubmission]:
         """Stand in for an API that rejects the token."""
         raise NetlifyError("Netlify API returned 401 Unauthorized for GET /sites/site-1/forms")
 
-    monkeypatch.setattr(cli, "fetch_netlify_submissions", failing_fetch)
+    monkeypatch.setattr(inbound, "fetch_netlify_submissions", failing_fetch)
     assert run("import-form", "--netlify") == 1
     captured = capsys.readouterr()
-    assert "Netlify import failed: Netlify API returned 401" in captured.err and TOKEN not in captured.err
+    assert "Netlify import failed for site site-1: Netlify API returned 401" in captured.err and TOKEN not in captured.err
+    assert "import-form: 0 new, 0 merged, 0 skipped." in captured.out
 
 
 def test_cli_import_form_argument_and_file_errors(run: Callable[..., int], tmp_path: Path, capsys: pytest.CaptureFixture[str]):
@@ -537,7 +549,7 @@ def test_weekly_report_lists_inbound_first(store: LeadStore, sequence_template):
     report = build_report(store, sequence_template, days=7)
     assert [e.company for e in report.inbound] == ["Molasses & Co", "Old Co", "Proteincrumb", "Good Pup Bakery"]
     assert report.inbound[1] == InboundEntry(company="Old Co", email="", category="other", summary="typed by hand")
-    assert repr(report.inbound[2]) == "InboundEntry(company='Proteincrumb', category='cookie')"
+    assert repr(report.inbound[2]) == "InboundEntry(company='Proteincrumb', category='cookie', site='')"
     assert "inbound=4" in repr(report)
     text = render_report(report)
     assert text.index("Inbound (website): 4") < text.index("New leads found") < text.index("Follow-ups due now")
@@ -551,3 +563,264 @@ def test_weekly_report_leaves_out_inbound_outside_the_window(store: LeadStore, s
     assert report.inbound == []
     text = render_report(report)
     assert text.splitlines()[2] == "Inbound (website): 0"
+
+
+# --- four sites: extras, tags, category, segment, source ---------------------------
+
+
+def test_from_mapping_keeps_extras_from_bracket_keys_lists_and_unknown_keys():
+    sub = FormSubmission.from_mapping({
+        "product": ["Oat cookies", None, " Bars "], "site": "pet", "Stage": "Idea or concept",
+        "allergens[]": ["Peanuts", "Tree nuts", ""], "Allergens": "Dairy, Peanuts", "certifications[]": "Organic, Kosher",
+        "claims[]": [], "species": None, "Recipe Status": "Kitchen recipe", "How did you hear": "Podcast",
+        "extras": "a key that shadows the model field", "weird key!!": "dropped", "": "dropped", 7: "dropped",
+        "bot-field": "", "form-name": "capacity-check", "created_at": "2026-09-29T15:45:00Z", "id": "sub-7",
+        "number": 7, "ip": "203.0.113.9", "user_agent": "Mozilla/5.0", "referrer": "https://google.com/",
+        "pack_format": "x" * 900,
+    })
+    assert (sub.product, sub.site, sub.stage, sub.submission_id) == ("Oat cookies, Bars", "pet", "Idea or concept", "sub-7")
+    assert sub.extras == {
+        "allergens": "Peanuts, Tree nuts, Dairy, Peanuts", "certifications": "Organic, Kosher",
+        "recipe_status": "Kitchen recipe", "how_did_you_hear": "Podcast",
+        "extras": "a key that shadows the model field", "pack_format": "x" * 500,
+    }
+    assert repr(sub) == "FormSubmission(id='sub-7', email='', company='', site='pet', extras=6)"
+
+
+def test_repeated_list_answers_merge_without_duplicates():
+    sub = FormSubmission.from_mapping({"channels[]": ["Grocery chains", "Online or direct"], "channels": ["Grocery chains"]})
+    assert sub.extras == {"channels": "Grocery chains, Online or direct"}
+
+
+@pytest.mark.parametrize("key, expected", [
+    ("allergens[]", "allergens"), ("Certifications []", "certifications"), ("Pet-Product", "pet_product"),
+    ("product", ""), ("site", ""), ("id", ""), ("created_at", ""), ("Form-Name", ""), ("bot-field", ""),
+    ("ip", ""), ("site_url", ""), ("x" * 41, ""), ("<script>", ""), (None, ""),
+])
+def test_extra_key(key: object, expected: str):
+    assert extra_key(key) == expected
+
+
+def test_load_csv_with_the_four_site_columns():
+    subs = load_csv(SITES_CSV)
+    assert [s.site for s in subs] == ["bakery", "pet", "formulation", "pet-formulation"]
+    bakery, pet = subs[0], subs[1]
+    assert bakery.extras["allergens"] == "Tree nuts, Dairy, Eggs, Wheat"
+    assert bakery.extras["channels"] == "Wholesale (cafes, gift shops), Grocery chains"
+    assert "species" not in bakery.extras and "bot_field" not in bakery.extras and "id" not in bakery.extras
+    assert pet.extras["how_did_you_hear"] == "Trade show" and pet.extras["pet_product"] == "Toppers or mixers"
+    assert subs[2].stage == "Selling from a home or shared kitchen"
+
+
+def test_note_lists_site_and_extras_after_the_core_fields():
+    sub = _sub(phone="", site="formulation", stage="Idea or concept", current_setup="", extras={
+        "how_did_you_hear": "A\nfriend", "after_formulation": "Maybe", "storage": "Frozen", "claims": "  ",
+    })
+    assert inbound_note(sub) == (
+        "Inbound capacity check 2026-09-25 from /guides/how-to-find-a-cookie-co-packer/: "
+        "product=Chewy molasses cookies; volume=5,000 to 25,000; timing=Within 3 months; stage=Idea or concept; "
+        "site=formulation; storage=Frozen; after_formulation=Maybe; how_did_you_hear=A friend"
+    )
+    assert "\n" not in inbound_note(sub)
+
+
+def test_fixture_leads_carry_site_source_category_and_tags():
+    leads = [submission_to_lead(s) for s in load_csv(SITES_CSV)]
+    assert [(l.source, l.category, l.segment) for l in leads] == [
+        ("inbound_bakery", Category.COOKIE, Segment.EMERGING_BRAND),
+        ("inbound_pet", Category.PET_FOOD, Segment.ESTABLISHED_BRAND),
+        ("inbound_formulation", Category.OTHER, Segment.EMERGING_BRAND),
+        ("inbound_pet_formulation", Category.PET_TREAT, Segment.EMERGING_BRAND),
+    ]
+    assert leads[0].tags == ["inbound", "website", "site:bakery", "fit:tree-nut", "need-cert:organic", "need-cert:kosher"]
+    assert leads[2].tags == [
+        "inbound", "website", "site:formulation", "fit:refrigerated", "fit:peanut",
+        "need-cert:gluten-free", "need-cert:sqf-or-other-gfsi-audit", "need:formulation",
+    ]
+    assert leads[3].tags == ["inbound", "website", "site:pet-formulation", "need:formulation", "formulation-only"]
+    assert "site=pet; storage=Frozen; allergens=None; certifications=Human grade" in leads[1].notes
+
+
+@pytest.mark.parametrize("extras, site, expected", [
+    ({}, "", []),
+    ({}, "Bakery", ["site:bakery"]),
+    ({"storage": "Refrigerated"}, "", ["fit:refrigerated"]),
+    ({"storage": " frozen "}, "", ["fit:frozen"]),
+    ({"storage": "Shelf-stable"}, "", []),
+    ({"storage": "Not sure"}, "", []),
+    ({"allergens": "Peanuts"}, "", ["fit:peanut"]),
+    ({"allergens": "Dairy, Tree nuts, Peanuts"}, "", ["fit:peanut", "fit:tree-nut"]),
+    ({"allergens": "None"}, "", []),
+    ({"certifications": "SQF or other GFSI audit, Non-GMO"}, "", ["need-cert:sqf-or-other-gfsi-audit", "need-cert:non-gmo"]),
+    ({"certifications": "None yet"}, "", []),
+    ({"recipe_status": "Kitchen recipe"}, "", ["need:formulation"]),
+    ({"recipe_status": "Concept only"}, "", ["need:formulation"]),
+    ({"recipe_status": "Want a private-label recipe"}, "", ["need:formulation"]),
+    ({"recipe_status": "Product to match"}, "", ["need:formulation"]),
+    ({"recipe_status": "Production-ready formula"}, "", []),
+    ({"recipe_status": "Production-ready formula"}, "formulation", ["site:formulation", "need:formulation"]),
+    ({}, "pet-formulation", ["site:pet-formulation", "need:formulation"]),
+    ({"recipe_status": "Kitchen recipe"}, "formulation", ["site:formulation", "need:formulation"]),
+    ({"after_formulation": "No, formulation only"}, "", ["formulation-only"]),
+    ({"after_formulation": "Maybe"}, "", []),
+    ({"after_formulation": "Yes, produce it on an open line"}, "", []),
+    ({"after_formulation": "Not sure"}, "", []),
+])
+def test_tag_rules(extras: dict[str, str], site: str, expected: list[str]):
+    assert inbound_tags(_sub(site=site, extras=extras)) == ["inbound", "website", *expected]
+
+
+@pytest.mark.parametrize("site, pet_product, product, expected", [
+    ("pet", "Complete and balanced food", "Kibble", Category.PET_FOOD),
+    ("pet-formulation", "Toppers or mixers", "Bone broth", Category.PET_FOOD),
+    ("pet", "Treats or snacks", "Chewy molasses cookies", Category.PET_TREAT),
+    ("pet", "Not sure yet", "Chewy molasses cookies", Category.PET_TREAT),
+    ("pet", "", "Hot sauce", Category.PET_TREAT),
+    ("bakery", "Complete and balanced food", "Chewy molasses cookies", Category.COOKIE),
+    ("formulation", "", "Dog biscuits", Category.PET_TREAT),
+    ("", "", "Hot sauce", Category.OTHER),
+])
+def test_pet_sites_decide_food_or_treat(site: str, pet_product: str, product: str, expected: Category):
+    sub = _sub(site=site, product=product, extras={"pet_product": pet_product} if pet_product else {})
+    assert inbound_category(sub) == expected
+    lead = submission_to_lead(sub)
+    assert lead.category == expected
+    assert lead.signals.detected_categories == ([] if expected == Category.OTHER else [expected])
+
+
+@pytest.mark.parametrize("setup, stage, segment, transitioning", [
+    ("", "Idea or concept", Segment.EMERGING_BRAND, False),
+    ("", "Selling from a home or shared kitchen", Segment.EMERGING_BRAND, True),
+    ("", "selling with a  co-packer", Segment.ESTABLISHED_BRAND, True),
+    ("", "Established brand adding products", Segment.ESTABLISHED_BRAND, True),
+    ("", "Something else", Segment.UNKNOWN, False),
+    ("Not in production yet", "Established brand adding products", Segment.EMERGING_BRAND, True),
+    ("Somewhere else", "Selling with a co-packer", Segment.ESTABLISHED_BRAND, True),
+])
+def test_stage_sets_segment_and_transitioning(setup: str, stage: str, segment: Segment, transitioning: bool):
+    assert inbound_segment(_sub(current_setup=setup, stage=stage)) == (segment, transitioning)
+    lead = submission_to_lead(_sub(current_setup=setup, stage=stage))
+    assert (lead.segment, lead.signals.transitioning) == (segment, transitioning)
+
+
+@pytest.mark.parametrize("site, source", [
+    ("", "inbound_website"), ("bakery", "inbound_bakery"), ("pet", "inbound_pet"),
+    ("formulation", "inbound_formulation"), ("pet-formulation", "inbound_pet_formulation"),
+    (" Pet Formulation ", "inbound_pet_formulation"), ("!!!", "inbound_website"),
+])
+def test_source_names_the_site(site: str, source: str):
+    assert inbound_source(_sub(site=site)) == source
+    assert submission_to_lead(_sub(site=site)).source == source
+
+
+def test_merge_adds_site_tags_and_sources_once(store: LeadStore):
+    store.upsert(_researched_lead())
+    pet = _sub(site="pet", extras={"storage": "Frozen", "certifications": "Organic"})
+    import_submissions(store, [pet])
+    lead = store.get("molassesco.com")
+    assert lead.tags == ["spear", "inbound", "website", "site:pet", "fit:frozen", "need-cert:organic"]
+    assert lead.source == "seed+inbound_pet" and "site=pet; storage=Frozen; certifications=Organic" in lead.notes
+
+    again = import_submissions(store, [pet, _sub(site="pet", submission_id="")])
+    assert [reason for _, reason in again.skipped] == ["already imported"] * 2
+    second = _sub(site="pet-formulation", product="Salmon bites", submission_id="sub-2",
+                  extras={"storage": "Frozen", "after_formulation": "No, formulation only"})
+    import_submissions(store, [second, _sub(site="pet", product="Beef bites", submission_id="sub-3")])
+    lead = store.get("molassesco.com")
+    assert lead.tags == [
+        "spear", "inbound", "website", "site:pet", "fit:frozen", "need-cert:organic",
+        "site:pet-formulation", "need:formulation", "formulation-only",
+    ]
+    assert lead.source == "seed+inbound_pet+inbound_pet_formulation"  # a prefix of another source is not a match
+    assert lead.notes.count("Inbound capacity check") == 3
+    assert parse_activity_detail(store.activities("molassesco.com")[1]["detail"])["site"] == "pet-formulation"
+
+
+def test_weekly_report_shows_inbound_from_every_site(store: LeadStore, sequence_template):
+    import_submissions(store, load_csv(SITES_CSV) + [_sub()])
+    report = build_report(store, sequence_template, days=7, today=date.today())
+    assert sorted(e.site for e in report.inbound) == ["", "bakery", "formulation", "pet", "pet-formulation"]
+    text = render_report(report)
+    assert "Inbound (website): 5" in text
+    assert "  Bark & Bowl, dev@barkandbowl.com [pet_food] site=pet; product=Beef and pumpkin meal toppers;" in text
+    assert "  Molasses & Co, maya@molassesco.com [cookie] product=Chewy molasses cookies;" in text
+
+
+# --- several Netlify sites ------------------------------------------------------
+
+
+def _multi_site_handler(calls: list[str]) -> Callable[[httpx.Request], httpx.Response]:
+    """Serve site-1 and site-3 like the documented API; site-2 answers 500."""
+    forms = {"site-1": "form-a", "site-3": "form-c"}
+    pages = {"form-a": [_record(1, "2026-09-27T10:00:00Z")], "form-c": [_record(3, "2026-09-28T10:00:00Z"), _record(4, "2026-09-29T10:00:00Z")]}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        """Route listSiteForms and listFormSubmissions per site."""
+        path = request.url.path
+        calls.append(path)
+        assert request.headers["Authorization"] == f"Bearer {TOKEN}"
+        if path == "/api/v1/sites/site-2/forms":
+            return httpx.Response(500)
+        site = path.removeprefix("/api/v1/sites/").removesuffix("/forms")
+        if site in forms:
+            return httpx.Response(200, json=[{"id": forms[site], "name": "capacity-check"}])
+        form = path.removeprefix("/api/v1/forms/").removesuffix("/submissions")
+        return httpx.Response(200, json=pages[form] if request.url.params["page"] == "1" else [])
+
+    return handler
+
+
+@pytest.mark.parametrize("value, expected", [
+    ("site-1", ["site-1"]), (" site-1 , site-2,,site-1, ", ["site-1", "site-2"]), ("", []), (" , ", []),
+])
+def test_parse_site_ids(value: str, expected: list[str]):
+    assert parse_site_ids(value) == expected
+
+
+def test_fetch_netlify_sites_keeps_going_past_a_failing_site():
+    calls: list[str] = []
+    client = httpx.Client(transport=httpx.MockTransport(_multi_site_handler(calls)))
+    pulls = fetch_netlify_sites(["site-1", "site-2", "site-3"], TOKEN, client=client)
+    assert [(p.site_id, p.ok, [s.submission_id for s in p.submissions]) for p in pulls] == [
+        ("site-1", True, ["sub-1"]), ("site-2", False, []), ("site-3", True, ["sub-3", "sub-4"]),
+    ]
+    assert "500 Internal Server Error for GET /sites/site-2/forms" in pulls[1].error and TOKEN not in pulls[1].error
+    assert "/api/v1/sites/site-3/forms" in calls
+    assert repr(pulls[1]) == "SitePull(site_id='site-2', submissions=0, ok=False)"
+    assert repr(SitePull(site_id="x")) == "SitePull(site_id='x', submissions=0, ok=True)"
+    since = fetch_netlify_sites(["site-3"], TOKEN, since=date(2026, 9, 29), client=client)
+    assert [s.submission_id for s in since[0].submissions] == ["sub-4"]
+
+
+def test_cli_import_form_pulls_every_site_and_reports_a_failure(run: Callable[..., int], monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]):
+    monkeypatch.setenv("NETLIFY_AUTH_TOKEN", TOKEN)
+    monkeypatch.setenv("NETLIFY_SITE_ID", "site-1, site-2,site-3")
+    calls: list[str] = []
+    monkeypatch.setattr(inbound, "_netlify_client", lambda: httpx.Client(transport=httpx.MockTransport(_multi_site_handler(calls))))
+    assert run("import-form", "--netlify") == 1
+    captured = capsys.readouterr()
+    assert "Netlify site site-1: 1 submissions" in captured.out and "Netlify site site-3: 2 submissions" in captured.out
+    assert "Netlify import failed for site site-2: Netlify API returned 500" in captured.err
+    assert "import-form: 3 new, 0 merged, 0 skipped." in captured.out
+    assert TOKEN not in captured.out + captured.err
+    monkeypatch.setenv("NETLIFY_SITE_ID", "site-1,site-3")
+    assert run("import-form", "--netlify") == 0
+    assert "import-form: 0 new, 0 merged, 3 skipped." in capsys.readouterr().out
+
+
+def test_cli_import_form_netlify_rejects_a_site_list_of_only_commas(run: Callable[..., int], monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]):
+    monkeypatch.setenv("NETLIFY_AUTH_TOKEN", TOKEN)
+    monkeypatch.setenv("NETLIFY_SITE_ID", " , ")
+    assert run("import-form", "--netlify") == 1
+    assert "NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID" in capsys.readouterr().err
+
+
+def test_cli_import_form_sites_csv(run: Callable[..., int], capsys: pytest.CaptureFixture[str]):
+    assert run("import-form", str(SITES_CSV)) == 0
+    out = capsys.readouterr().out
+    assert "Bark & Bowl dev@barkandbowl.com pet_food established_brand (new)" in out
+    assert "Purrfect Bites lena@purrfectbites.com pet_treat emerging_brand (new)" in out
+    assert "import-form: 4 new, 0 merged, 0 skipped." in out
+    assert run("list", "--tag", "need:formulation") == 0
+    listed = capsys.readouterr().out
+    assert "Keto Kind" in listed and "Purrfect Bites" in listed and "Bark & Bowl" not in listed

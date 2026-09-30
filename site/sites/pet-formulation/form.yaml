@@ -1,0 +1,88 @@
+# The pet formulation project check. See site/sites/bakery/form.yaml for the field rules.
+# stage replaces current_setup on the formulation sites; species and pet_product
+# decide pet treat or pet food; stage, formulation_goal, recipe_status, and
+# after_formulation are read by `leadgen import-form` (src/leadgen/inbound.py):
+# keep their names and option strings exact.
+
+title: "Start a pet formulation project"
+intro: "Seven short questions about your product, species, stage, and goal, then your contact details. No sales call unless you ask for one."
+summary: "Seven short questions about your product, species, stage, and goal"
+kicker: "Project check"
+submit: "Send the project check"
+steps:
+  - "We check fit with the facility and reply within {reply_within}."
+  - "If it fits, you send your recipe, treat, or brief, and the facility develops a sample."
+  - "You approve the sample, get a written production quote, and sign directly with the facility."
+
+fields:
+  - name: product
+    label: "What do you want to make?"
+    placeholder: "Single-protein salmon training treats, 6 oz pouch"
+    wide: true
+  - name: pet_product
+    label: "Product type"
+    type: select
+    options: ["Treats or snacks", "Complete and balanced food", "Toppers or mixers", "Not sure yet"]
+  - name: species
+    label: "For which animals?"
+    type: select
+    options: ["Dogs", "Cats", "Dogs and cats", "Other"]
+  - name: stage
+    label: "Where are you now?"
+    type: select
+    options: ["Idea or concept", "Selling from a home or shared kitchen", "Selling with a co-packer", "Established brand adding products"]
+  - name: formulation_goal
+    label: "What should the project do?"
+    type: select
+    options: ["Scale my kitchen recipe", "Match an existing product", "Improve or clean up a recipe", "Make it shelf-stable", "Develop a new product from a concept"]
+  - name: timing
+    label: "When you want to start"
+    type: select
+    options: ["Now", "Within 3 months", "3 to 6 months", "Exploring"]
+  - name: volume
+    label: "Expected monthly volume once in production"
+    type: select
+    options: ["Under 5,000 units", "5,000 to 25,000", "25,000 to 100,000", "Over 100,000", "Not sure yet"]
+
+fit:
+  title: "Help us check fit"
+  intro: "About a minute. These answers tell the facility where the project starts and where it has to end up, before anyone gets on a call."
+  fields:
+    - name: recipe_status
+      label: "Where is the recipe?"
+      type: select
+      options: ["Production-ready formula", "Kitchen recipe", "Product to match", "Concept only", "Want a private-label recipe"]
+    - name: after_formulation
+      label: "Once the recipe is approved, should the facility make it?"
+      type: radio
+      hint: "Formulation here is built to lead to production on the facility's lines. If you want a formula only, say so, and we ask the facility whether it takes that on and on what terms."
+      options: ["Yes, produce it on an open line", "Maybe", "No, formulation only"]
+    - name: storage
+      label: "How will it be stored and sold?"
+      type: radio
+      options: ["Shelf-stable", "Refrigerated", "Frozen", "Not sure"]
+    - name: sku_count
+      label: "How many products (SKUs)?"
+      type: radio
+      options: ["1", "2 to 3", "4 to 10", "More than 10"]
+    - name: pack_format
+      label: "Pack format"
+      placeholder: "8 oz stand-up pouch, 12 per case"
+    - name: target_price
+      label: "Target retail price"
+      placeholder: "$12.99 a pouch"
+    - name: claims
+      label: "Claims you want on the pack"
+      type: checkboxes
+      hint: "Each claim shapes the formula and the label, so the facility confirms which ones it can support for your product before development starts."
+      options: ["Grain-free", "Limited ingredient", "Single protein", "High-protein", "Human grade", "None"]
+    - name: certifications
+      label: "Certifications or standards buyers ask for"
+      type: checkboxes
+      options: ["Human grade", "Organic", "Non-GMO", "SQF or other GFSI audit", "None yet"]
+    - name: channels
+      label: "Where it will sell"
+      type: checkboxes
+      options: ["Online or direct", "Farmers markets and events", "Pet specialty stores", "Veterinary or grooming clients", "Grocery chains", "Online marketplaces", "Subscription boxes"]
+
+notes_placeholder: "The treat you want matched, ingredients to avoid, the life stage, a retailer or launch date"

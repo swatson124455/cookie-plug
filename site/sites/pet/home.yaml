@@ -1,0 +1,38 @@
+# Home page copy for the pet site. Layout: site/templates/home.html.
+# No AAFCO, human-grade, or registration claims: the facility has not confirmed them.
+
+kicker: "Contract manufacturing · Private label · Formulation"
+h1: "Open co-packing lines for dog treat and pet food brands."
+lead: "Pet co-packers with good lines are often booked out or set minimums a young brand cannot meet. The manufacturer we represent has open pet-treat and pet-food lines now and does the whole job under one roof: formulation, production, packaging, and the pet-food label. You bring the brand; it makes the product."
+trust: "Brands never pay us; the facility does, once you are its customer. Every fact on this site is confirmed by the facility in writing."
+
+who_title: "Who calls us"
+who_text: "Pet brands at a turning point. If one of these is you, capacity is probably your constraint."
+who:
+  - label: "Kitchen to line"
+    title: "Outgrowing the home batch"
+    text: "Pet boutiques and groomers keep reordering, and the oven, the dehydrator, and your weekends are the limit."
+  - label: "New listing"
+    title: "Landing pet specialty or grocery"
+    text: "A regional chain or a distributor said yes. Now you need a plant, a written spec, and cases built to their requirements."
+  - label: "Private label"
+    title: "Launching without a recipe"
+    text: "You have the brand, the audience, or the store, but not the formula. The facility can develop one with you."
+  - label: "Risk"
+    title: "Adding a second source"
+    text: "Pet brands lose listings when a single plant misses a run. A second line that already makes your product is cheap insurance."
+
+steps_title: "How it works"
+steps_text: "The first step is your product, not a pitch."
+steps:
+  - title: "Send the capacity check"
+    text: "A few questions about your product, species, volume, and timing. We confirm line fit with the facility and reply within {reply_within}."
+  - title: "Get a benchmark sample"
+    text: "Send your product or your spec. The facility's formulation team makes a sample to match it, and you judge it side by side with your own."
+  - title: "Quote, sign, and run"
+    text: "Written pricing once the sample is approved, then a first production run on an open line, packed shelf-ready. You sign directly with the facility."
+
+lines_title: "Pet lines with open capacity"
+beyond: "Pet treats and pet food run under one roof with the facility's bakery lines. Tell us the format (baked, soft, jerky-style, kibble, topper) in the capacity check; the facility confirms line fit before anything else."
+included_text: "Turnkey means you do not need a manufacturing team. The facility handles all of this in one place, including the pet-food label."
+guides_text: "How to find, qualify, and work with a pet co-packer, written plainly."

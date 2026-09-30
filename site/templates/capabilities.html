@@ -12,8 +12,9 @@
 {{ m.section_head(1, "Production lines") }}
 <div class="ruled cols-2">
 {% for line in site.facts.lines %}
-{% set spec = site.categories.get(line.slug) %}
-<a class="cell" href="{{ site.url(line.slug) }}">
+{% set found = site.category_for(line.key) %}
+{% set spec = found[1] if found else none %}
+<a class="cell" href="{{ site.line_url(line.key) }}">
 <span class="status-pill{% if not line.open %} ask{% endif %}">{{ "Open now" if line.open else "Ask" }}</span>
 <h3>{{ line.label }}</h3>
 <p>{{ spec.card if spec else "" }}</p>
@@ -55,7 +56,7 @@
 {% if site.facts.location %}<p>Production location: {{ site.facts.location }}.{% if site.facts.ships_nationwide %} Ships nationwide.{% endif %}</p>{% endif %}
 
 <div class="section-gap"></div>
-{{ m.section_head(5, "What to send for a benchmark") }}
+{{ m.section_head(5, "What to send for a sample") }}
 <ul class="checks">
 <li>Your product: a case, not a bag, so the facility can test it properly.</li>
 <li>Your spec sheet or recipe, if you have one.</li>
@@ -71,8 +72,8 @@
 </div>
 <div class="aside">
 {{ m.facts_panel() }}
-<div class="box signal"><h3>Is your product a fit?</h3><p>Four questions, and we reply within {{ site.cfg.reply_within }}.</p><p><a class="btn small" href="{{ site.url('contact') }}">Check capacity</a></p></div>
+<div class="box signal"><h3>Is your product a fit?</h3><p>{{ site.form.summary }}, and we reply within {{ site.cfg.reply_within }}.</p><p><a class="btn small" href="{{ site.url('contact') }}">{{ site.cfg.wording.cta }}</a></p></div>
 </div>
 </div></section>
-{{ m.cta_band("Capacity is open now", "Send the four questions and we confirm line fit with the facility within " ~ site.cfg.reply_within ~ ".") }}
+{{ m.cta_band("Lines are open now", site.form.summary ~ ". We check fit with the facility and reply within " ~ site.cfg.reply_within ~ ".") }}
 {% endblock %}

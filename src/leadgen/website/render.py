@@ -12,7 +12,7 @@ from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-from leadgen.website.config import SiteConfig, display_value, is_placeholder
+from leadgen.website.config import FamilyMember, SiteConfig, display_value, is_placeholder
 from leadgen.website.content import FaqItem, Guide
 from leadgen.website.facts import FacilityFacts, Line
 
@@ -24,7 +24,7 @@ if TYPE_CHECKING:
 
 MODES = ("production", "draft", "preview")
 HYPHENATED = re.compile(r"(\w+(?:-\w+)+)")
-INTERNAL_LINK = re.compile(r'href="/([a-z0-9/_-]*)(#[^"]*)?"')
+INTERNAL_LINK = re.compile(r'<a href="/([a-z0-9/_-]*)(#[^"]*)?">(.*?)</a>', re.DOTALL)
 
 
 class SiteContext:
@@ -42,6 +42,8 @@ class SiteContext:
         self.faq: list[FaqItem] = []
         self.categories: dict[str, dict[str, Any]] = {}
         self.landings: dict[str, dict[str, Any]] = {}
+        self.home: dict[str, Any] = {}
+        self.form: dict[str, Any] = {}
         self.css_version = ""
 
     def __repr__(self) -> str:
@@ -115,7 +117,7 @@ class SiteContext:
         from markupsafe import Markup, escape
 
         if is_placeholder(value):
-            hint = "Placeholder: fill in site/config.yaml"
+            hint = "Placeholder: fill in site/shared.yaml or site/sites/<id>/site.yaml"
             return Markup(f'<mark class="todo" title="{hint}">{escape(display_value(value))}</mark>')
         return Markup(escape(value))
 
@@ -134,6 +136,40 @@ class SiteContext:
             groups.setdefault(item.group, []).append(item)
         return list(groups.items())
 
+    def category_for(self, line_key: str) -> tuple[str, dict[str, Any]] | None:
+        """This site's page for a production line, as ``(slug, spec)``, if it has one."""
+        return next(((slug, spec) for slug, spec in self.categories.items() if spec["line"] == line_key), None)
+
+    def line_url(self, line_key: str) -> str:
+        """The line's page on this site, or the capabilities page when the site has none."""
+        found = self.category_for(line_key)
+        return self.url(found[0]) if found else self.url("capabilities")
+
+    def page_keys(self) -> set[str]:
+        """Keys of the indexable content pages this site carries, for resolving Markdown links."""
+        keys = {"", "capabilities", "guides", "faq", "about", "contact", "privacy"}
+        return keys | set(self.categories) | {f"guides/{guide.slug}" for guide in self.guides}
+
+    def live_siblings(self) -> list[FamilyMember]:
+        """Sibling sites with a real domain (placeholders are skipped until the domain is set)."""
+        return [member for member in self.cfg.family if not is_placeholder(member.domain)]
+
+    def guide_home(self, slug: str) -> str:
+        """Absolute URL of the guide on the first live site in family order that carries it, else empty.
+
+        Shared guides get one canonical home, so four domains never compete with copies of one page.
+        """
+        for member in self.cfg.family_order():
+            if member.id == self.cfg.id:
+                return ""
+            if slug in member.guides and not is_placeholder(member.domain):
+                return f"{member.base_url}/guides/{slug}/"
+        return ""
+
+    def sibling_guide(self, slug: str) -> str:
+        """Absolute URL of a guide this site lacks but a live sibling carries, else empty."""
+        return next((f"{m.base_url}/guides/{slug}/" for m in self.live_siblings() if slug in m.guides), "")
+
     def guides_for(self, category: str, limit: int = 3) -> list[Guide]:
         """Guides for a category page, category matches first, then general ones."""
         ranked = sorted(self.guides, key=lambda guide: guide.category != category)
@@ -141,10 +177,18 @@ class SiteContext:
 
 
 def rewrite_internal_links(html: str, site: SiteContext) -> str:
-    """Point ``href="/path/"`` links written in Markdown at the right target for this build mode."""
+    """Point ``/path/`` links written in Markdown at the right target for this build mode and site.
+
+    A link to a page this site does not carry goes to the sibling site that does, or becomes plain text.
+    """
+    keys = site.page_keys()
+
     def replace(match: "re.Match[str]") -> str:
-        key, anchor = match.group(1).strip("/"), match.group(2) or ""
-        return f'href="{site.url(key, anchor.lstrip("#"))}"'
+        key, anchor, text = match.group(1).strip("/"), match.group(2) or "", match.group(3)
+        if key in keys:
+            return f'<a href="{site.url(key, anchor.lstrip("#"))}">{text}</a>'
+        elsewhere = site.sibling_guide(key.removeprefix("guides/")) if key.startswith("guides/") else ""
+        return f'<a href="{elsewhere}">{text}</a>' if elsewhere else text
 
     return INTERNAL_LINK.sub(replace, html)
 

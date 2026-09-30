@@ -7,7 +7,7 @@
 <h1>{{ spec.h1|nobreak }}</h1>
 <p class="lead">{{ spec.intro }}</p>
 <div class="actions">
-<a class="btn" href="{{ site.url(page.key, 'capacity') }}">Check capacity for your {{ spec.noun }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
+<a class="btn" href="{{ site.url(page.key, 'capacity') }}">{{ spec.get("cta") or "Check capacity for your " ~ spec.noun }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
 <a class="btn ghost" href="{{ site.url('capabilities') }}">Capabilities</a>
 </div>
 </div></section>
@@ -23,7 +23,7 @@
 
 <section class="section"><div class="wrap split">
 <div>
-{{ m.section_head(2, "What the facility handles") }}
+{{ m.section_head(2, spec.get("handles_title") or "What the facility handles") }}
 <dl class="spec-list">
 {% for item in spec.handles %}
 <div><dt>{{ item.label }}</dt><dd>{{ item.text }}</dd></div>
@@ -60,5 +60,5 @@
 {{ m.guide_cards(site.guides_for(page.key, 3), 3) }}
 </div></section>
 
-{{ m.form_section(page, "Check capacity for your " ~ spec.noun) }}
+{{ m.form_section(page, spec.get("cta") or "Check capacity for your " ~ spec.noun) }}
 {% endblock %}

@@ -1,4 +1,5 @@
-# Landing pages for paid search, served at /lp/<slug>/. They are noindex and
+# Landing pages for paid search, served at /lp/<slug>/ on the site that lists them
+# in its site.yaml `landings`. They are noindex and
 # stay out of the sitemap; the form records the page path, so every lead shows
 # which ad channel it came from. Point each ad group's final URL at one of these.
 # Facility claims follow the same rule as everywhere: confirmed facts only.
@@ -18,20 +19,55 @@ google-pet:
   title: "Dog Treat and Pet Food Co-Packer With Open Capacity"
   description: "Open pet-treat and pet-food lines now, under one roof with bakery lines. Formulation, production, packaging, labeling. Check capacity."
   h1: "Dog treat and pet food co-packing, with open lines now"
-  intro: "A US manufacturer with open pet-treat and pet-food capacity, under one roof with its bakery lines. Answer four questions and we confirm fit within one business day."
+  intro: "A US manufacturer with open pet-treat and pet-food capacity, under one roof with its bakery lines. Answer five questions and we confirm fit within one business day."
   points:
     - "No waitlist to get on the line"
     - "Formulation, production, packaging, and the pet-food label in one place"
     - "Multiple SKUs welcome"
     - "Free to ask; brands never pay us"
 
-bing:
-  title: "Co-Packer With Open Capacity for Food and Pet Brands"
-  description: "Open cookie, bakery, pet-treat, and pet-food lines now. Turnkey from formulation to shelf-ready case packs. Check capacity for your product."
-  h1: "A co-packer with open lines for food and pet brands"
-  intro: "Open capacity now on cookie, bakery, pet-treat, and pet-food lines, turnkey from formulation to shelf-ready case packs. Answer four questions and we confirm fit within one business day."
+bing-bakery:
+  title: "Cookie and Bakery Co-Packer With Open Capacity"
+  description: "Open cookie and bakery lines now. Turnkey from formulation to shelf-ready case packs. Check capacity for your product."
+  h1: "Cookie and bakery co-packing, with open lines now"
+  intro: "A US manufacturer with open cookie and bakery capacity, turnkey from formulation to shelf-ready case packs. Answer four questions and we confirm fit within one business day."
   points:
     - "No waitlist to get on the line"
-    - "Human and pet lines under one roof"
+    - "Formulation, production, packaging, labeling, and nutrition panels in one place"
     - "Multiple SKUs welcome"
     - "Free to ask; brands never pay us"
+
+bing-pet:
+  title: "Dog Treat and Pet Food Co-Packer With Open Capacity"
+  description: "Open pet-treat and pet-food lines now. Formulation, production, packaging, and the pet-food label in one place. Check capacity."
+  h1: "Dog treat and pet food co-packing, with open lines now"
+  intro: "A US manufacturer with open pet-treat and pet-food capacity. Answer five questions and we confirm fit within one business day."
+  points:
+    - "No waitlist to get on the line"
+    - "Formulation, production, packaging, and the pet-food label in one place"
+    - "Multiple SKUs welcome"
+    - "Free to ask; brands never pay us"
+
+google-formulation:
+  title: "Cookie and Bakery Recipe Development for Production"
+  description: "Scale a kitchen recipe, match a product, or start from a concept. Developed with you, then produced on an open cookie or bakery line. Start a project."
+  h1: "Cookie and bakery recipe development, with open lines to produce it"
+  intro: "A US manufacturer that develops your cookie or baked good with you and then makes it on its open cookie and bakery lines. Answer five questions and we confirm fit within one business day."
+  points:
+    - "Kitchen recipe, product to match, or concept"
+    - "Open lines now: develop it here, then produce it here"
+    - "Formulation, production, packaging, labeling, and nutrition panels in one place"
+    - "Free to ask; brands never pay us"
+  form_title: "Tell us about your product"
+
+google-pet-formulation:
+  title: "Dog Treat and Pet Food Recipe Development"
+  description: "Scale a home recipe, match a treat, or start from a concept. Developed with you, then produced on an open pet-treat or pet-food line. Start a project."
+  h1: "Dog treat and pet food recipe development, with open lines to produce it"
+  intro: "A US manufacturer that develops your treat or pet food with you and then makes it on its open pet-treat and pet-food lines, under one roof with its bakery lines. Answer seven short questions and we confirm fit within one business day."
+  points:
+    - "Home recipe, treat to match, or concept"
+    - "Open pet lines now: develop it here, then produce it here"
+    - "Formulation, production, packaging, and the pet-food label in one place"
+    - "Free to ask; brands never pay us"
+  form_title: "Tell us about your pet product"

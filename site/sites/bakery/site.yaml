@@ -1,0 +1,34 @@
+# The human baked-goods co-packing site: cookie and bakery brands, and makers of
+# other packaged foods who want to ask. Merged over site/shared.yaml.
+
+brand: "Open Line Co-Packing"       # working name (decision 12): check the trademark and domain before you buy
+brand_short: "Open Line"
+tagline: "Open co-packing lines for cookies and baked goods"
+domain: "TO_FILL https://yourdomain.com"   # the registered domain, https, no trailing slash
+indexnow_key: "ee3f17956e9b3482a5103f90939a20b0"   # public by design; the build publishes /<key>.txt
+family_blurb: "Cookies and baked goods"   # how the other sites' footers describe this one
+
+lines: [cookie, bakery]             # facility lines this site presents
+categories: [cookie-co-packer, bakery-co-packer]   # line pages from site/content/categories.yaml
+landings: [google-bakery, bing-bakery]             # ad landing pages from site/content/landing.yaml
+guides:                             # guides from site/content/guides/ (this site is the canonical home of the first site listing each)
+  - how-to-find-a-cookie-co-packer
+  - co-packer-minimums-lead-times-and-costs
+  - what-a-co-packer-quote-includes
+  - questions-to-ask-a-co-packer-before-signing
+  - what-retailers-require-from-a-new-supplier
+  - second-source-co-packer-strategy
+  - small-batch-and-pilot-runs
+  - from-farmers-market-to-packaged-product
+  - when-to-leave-the-commissary
+  - refrigerated-to-shelf-stable
+
+wording:
+  home_title: "Cookie and Bakery Co-Packer With Open Capacity"
+  home_description: "Open cookie and bakery co-packing lines now. Turnkey from formulation to shelf-ready case packs, for brands leaving the kitchen or adding a second source."
+  service_name: "Co-packing for cookie and baked-goods brands"
+  guides_title: "Co-Packer Guides for Cookie and Bakery Brands"
+  guides_description: "Plain answers for food founders: finding and qualifying a co-packer, minimums and quotes, retailer requirements, shelf-stable conversions, and second sourcing."
+  faq_title: "Bakery Co-Packer FAQ: Minimums, Samples, Costs"
+  faq_description: "Straight answers on co-packer minimums, sampling, certifications, private label, shelf-stable conversions, costs, and how working with us works."
+  about_lead: "We connect cookie and baked-goods brands that need production capacity with a US manufacturer that has open lines, and we run the process until you sign."

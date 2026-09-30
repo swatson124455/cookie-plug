@@ -1,0 +1,41 @@
+# Home page copy for the pet formulation site. Layout: site/templates/home.html.
+# No AAFCO, complete-and-balanced, human-grade, veterinary, registration, or
+# health claims: the facility has not confirmed them. No fees or timelines.
+
+kicker: "Formulation · Product development · Production"
+h1: "Develop your dog treat or pet food here. Then produce it here."
+lead: "A home recipe that has to scale, a treat you want matched, or a concept with no formula yet: the manufacturer we represent develops it with you and then makes it on its open pet-treat and pet-food lines. Formulation, production, packaging, and the pet-food label, all under one roof. You bring the brand; it builds the product."
+trust: "Brands never pay us; the facility does, once you are its customer. Every fact on this site is confirmed by the facility in writing."
+
+who_title: "Who starts a project"
+who_text: "Pet founders and pet professionals whose product is not production-ready yet. Where you start matters less than where it has to end up: on a production line, the same run after run."
+who:
+  - label: "Home recipe"
+    title: "A treat that has outgrown the oven"
+    text: "Boutiques and groomers reorder, and the recipe works a tray at a time. On production equipment, ingredients, moisture, and bake all behave differently, so the recipe is rebuilt for the line and sampled until it matches yours."
+  - label: "Benchmark"
+    title: "A treat to match"
+    text: "You know what you want because it already exists: your own treat from another kitchen, or a style you want to compete with. The facility develops to that benchmark, and you judge the sample side by side."
+  - label: "Concept"
+    title: "An idea and a brand"
+    text: "A single-protein treat, a topper, a limited-ingredient biscuit: you have the concept and the customers, not the formula. The facility develops one with you."
+  - label: "Private label"
+    title: "Vets, trainers, groomers, creators"
+    text: "Clients or followers already trust your recommendations and want a product under your name. The facility develops one with you, under your brand."
+
+steps_title: "How a project works"
+steps_text: "Develop it here, then produce it here. The first step is your product, not a pitch."
+steps:
+  - title: "Send the project check"
+    text: "A few questions about your product, species, stage, and goal. We confirm fit with the facility and reply within {reply_within}."
+  - title: "Judge a sample"
+    text: "Send your recipe, your treat, or your brief. The facility's formulation team develops a sample from it, and you judge it against your own product or your target until you approve it."
+  - title: "Quote, sign, and run"
+    text: "Once the sample is approved, the facility quotes production in writing, then makes a first run on an open pet line, packed shelf-ready. You sign directly with the facility."
+
+lines_title: "Where your recipe goes to production"
+beyond: "Pet treats and pet food run under one roof with the facility's bakery lines. Tell us the format (baked, soft, jerky-style, kibble, topper) in the project check; the facility confirms line fit before any development starts."
+included_title: "From recipe to shelf-ready"
+included_text: "Formulation is the first of the turnkey services, all under one roof. The recipe the facility develops with you is the recipe it produces, packs, and labels, including the pet-food label."
+faq_text: "The questions pet founders ask before a project starts."
+guides_text: "Taking a pet recipe from the kitchen to production, written plainly."

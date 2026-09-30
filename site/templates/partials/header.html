@@ -6,5 +6,5 @@
 <a href="{{ site.url(key) }}" data-nav="{{ key }}"{% if page is defined and page.nav == key %} aria-current="page"{% endif %}>{{ label }}</a>
 {% endfor %}
 </nav>
-<a class="btn small header-cta" href="{{ site.url('contact') }}">Check capacity</a>
+<a class="btn small header-cta" href="{{ site.url('contact') }}">{{ site.cfg.wording.cta }}</a>
 </div></header>

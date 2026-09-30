@@ -8,7 +8,7 @@
 {% if page.noindex or site.draft %}
 <meta name="robots" content="noindex, nofollow">
 {% else %}
-<link rel="canonical" href="{{ site.abs_url(page.key) }}">
+<link rel="canonical" href="{{ page.canonical or site.abs_url(page.key) }}">
 {% endif %}
 <meta name="theme-color" content="#0c0e0f">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">

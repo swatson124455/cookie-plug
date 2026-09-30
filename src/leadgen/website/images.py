@@ -1,8 +1,8 @@
 """Share images and icons, drawn with Pillow from the site's own fonts.
 
-Run ``python site/build.py --images`` after adding a guide or changing the
-brand. Output is committed under ``site/static/``, so the site build itself
-never needs Pillow. Every image is drawn from confirmed facts only.
+Run ``python site/build.py --images`` after adding a guide or changing a
+brand. Share images are committed under ``site/sites/<id>/static/og/`` and the
+shared icons under ``site/static/``, so the site build itself never needs Pillow. Every image is drawn from confirmed facts only.
 """
 
 from __future__ import annotations
@@ -173,21 +173,28 @@ def icon(size: int) -> "Image.Image":
 
 def image_jobs(site: "SiteContext") -> list[tuple[str, str, str]]:
     """``(relative path, title, kicker)`` for every share image the site uses."""
-    jobs = [("og/default.png", site.cfg.tagline, KICKER)]
-    jobs += [(f"og/{slug}.png", spec["h1"], KICKER) for slug, spec in site.categories.items()]
+    kicker = str(site.home.get("kicker") or KICKER).upper().replace(" · ", "  ·  ")
+    jobs = [("og/default.png", site.cfg.tagline, kicker)]
+    jobs += [(f"og/{slug}.png", spec["h1"], kicker) for slug, spec in site.categories.items()]
     jobs += [(f"og/guides/{guide.slug}.png", guide.title, f"GUIDE  ·  {guide.reading_minutes} MIN READ") for guide in site.guides]
     return jobs
 
 
-def generate_images(site: "SiteContext", static_dir: Path) -> list[Path]:
-    """Write every share image plus the app icon and logo; return the paths written."""
-    fonts = Fonts(static_dir / "fonts")
+def generate_images(site: "SiteContext", static_dir: Path, font_dir: Path) -> list[Path]:
+    """Write every share image for one site into its static directory; return the paths written."""
+    fonts = Fonts(font_dir)
     written: list[Path] = []
     for relative, title, kicker in image_jobs(site):
         target = static_dir / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         share_image(site, fonts, title, kicker).save(target, optimize=True)
         written.append(target)
+    return written
+
+
+def generate_icons(static_dir: Path) -> list[Path]:
+    """The app icon and logo, shared by every site in the family."""
+    written: list[Path] = []
     for name, size in (("apple-touch-icon.png", 180), ("logo.png", 512)):
         icon(size).save(static_dir / name, optimize=True)
         written.append(static_dir / name)

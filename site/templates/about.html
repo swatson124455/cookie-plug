@@ -5,15 +5,15 @@
 <section class="page-head"><div class="wrap">
 {{ m.crumbs(page) }}
 <h1>About {{ site.cfg.brand }}</h1>
-<p class="lead">{{ site.cfg.brand }} is a partnerships service, not a plant. We connect food and pet brands that need production capacity with a US manufacturer that has it, and we run the process until you sign.</p>
+<p class="lead">{{ site.cfg.brand }} is a partnerships service, not a plant. {{ site.cfg.wording.about_lead }}</p>
 </div></section>
 <section class="section"><div class="wrap split">
 <div class="prose">
 <h2>How it works</h2>
 <ol>
-<li><strong>You send the capacity check, or call.</strong> Four questions about your product, volume, and timing.</li>
+<li><strong>You send the {{ site.cfg.wording.check_name }}, or call.</strong> {{ site.form.summary }}.</li>
 <li><strong>We confirm fit with the facility:</strong> line, format, volume, and timing. If it is not a fit, we say so plainly, and if we know where you should look instead, we tell you.</li>
-<li><strong>You send your product or spec for a benchmark sample</strong> and judge it side by side with your own.</li>
+<li><strong>You send your product, recipe, or spec for a sample</strong> and judge it against your own product or your brief.</li>
 <li><strong>The facility quotes in writing</strong> once you approve the sample.</li>
 <li><strong>You sign directly with the facility.</strong> From then on you work with the plant, and we stay reachable if anything snags.</li>
 </ol>
@@ -30,7 +30,7 @@
 <div class="box"><h2 class="label">Reach us</h2>
 <div class="contact-card"><span>{{ m.email(c.email) }}</span>{% if c.phone %}<span>{{ m.phone(c.phone) }}</span>{% endif %}</div>
 <p class="muted">Replies within {{ site.cfg.reply_within }}.</p></div>
-<div class="box signal"><h3>Check capacity</h3><p>Four questions; no cost to ask.</p><p><a class="btn small" href="{{ site.url('contact') }}">Start</a></p></div>
+<div class="box signal"><h3>{{ site.cfg.wording.cta }}</h3><p>{{ site.form.summary }}; no cost to ask.</p><p><a class="btn small" href="{{ site.url('contact') }}">Start</a></p></div>
 </div>
 </div></section>
 {% endblock %}

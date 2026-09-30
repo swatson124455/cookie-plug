@@ -1,7 +1,7 @@
 """Static website generator for the inbound side of the pipeline.
 
 The site is built from three kinds of input, none of which is code:
-``site/config.yaml`` (brand, domain, contact details), ``config/facility.yaml``
+``site/shared.yaml`` and ``site/sites/<id>/`` (brand, domain, contact details, home copy, questionnaire), ``config/facility.yaml``
 (facility facts, rendered only once confirmed), and ``site/content/``
 (guides, FAQ, category copy). ``site/templates/`` holds the Jinja layouts.
 

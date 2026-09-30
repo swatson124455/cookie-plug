@@ -1,0 +1,42 @@
+# The human-food formulation site: recipe and product development for cookie and
+# baked-goods brands, presented as the path to production on the facility's open
+# lines (develop it here, then produce it here). Merged over site/shared.yaml.
+# Never promise formulation-only work, formulation fees, recipe ownership, or
+# timelines: those are confirmed with the facility in writing, per project.
+
+brand: "Open Line Formulation"      # working name (decision 12): check the trademark and domain before you buy
+brand_short: "Open Line"
+tagline: "Recipe and product development for cookie and bakery brands"
+domain: "TO_FILL https://yourformulationdomain.com"   # the registered domain, https, no trailing slash
+indexnow_key: "e88454fb6beca3a01cab4fbd06846cb2"
+family_blurb: "Recipe development for food brands"
+
+lines: [cookie, bakery]
+categories: [cookie-recipe-development, bakery-product-development]
+landings: [google-formulation]
+guides:                             # the co-packing sites list these first, so they stay each guide's canonical home
+  - refrigerated-to-shelf-stable
+  - from-farmers-market-to-packaged-product
+  - small-batch-and-pilot-runs
+  - when-to-leave-the-commissary
+  - what-retailers-require-from-a-new-supplier
+  - questions-to-ask-a-co-packer-before-signing
+  - what-a-co-packer-quote-includes
+
+wording:
+  home_title: "Cookie and Bakery Product Development and Scale-Up"
+  home_description: "Recipe and product development for cookie and bakery brands: scale a kitchen recipe, match a product, or start from a concept, then run it on an open line."
+  service_name: "Recipe and product development for cookie and baked-goods brands"
+  guides_title: "Guides for Food Founders Developing a Product"
+  guides_description: "Plain answers for food founders taking a recipe to production: shelf-stable conversions, pilot runs, leaving the kitchen, retailer requirements, and contracts."
+  guides_h1: "Guides for founders taking a recipe to production"
+  guides_lead: "Plain answers to the questions founders ask while a kitchen recipe becomes a product on a production line. Each one starts with the short answer."
+  faq_title: "Recipe Development FAQ: Recipes, Samples, Costs"
+  faq_description: "Straight answers on recipe and product development: what a project includes, matching a product, who owns the recipe, costs, and the path to production."
+  faq_lead: "Straight answers about recipe development, the facility, and how we work."
+  about_lead: "We connect cookie and baked-goods brands that need a recipe developed or scaled with a US manufacturer that formulates and produces on open lines, and we run the process until you sign."
+  check_name: "project check"
+  cta: "Start a project"
+  cta_long: "Start a formulation project"
+  guide_form_title: "Have a recipe that needs to scale?"
+  guide_form_intro: "If this guide describes where your product is, send the project check. We confirm fit with the facility's formulation team and its open lines first."

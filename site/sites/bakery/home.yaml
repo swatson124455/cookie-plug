@@ -1,0 +1,38 @@
+# Home page copy for the baked-goods site. Layout: site/templates/home.html.
+# Facility claims stay inside what config/facility.yaml confirms.
+
+kicker: "Contract manufacturing · Private label · Formulation"
+h1: "Open co-packing lines for cookie and bakery brands."
+lead: "Many co-packers make small brands wait or keep raising minimums. The manufacturer we represent has open cookie and bakery lines now and does the whole job under one roof: formulation, production, packaging, labeling, and nutrition panels. You bring the brand; it makes the product."
+trust: "Brands never pay us; the facility does, once you are its customer. Every fact on this site is confirmed by the facility in writing."
+
+who_title: "Who calls us"
+who_text: "Food brands at a turning point, not brands that are comfortable. If one of these is you, capacity is probably your constraint."
+who:
+  - label: "Kitchen to line"
+    title: "Outgrowing a kitchen"
+    text: "You are turning down wholesale orders, a buyer asked for an audit certificate, or the founders are still scooping dough at 5 a.m."
+  - label: "New listing"
+    title: "Launching into retail"
+    text: "A first listing just landed, and the reorder will arrive faster than the first order did. Production has to be ready before the shelf is."
+  - label: "Format change"
+    title: "Changing the product"
+    text: "Bakery case to shelf-stable, bulk to individually wrapped, one flavor to a full line. Formulation and packaging are part of the job."
+  - label: "Risk"
+    title: "Adding a second source"
+    text: "One co-packer is a single point of failure. A second line that already makes your product is cheap insurance."
+
+steps_title: "How it works"
+steps_text: "The first step is your product, not a pitch."
+steps:
+  - title: "Send the capacity check"
+    text: "A few questions about your product, volume, and timing. We confirm line fit with the facility and reply within {reply_within}."
+  - title: "Get a benchmark sample"
+    text: "Send your product or your spec. The facility's formulation team makes a sample to match it, and you judge it side by side with your own."
+  - title: "Quote, sign, and run"
+    text: "Written pricing once the sample is approved, then a first production run on an open line, packed shelf-ready. You sign directly with the facility."
+
+lines_title: "Lines with open capacity"
+beyond: "Making something that is not a cookie or a baked good? Tell us what it is in the capacity check. If it is outside these lines, we say so plainly, within {reply_within}."
+included_text: "Turnkey means you do not need a manufacturing team. The facility handles all of this in one place."
+guides_text: "How to find, qualify, and switch co-packers, written plainly."

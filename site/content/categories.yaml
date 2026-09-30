@@ -217,3 +217,231 @@ pet-food-co-packer:
       when_confirmed:
         field: commercial.min_order_units
         a: "Minimum runs start at {value} units; the exact number depends on your format and packaging, and the facility confirms it on the first call."
+
+# Formulation sites: recipe and product development as the path to production on
+# the facility's open lines. No fees, timelines, recipe-ownership, AAFCO, or
+# complete-and-balanced promises; those are confirmed per project, in writing.
+
+cookie-recipe-development:
+  line: cookie
+  h1: "Cookie recipe development, built for production"
+  title: "Cookie Recipe Development for Production"
+  crumb: "Cookie recipe development"
+  noun: "cookie"
+  card: "Scale a kitchen cookie, match one, or build one from a concept, then produce it on an open cookie line."
+  description: "Cookie recipe development that ends on a production line: scale a kitchen recipe, match a benchmark, or reformulate, then produce, pack, and label it."
+  intro: "For founders whose cookie is not production-ready yet: a kitchen recipe that has to scale, a cookie you want matched, a recipe to clean up, or only a concept. The manufacturer we represent develops it with you, samples it until you approve it, and then makes it on its open cookie lines, packed and labeled. Develop it here, then produce it here."
+  who_title: "Cookie projects that start here"
+  who:
+    - title: "A kitchen cookie that has to scale"
+      text: "Hand-scooped dough and a home oven hide a lot. On production equipment the spread, the bake, and the texture change, so the recipe is rebuilt until the cookie still tastes like yours."
+    - title: "A cookie to match"
+      text: "Your own cookie from another kitchen, or a style you want to compete with. The facility develops to that benchmark, and you judge the sample side by side."
+    - title: "Less sugar, fewer allergens, a cleaner label"
+      text: "Reformulating a cookie moves the sweetness, the texture, and the label together. Each change is sampled until you approve it."
+    - title: "A cookie for a brand without one"
+      text: "A retailer, a cafe group, or a creator wants a cookie under its own name. Private label means the facility develops it with you, under your brand."
+  handles_title: "What formulation covers"
+  handles:
+    - label: "Recipe development"
+      text: "Your kitchen recipe scaled to production, a benchmark matched, or a new cookie developed from your brief."
+    - label: "Samples"
+      text: "Sampled until you approve it, judged against your own cookie or your target."
+    - label: "Label and nutrition panel"
+      text: "Ingredient statement, allergen declaration, and the Nutrition Facts panel, built from the approved recipe."
+    - label: "Packaging"
+      text: "Packed into your retail format once the recipe is approved."
+    - label: "Production"
+      text: "The approved recipe made on an open cookie line, to a written spec, in shelf-ready case packs."
+  ready:
+    - "Your recipe, in weights if you have them, or a case of the cookie you want matched."
+    - "What must change and what must not: taste, texture, size, sugar, allergens, shelf life."
+    - "The claims you want on the pack, and any your buyer requires."
+    - "Pack size, target retail price, and where the cookie will sell."
+    - "Expected monthly volume once it is in production."
+  note: "Cookie formats (drop, wire-cut, bar, sandwich, soft-baked) run on different equipment, so the recipe is developed for the line that will make it. Name your format in the project check; the facility confirms line fit before development starts."
+  cta: "Start your cookie project"
+  extras:
+    - title: "Taking a fresh cookie shelf-stable"
+      intro: "Cookies sold in coffee shops, convenience stores, gift boxes, or meal kits usually have to be shelf-stable, and often individually wrapped. Converting a fresh cookie is a formulation and packaging project, and both are part of the turnkey service. Whether your wrap format fits a line is confirmed first."
+      points:
+        - "Tell us the shelf life you need and where the cookie will be sold."
+        - "Expect the recipe, the packaging, and the label to change together."
+        - "Plan for shelf-life testing before launch; it is what proves the date on the pack."
+      guide: refrigerated-to-shelf-stable
+  questions:
+    - q: "Will the production cookie taste like my kitchen cookie?"
+      a: "That is what sampling is for. The facility develops the recipe for the line that will make it and samples it until you approve it, side by side with your own cookie. Nothing is quoted for production until you do."
+    - q: "Can you make my cookie gluten-free, vegan, or lower in sugar?"
+      a: "Tell us the claims you want in the project check. Less sugar or a vegan recipe is a formulation question; a gluten-free or allergen-free claim also depends on testing and line controls. We confirm in writing what the facility can support for your cookie before development starts."
+    - q: "What is the minimum production run?"
+      a: "It depends on the format and the packaging, so the facility confirms it for your cookie on the first call, before any development starts. We will not quote a number that does not apply to your product."
+      when_confirmed:
+        field: commercial.min_order_units
+        a: "Minimum runs start at {value} units; the exact number for your cookie depends on the format and packaging, and the facility confirms it on the first call, before any development starts."
+
+bakery-product-development:
+  line: bakery
+  h1: "Bakery product development, from brief to production"
+  title: "Bakery Product Development and Scale-Up"
+  crumb: "Bakery product development"
+  noun: "baked goods"
+  card: "Develop or rework a baked good for the line that will make it; the facility confirms format fit first."
+  description: "Bakery product development for baked-goods brands: scale a recipe, match a product, or make it shelf-stable, then produce it on an open bakery line."
+  intro: "A recipe that works in a bakery case rarely survives a production line or a store shelf unchanged. The manufacturer we represent develops your product with you for the line that will make it, samples it until you approve it, and then produces, packs, and labels it on its open bakery lines. Baked goods cover many formats, so name yours first; the facility confirms fit before development starts."
+  who_title: "Bakery projects that start here"
+  who:
+    - title: "Fresh to shelf-stable"
+      text: "A product sold from a bakery case has to survive a distribution center and a store shelf. That changes the recipe, the packaging, and the label, and it is formulation work."
+    - title: "A commissary recipe that has to scale"
+      text: "A shared kitchen got you to market. On production equipment the recipe is rebuilt, and sampled until the product is still yours."
+    - title: "A cleaner or lighter version"
+      text: "Less sugar, fewer allergens, a shorter ingredient list. Each change is sampled until you approve it."
+    - title: "A new product from a concept"
+      text: "A retailer, a cafe group, or a brand adding a line has the idea but not the recipe. The facility develops one with you, under your brand."
+  handles_title: "What formulation covers"
+  handles:
+    - label: "Recipe development"
+      text: "Your recipe scaled to production, a benchmark matched, or a new product developed from your brief."
+    - label: "Samples"
+      text: "Sampled until you approve it, judged against your own product or your target."
+    - label: "Label and nutrition panel"
+      text: "Ingredient statement, allergen declaration, and the Nutrition Facts panel, built from the approved recipe."
+    - label: "Packaging"
+      text: "Packed into your retail format once the recipe is approved."
+    - label: "Production"
+      text: "The approved recipe made on an open bakery line, to a written spec, in shelf-ready case packs."
+  ready:
+    - "Your recipe, or a case of the product you want matched."
+    - "How it is stored today, and how it must be stored and sold: fresh, frozen, or shelf-stable."
+    - "What must change and what must not."
+    - "The claims you want on the pack, pack size, and target retail price."
+    - "Expected monthly volume once it is in production."
+  note: "Brownies, bars, muffins, granola, crackers, and cakes each run on different equipment. Name your format in the project check, and the facility confirms line fit before development starts."
+  cta: "Start your bakery project"
+  extras:
+    - title: "From a shared kitchen to a production recipe"
+      intro: "A commissary recipe is written for people and small batches. A production recipe is written for equipment and a written spec, and it is what every run is checked against."
+      points:
+        - "Write the recipe down in weights, with the process steps, before the first call."
+        - "Expect the production recipe to differ from the kitchen one; the sample decides whether it is still yours."
+        - "Build the label from the approved recipe, not the kitchen one: the ingredient statement and the Nutrition Facts panel follow the formula."
+      guide: when-to-leave-the-commissary
+  questions:
+    - q: "Can my fresh product become shelf-stable?"
+      a: "It is a formulation project: the recipe, the packaging, and the label all change, and shelf life has to be tested before launch. Tell us about the product, and we confirm what the facility can do for it before development starts."
+    - q: "Which baked goods can the facility develop?"
+      a: "The recipe has to be developed for the equipment that will make it, so the answer is product by product. Name your format in the project check, and we confirm line fit with the facility before development starts."
+    - q: "Is there a minimum production run?"
+      a: "Yes, and it depends on the format and the packaging. The facility confirms the number for your product on the first call, before any development starts."
+      when_confirmed:
+        field: commercial.min_order_units
+        a: "Minimum runs start at {value} units; the exact number depends on your format and packaging, and the facility confirms it on the first call."
+
+dog-treat-formulation:
+  line: pet_treat
+  h1: "Dog treat formulation, built for production"
+  title: "Dog Treat Formulation and Recipe Development"
+  crumb: "Dog treat formulation"
+  noun: "dog treat"
+  card: "Scale a home treat recipe, match a treat, or start from a concept, then produce it on an open pet-treat line."
+  description: "Dog treat formulation that ends on a production line: scale a home recipe, match a treat, or develop one from a concept, then produce and label it."
+  intro: "For dog treat founders and pet professionals whose treat is not production-ready yet: a home recipe that has to scale, a treat you want matched, or a concept with no formula. The manufacturer we represent develops it with you, samples it until you approve it, and then makes it on its open pet-treat lines, under one roof with its bakery lines. Develop it here, then produce it here."
+  who_title: "Treat projects that start here"
+  who:
+    - title: "A home recipe that has to scale"
+      text: "The biscuits sell at the boutique and the groomer's counter. On production equipment the moisture, the bake, and the texture change, so the recipe is rebuilt until the treat is still yours."
+    - title: "A treat to match"
+      text: "Your own treat from another kitchen, or a style you want to compete with. The facility develops to that benchmark, and you judge the sample side by side."
+    - title: "Limited-ingredient or single-protein"
+      text: "Fewer ingredients leave less room to adjust texture and shelf life, so these treats are formulation projects from the first sample."
+    - title: "A private-label line"
+      text: "A veterinary practice, a trainer, a groomer, or a creator wants treats under its own name. The facility develops them with you, under your brand."
+  handles_title: "What formulation covers"
+  handles:
+    - label: "Recipe development"
+      text: "Your home recipe scaled to production, a benchmark matched, or a new treat developed from your brief."
+    - label: "Samples"
+      text: "Sampled until you approve it, judged against your own treat or your target."
+    - label: "The pet-food label"
+      text: "The guaranteed analysis and the ingredient statement, built from the approved recipe."
+    - label: "Packaging"
+      text: "Packed into your retail format once the recipe is approved."
+    - label: "Production"
+      text: "The approved recipe made on an open pet-treat line, to a written spec, in shelf-ready case packs."
+  ready:
+    - "Your recipe, in weights if you have them, or a bag of the treat you want matched."
+    - "The species, and whether the product is a treat or a food."
+    - "What must change and what must not: protein, texture, size, shelf life."
+    - "The claims you want on the pack, pack size, and target retail price."
+    - "Your channels and the states you sell in, because feed registrations are state by state."
+  note: "Treat formats run on different equipment: baked biscuits, soft-baked treats, jerky, freeze-dried, and extruded treats are different lines. Name yours in the project check; the facility confirms line fit before development starts."
+  cta: "Start your treat project"
+  extras:
+    - title: "Private label or your own recipe"
+      intro: "Both start here. Private label means the facility develops a treat with you and you sell it under your brand. Bringing your own recipe means the facility rebuilds it for its line and makes it to your written spec."
+      points:
+        - "Private label is often the faster start when you have a brand and customers but no finished recipe."
+        - "Your own recipe keeps the product unique to you: bring the formula, your current label, and a bag of treats."
+        - "Either way, who owns the formula is set in the written agreement with the facility, and we get it confirmed before development starts."
+      guide: private-label-vs-co-packing-dog-treats
+  questions:
+    - q: "Will the production treat match my home recipe?"
+      a: "That is what sampling is for. The facility develops the recipe for the line that will make it and samples it until you approve it, side by side with your own treat. Nothing is quoted for production until you do."
+    - q: "Who handles state feed registrations?"
+      a: "Pet treats are regulated as animal feed, and many states require a product to be registered before it is sold there. What the facility covers and what stays with you is confirmed per product, before development starts; tell us the states you sell in."
+    - q: "What is the minimum production run for treats?"
+      a: "It depends on the format and the packaging, so the facility confirms it for your treat on the first call, before any development starts."
+      when_confirmed:
+        field: commercial.min_order_units
+        a: "Minimum runs start at {value} units; the exact number for your treat depends on the format and packaging, and the facility confirms it on the first call."
+
+pet-food-formulation:
+  line: pet_food
+  h1: "Pet food formulation, from concept to production"
+  title: "Pet Food Formulation and Recipe Development"
+  crumb: "Pet food formulation"
+  noun: "pet food"
+  card: "Develop a food, topper, or mixer for the line that will make it, then produce it on an open pet-food line."
+  description: "Pet food formulation for brands with a recipe, a product to match, or a concept: developed for the line that makes it, then produced, packed, and labeled."
+  intro: "For pet food brands whose product is not production-ready yet: a home recipe, a food or topper you want matched, or a concept. The manufacturer we represent develops it with you for its open pet-food lines, samples it until you approve it, and then produces, packs, and labels it. What your label will claim decides how the food has to be formulated, so that is settled first."
+  who_title: "Pet food projects that start here"
+  who:
+    - title: "A topper or mixer"
+      text: "Fed alongside a complete food, a topper or mixer is labeled for intermittent or supplemental feeding, which shapes both the recipe and the label."
+    - title: "A complete and balanced food"
+      text: "A food meant to be fed on its own has to substantiate that claim. How yours would be substantiated is settled with the facility, in writing, before development starts."
+    - title: "A home recipe that has to scale"
+      text: "A fresh or baked recipe customers love, made in small batches. On production equipment it is rebuilt for the line and sampled until you approve it."
+    - title: "A private-label food"
+      text: "A retailer, a veterinary practice, or a brand extension wants a product under its own name. The facility develops it with you, under your brand."
+  handles_title: "What formulation covers"
+  handles:
+    - label: "Recipe development"
+      text: "Your recipe taken to production, a benchmark matched, or a new food developed from your brief."
+    - label: "Samples"
+      text: "Sampled until you approve it, judged against your own product or your target."
+    - label: "The pet-food label"
+      text: "The guaranteed analysis and the ingredient statement, built from the approved recipe."
+    - label: "Packaging"
+      text: "Packed into your retail format once the recipe is approved."
+    - label: "Production"
+      text: "The approved recipe made on an open pet-food line, to a written spec, in shelf-ready case packs."
+  ready:
+    - "Your recipe and ingredient list, or the product you want matched."
+    - "Species and life stage, and whether the food is complete and balanced or for intermittent or supplemental feeding."
+    - "The format: baked, kibble, freeze-dried, or another."
+    - "The claims you want on the label, pack size, and target retail price."
+    - "Expected monthly volume once in production, and the states you sell in."
+  note: "Pet food formats (baked, extruded kibble, freeze-dried, wet) run on very different equipment, so the recipe is developed for the line that will make it. Name yours in the project check; the facility confirms line fit before development starts."
+  cta: "Start your pet food project"
+  questions:
+    - q: "Can the food be complete and balanced?"
+      a: "A complete and balanced claim has to be substantiated, either by formulating to an AAFCO nutrient profile for the species and life stage or by an AAFCO feeding trial. The facility confirms how it would substantiate the claim for your food, in writing, before development starts."
+    - q: "Who handles state feed registrations?"
+      a: "Many states require pet food to be registered before it is sold there. What the facility covers and what stays with you is confirmed per product, before development starts; tell us the states you sell in."
+    - q: "Is there a minimum production run?"
+      a: "Yes, and it depends on the format and the packaging. The facility confirms the number for your product on the first call, before any development starts."
+      when_confirmed:
+        field: commercial.min_order_units
+        a: "Minimum runs start at {value} units; the exact number depends on your format and packaging, and the facility confirms it on the first call."

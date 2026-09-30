@@ -130,9 +130,15 @@ def test_unknown_lines_flags_lines_the_facility_does_not_run(complete_cfg):
     assert unknown_lines(cfg, ["cookie", "bakery"]) == ["candy"]
 
 
-def test_repo_site_config_loads():
-    cfg = load_site_config(REPO / "site" / "config.yaml")
-    assert cfg.brand and cfg.capacity.lines
+def test_repo_site_family_loads():
+    from leadgen.website.config import load_family
+
+    family = load_family(REPO / "site")
+    assert [cfg.id for cfg in family][:2] == ["bakery", "pet"]
+    for cfg in family:
+        assert cfg.brand and cfg.capacity.lines and cfg.lines and cfg.indexnow_key
+        assert {member.id for member in cfg.family} == {other.id for other in family} - {cfg.id}
+    assert len({cfg.indexnow_key for cfg in family}) == len(family)
 
 
 # facts ----------------------------------------------------------------------
@@ -274,9 +280,22 @@ def test_markdown_links_follow_the_build_mode(complete_cfg, open_facts, tmp_path
     html = '<a href="/guides/x/">x</a> <a href="/faq/#minimums">m</a> <a href="/">home</a> <a href="https://fda.gov/">f</a>'
     preview = SiteContext(complete_cfg, open_facts, "preview", date(2026, 9, 29), tmp_path)
     production = SiteContext(complete_cfg, open_facts, "production", date(2026, 9, 29), tmp_path)
+    for site in (preview, production):
+        site.guides = [load_guide(_guide_file(tmp_path, "x"))]
     assert rewrite_internal_links(html, preview) == (
         '<a href="#guide-x">x</a> <a href="#faq--minimums">m</a> <a href="#home">home</a> <a href="https://fda.gov/">f</a>')
     assert rewrite_internal_links(html, production) == html
+
+
+def test_markdown_links_to_pages_this_site_lacks_go_to_a_sibling_or_become_text(complete_cfg, open_facts, tmp_path):
+    from leadgen.website.config import FamilyMember
+
+    family = [FamilyMember(id="pet", brand="Pet", domain="https://pet.test", guides=["y"]),
+              FamilyMember(id="later", brand="Later", domain="TO_FILL https://later.test", guides=["z"])]
+    cfg = complete_cfg.model_copy(update={"family": family})
+    site = SiteContext(cfg, open_facts, "production", date(2026, 9, 29), tmp_path)
+    html = '<a href="/guides/y/">y</a>, <a href="/guides/z/">z</a>, <a href="/dog-treat-co-packer/">dogs</a>'
+    assert rewrite_internal_links(html, site) == '<a href="https://pet.test/guides/y/">y</a>, z, dogs'
 
 
 def test_hyphenated_words_are_kept_together():

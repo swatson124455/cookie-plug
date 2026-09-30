@@ -2,13 +2,13 @@
 {% import "partials/macros.html" as m with context %}
 {% block main %}
 <section class="page-head"><div class="wrap">
-<p class="kicker"><span class="dot" aria-hidden="true"></span>Open capacity, {{ site.facts.as_of }}</p>
+<p class="kicker"><span class="dot" aria-hidden="true"></span>Lines open, {{ site.facts.as_of }}</p>
 <h1>{{ spec.h1|nobreak }}</h1>
 <p class="lead">{{ spec.intro }}</p>
 <ul class="checks landing-points">
 {% for point in spec.points %}<li>{{ point }}</li>{% endfor %}
 </ul>
-<div class="actions"><a class="btn" href="{{ site.url(page.key, 'capacity') }}">Check capacity for your product <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
+<div class="actions"><a class="btn" href="{{ site.url(page.key, 'capacity') }}">{{ site.cfg.wording.cta_long }} <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
 </div></section>
-{{ m.form_section(page, spec.get("form_title") or "Check capacity for your product") }}
+{{ m.form_section(page, spec.get("form_title") or "") }}
 {% endblock %}

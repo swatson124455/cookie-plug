@@ -3,11 +3,11 @@
 {% block main %}
 <section class="page-head"><div class="wrap">
 {{ m.crumbs(page) }}
-<h1>Guides for brands choosing a co-packer</h1>
-<p class="lead">Plain answers to the questions founders ask before, during, and after the move to a co-packer. Each one starts with the short answer.</p>
+<h1>{{ site.cfg.wording.guides_h1 }}</h1>
+<p class="lead">{{ site.cfg.wording.guides_lead }}</p>
 </div></section>
 <section class="section"><div class="wrap">
 {{ m.guide_cards(site.guides, 2) }}
 </div></section>
-{{ m.cta_band("Capacity is your constraint?", "Send the four questions. We confirm line fit with the facility and reply within " ~ site.cfg.reply_within ~ ".") }}
+{{ m.cta_band(site.cfg.wording.guide_form_title, site.form.summary ~ ". We check fit with the facility and reply within " ~ site.cfg.reply_within ~ ".") }}
 {% endblock %}

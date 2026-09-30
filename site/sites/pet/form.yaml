@@ -1,0 +1,76 @@
+# The pet capacity check. See site/sites/bakery/form.yaml for the field rules.
+# species and pet_product feed `leadgen import-form`: complete-and-balanced food
+# and toppers become pet-food leads, everything else a pet-treat lead.
+
+title: "Check capacity for your pet product"
+intro: "Five questions about your product, then your contact details. No sales call unless you ask for one."
+summary: "Five questions about your product, species, volume, and timing"
+kicker: "Capacity check"
+submit: "Send the capacity check"
+steps:
+  - "We check line fit with the facility and reply within {reply_within}."
+  - "If it fits, you send your product or spec for a benchmark sample."
+  - "You approve the sample, get a written quote, and sign directly with the facility."
+
+fields:
+  - name: product
+    label: "What are you making?"
+    placeholder: "Peanut butter dog biscuits, 8 oz pouch"
+    wide: true
+  - name: pet_product
+    label: "Product type"
+    type: select
+    options: ["Treats or snacks", "Complete and balanced food", "Toppers or mixers", "Not sure yet"]
+  - name: species
+    label: "For which animals?"
+    type: select
+    options: ["Dogs", "Cats", "Dogs and cats", "Other"]
+  - name: volume
+    label: "Monthly volume, now or needed"
+    type: select
+    options: ["Under 5,000 units", "5,000 to 25,000", "25,000 to 100,000", "Over 100,000"]
+  - name: timing
+    label: "When you need it"
+    type: select
+    options: ["Now", "Within 3 months", "3 to 6 months", "Exploring"]
+  - name: current_setup
+    label: "How it is made today"
+    type: select
+    options: ["Home or shared kitchen", "Our own facility", "A co-packer", "Not in production yet"]
+
+fit:
+  title: "Help us check fit"
+  intro: "About a minute. These answers let the facility rule a mismatch in or out before anyone gets on a call."
+  fields:
+    - name: storage
+      label: "How is it stored and sold?"
+      type: radio
+      options: ["Shelf-stable", "Refrigerated", "Frozen", "Not sure"]
+    - name: recipe_status
+      label: "Where is the recipe?"
+      type: select
+      options: ["Production-ready formula", "Kitchen recipe", "Product to match", "Concept only", "Want a private-label recipe"]
+    - name: sku_count
+      label: "How many products (SKUs)?"
+      type: radio
+      options: ["1", "2 to 3", "4 to 10", "More than 10"]
+    - name: pack_format
+      label: "Pack format"
+      placeholder: "8 oz stand-up pouch, 12 per case"
+    - name: target_price
+      label: "Target retail price"
+      placeholder: "$12.99 a pouch"
+    - name: certifications
+      label: "Certifications or standards buyers ask for"
+      type: checkboxes
+      options: ["Human grade", "Organic", "Non-GMO", "SQF or other GFSI audit", "None yet"]
+    - name: claims
+      label: "Claims on the pack"
+      type: checkboxes
+      options: ["Grain-free", "Limited ingredient", "Single protein", "High-protein", "Made in USA", "None"]
+    - name: channels
+      label: "Where it sells, or will"
+      type: checkboxes
+      options: ["Online or direct", "Farmers markets and events", "Pet specialty stores", "Grocery chains", "Online marketplaces", "Subscription boxes"]
+
+notes_placeholder: "Retailer, launch date, ingredients the facility should know about"

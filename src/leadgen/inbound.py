@@ -7,6 +7,12 @@ CSV export (:func:`load_csv`) or from the Netlify API
 and :func:`import_submissions` turns them into leads. A submission from a
 company already in the pipeline is merged without touching researched facts,
 and importing the same submission twice changes nothing.
+
+Four sites (bakery, pet, formulation, pet-formulation) post the same form
+name with a hidden ``site`` field and optional fit questions (storage,
+allergens, certifications, ...). Every answer that is not a core field is kept
+in :attr:`FormSubmission.extras`, written into the lead note, and the fit
+answers the facility cares about become tags (:func:`inbound_tags`).
 """
 
 from __future__ import annotations
@@ -61,16 +67,51 @@ SEGMENT_BY_SETUP: dict[str, Segment] = {
     "a co-packer": Segment.ESTABLISHED_BRAND,
 }
 TRANSITIONING_SETUPS: frozenset[str] = frozenset({"home or shared kitchen", "our own facility", "a co-packer"})
+# The formulation sites ask "stage" instead of "current_setup".
+SEGMENT_BY_STAGE: dict[str, Segment] = {
+    "idea or concept": Segment.EMERGING_BRAND,
+    "selling from a home or shared kitchen": Segment.EMERGING_BRAND,
+    "selling with a co-packer": Segment.ESTABLISHED_BRAND,
+    "established brand adding products": Segment.ESTABLISHED_BRAND,
+}
+TRANSITIONING_STAGES: frozenset[str] = frozenset({
+    "selling from a home or shared kitchen", "selling with a co-packer", "established brand adding products",
+})
+
+# Sites whose leads are pet products whatever the product text says, and the answers that mean food, not treats.
+PET_SITES: frozenset[str] = frozenset({"pet", "pet-formulation"})
+PET_FOOD_PRODUCTS: frozenset[str] = frozenset({"complete and balanced food", "toppers or mixers"})
+FORMULATION_SITES: frozenset[str] = frozenset({"formulation", "pet-formulation"})
+FORMULATION_RECIPE_STATUSES: frozenset[str] = frozenset({
+    "kitchen recipe", "concept only", "want a private-label recipe", "product to match",
+})
+STORAGE_TAGS: dict[str, str] = {"refrigerated": "fit:refrigerated", "frozen": "fit:frozen"}
+ALLERGEN_TAGS: dict[str, str] = {
+    "peanuts": "fit:peanut", "peanut": "fit:peanut", "tree nuts": "fit:tree-nut", "tree nut": "fit:tree-nut",
+}
+NO_CERTIFICATION: frozenset[str] = frozenset({"none yet", "none"})
 
 # Export and API column names that mean a model field once keys are normalized.
 FIELD_ALIASES: dict[str, str] = {
     "created_at": "submitted_at", "date": "submitted_at", "_date": "submitted_at",
     "submitted": "submitted_at", "id": "submission_id",
 }
+# Keys that are never answers, so never extras: Netlify's own metadata about the request.
+METADATA_KEYS: frozenset[str] = frozenset({
+    "ip", "user_agent", "referrer", "site_url", "number", "form_id", "site_id", "updated_at",
+    "g_recaptcha_response",
+})
+# Fit questions in the order the note lists them; any other extra follows in arrival order.
+FIT_FIELDS: tuple[str, ...] = (
+    "storage", "allergens", "certifications", "claims", "recipe_status", "sku_count", "pack_format",
+    "target_price", "channels", "species", "pet_product", "formulation_goal", "after_formulation",
+)
+EXTRA_KEY_PATTERN = re.compile(r"[a-z0-9][a-z0-9_]{0,39}")
+EXTRA_MAX_CHARS = 500  # a guard on one answer; the longest real one is a pack format or target price
 # (label in the note, FormSubmission field); the first two are the activity summary.
 NOTE_FIELDS: tuple[tuple[str, str], ...] = (
     ("product", "product"), ("volume", "volume"), ("timing", "timing"),
-    ("setup", "current_setup"), ("phone", "phone"), ("notes", "notes"),
+    ("setup", "current_setup"), ("stage", "stage"), ("phone", "phone"), ("notes", "notes"),
 )
 
 EMAIL_PATTERN = re.compile(r"[a-z0-9._%+'-]+@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,24}")
@@ -99,15 +140,21 @@ class FormSubmission(BaseModel):
     email: str = ""
     phone: str = ""
     notes: str = ""
+    stage: str = ""  # the formulation sites' "where are you now" question, in place of current_setup
     source_page: str = ""
+    site: str = ""  # hidden field naming which of the sites sent it: bakery, pet, formulation, pet-formulation
     website: str = ""
     bot_field: str = ""  # the honeypot: people never see it, so any value means a bot
     form_name: str = ""
     submitted_at: datetime | None = None
     submission_id: str = ""
+    extras: dict[str, str] = Field(default_factory=dict)  # every other answer; checkbox lists comma-joined
 
     def __repr__(self) -> str:
-        return f"FormSubmission(id={self.submission_id!r}, email={self.email!r}, company={self.company!r})"
+        return (
+            f"FormSubmission(id={self.submission_id!r}, email={self.email!r}, company={self.company!r}, "
+            f"site={self.site!r}, extras={len(self.extras)})"
+        )
 
     @field_validator("submitted_at", mode="before")
     @classmethod
@@ -117,18 +164,29 @@ class FormSubmission(BaseModel):
 
     @classmethod
     def from_mapping(cls, row: Mapping[Any, Any]) -> FormSubmission:
-        """Build from a dict whose keys vary in case, spacing, hyphens, and underscores.
+        """Build from a dict whose keys vary in case, spacing, hyphens, underscores, and a ``[]`` suffix.
 
-        Unknown keys are ignored. When two keys normalize to the same field,
-        the first non-empty value wins.
+        Keys that name a field fill it; when two normalize to the same field,
+        the first non-empty value wins. Every other answer goes to ``extras``
+        under :func:`extra_key`, with repeated keys' values merged. List values
+        (checkbox groups from the API) are joined with ", ". Netlify metadata,
+        timestamps, ids, and non-string keys never become extras.
         """
         values: dict[str, str] = {}
+        extras: dict[str, list[str]] = {}
         for raw_key, raw_value in row.items():
+            items = value_items(raw_value)
             field = normalize_key(raw_key)
-            text = "" if raw_value is None else str(raw_value).strip()
-            if field and text and not values.get(field):
-                values[field] = text
-        return cls(**values)
+            if field:
+                if items and not values.get(field):
+                    values[field] = ", ".join(items)
+                continue
+            key = extra_key(raw_key)
+            if key and items:
+                bucket = extras.setdefault(key, [])
+                bucket.extend(item for item in items if item not in bucket)
+        joined = {key: ", ".join(items)[:EXTRA_MAX_CHARS] for key, items in extras.items()}
+        return cls(**values, extras=joined)
 
 
 class ImportedLead(BaseModel):
@@ -170,13 +228,55 @@ class NetlifyError(RuntimeError):
         return f"NetlifyError({str(self)!r})"
 
 
-def normalize_key(key: object) -> str:
-    """The model field an export or API column name means, or empty when it is not one of ours."""
+class SitePull(BaseModel):
+    """What one Netlify site gave: its submissions, or the error that stopped the pull."""
+
+    site_id: str
+    submissions: list[FormSubmission] = Field(default_factory=list)
+    error: str = ""
+
+    @property
+    def ok(self) -> bool:
+        """True when the pull finished without an error."""
+        return not self.error
+
+    def __repr__(self) -> str:
+        return f"SitePull(site_id={self.site_id!r}, submissions={len(self.submissions)}, ok={self.ok})"
+
+
+def _base_key(key: object) -> str:
+    """Lowercase, trimmed, without a checkbox ``[]`` suffix, with spaces and hyphens as underscores."""
     if not isinstance(key, str):
         return ""
-    normalized = re.sub(r"[\s-]+", "_", key.strip().lower())
+    return re.sub(r"[\s-]+", "_", key.strip().lower().removesuffix("[]").strip())
+
+
+def normalize_key(key: object) -> str:
+    """The model field an export or API column name means, or empty when it is not one of ours."""
+    normalized = _base_key(key)
     field = FIELD_ALIASES.get(normalized, normalized)
-    return field if field in FormSubmission.model_fields else ""
+    return field if field in FormSubmission.model_fields and field != "extras" else ""
+
+
+def extra_key(key: object) -> str:
+    """The ``extras`` key for an answer that is not a core field; empty for metadata and odd keys.
+
+    ``allergens[]`` gives ``allergens``. Timestamps, ids, Netlify's request
+    metadata, and keys that are not short ``[a-z0-9_]`` names are dropped.
+    """
+    normalized = _base_key(key)
+    if normalized in FIELD_ALIASES or normalized in METADATA_KEYS or normalize_key(normalized):
+        return ""
+    return normalized if EXTRA_KEY_PATTERN.fullmatch(normalized) else ""
+
+
+def value_items(value: object) -> list[str]:
+    """The non-empty, trimmed answers in a value: one for text, each element for a list."""
+    if value is None:
+        return []
+    raw = value if isinstance(value, (list, tuple, set, frozenset)) else [value]
+    items = (str(item).strip() for item in raw if item is not None)
+    return [item for item in items if item]
 
 
 def parse_timestamp(value: object) -> datetime | None:
@@ -286,8 +386,17 @@ def inbound_note(sub: FormSubmission) -> str:
         head += f" {sub.submitted_at.date().isoformat()}"
     if sub.source_page:
         head += f" from {_one_line(sub.source_page)}"
-    details = _joined(sub, NOTE_FIELDS)
+    details = "; ".join(part for part in (_joined(sub, NOTE_FIELDS), _extras_note(sub)) if part)
     return f"{head}: {details}" if details else head
+
+
+def _extras_note(sub: FormSubmission) -> str:
+    """``site=...`` then every non-empty extra as ``label=value``, fit questions first in form order."""
+    parts = [f"site={_one_line(sub.site)}"] if sub.site else []
+    rank = {key: index for index, key in enumerate(FIT_FIELDS)}
+    ordered = sorted(sub.extras.items(), key=lambda item: rank.get(item[0], len(rank)))  # stable: others keep arrival order
+    parts.extend(f"{key}={_one_line(value)}" for key, value in ordered if value.strip())
+    return "; ".join(parts)
 
 
 def inbound_summary(sub: FormSubmission) -> str:
@@ -310,6 +419,71 @@ def submission_markers(sub: FormSubmission) -> set[str]:
     return markers
 
 
+def site_slug(site: str) -> str:
+    """The site answer as a tag-safe id: lowercase letters, digits, and dashes (``pet-formulation``)."""
+    return re.sub(r"[^a-z0-9]+", "-", site.lower()).strip("-")[:40]
+
+
+def inbound_source(sub: FormSubmission) -> str:
+    """``inbound_<site>`` with dashes as underscores (``inbound_pet_formulation``); ``inbound_website`` without a site."""
+    site = site_slug(sub.site)
+    return f"inbound_{site.replace('-', '_')}" if site else SOURCE
+
+
+def _answers(text: str) -> list[str]:
+    """A comma-joined checkbox answer as its trimmed, non-empty choices."""
+    return [part.strip() for part in text.split(",") if part.strip()]
+
+
+def needs_formulation(sub: FormSubmission) -> bool:
+    """True when the brand has no production-ready formula yet, or asked through a formulation site."""
+    status = _one_line(sub.extras.get("recipe_status", "")).lower()
+    return status in FORMULATION_RECIPE_STATUSES or site_slug(sub.site) in FORMULATION_SITES
+
+
+def inbound_tags(sub: FormSubmission) -> list[str]:
+    """``inbound`` and ``website``, then the site and the fit answers the facility has to plan for.
+
+    ``site:<id>``; ``fit:refrigerated`` / ``fit:frozen`` from storage;
+    ``fit:peanut`` / ``fit:tree-nut`` from allergens; ``need-cert:<slug>`` per
+    certification wanted; ``need:formulation``; ``formulation-only`` when the
+    brand does not want production after formulation.
+    """
+    extras = sub.extras
+    site = site_slug(sub.site)
+    tags = list(TAGS) + ([f"site:{site}"] if site else [])
+    storage = _one_line(extras.get("storage", "")).lower()
+    if storage in STORAGE_TAGS:
+        tags.append(STORAGE_TAGS[storage])
+    allergens = {answer.lower() for answer in _answers(extras.get("allergens", ""))}
+    tags.extend(tag for name, tag in ALLERGEN_TAGS.items() if name in allergens)
+    for cert in _answers(extras.get("certifications", "")):
+        slug = site_slug(cert)
+        if slug and cert.lower() not in NO_CERTIFICATION:
+            tags.append(f"need-cert:{slug}")
+    if needs_formulation(sub):
+        tags.append("need:formulation")
+    if re.match(r"no\b", extras.get("after_formulation", "").strip().lower()):
+        tags.append("formulation-only")
+    return list(dict.fromkeys(tags))
+
+
+def inbound_category(sub: FormSubmission) -> Category:
+    """On the pet sites, food or treat from the pet_product answer; elsewhere read product and notes."""
+    if site_slug(sub.site) in PET_SITES:
+        product = _one_line(sub.extras.get("pet_product", "")).lower()
+        return Category.PET_FOOD if product in PET_FOOD_PRODUCTS else Category.PET_TREAT
+    return classify_category(f"{sub.product} {sub.notes}")
+
+
+def inbound_segment(sub: FormSubmission) -> tuple[Segment, bool]:
+    """(segment, transitioning) from the current_setup answer, else from the formulation sites' stage."""
+    setup = _one_line(sub.current_setup).lower()
+    stage = _one_line(sub.stage).lower()
+    segment = SEGMENT_BY_SETUP.get(setup) or SEGMENT_BY_STAGE.get(stage, Segment.UNKNOWN)
+    return segment, setup in TRANSITIONING_SETUPS or stage in TRANSITIONING_STAGES
+
+
 def submission_to_lead(sub: FormSubmission) -> Lead:
     """A new pipeline lead from one submission.
 
@@ -319,16 +493,15 @@ def submission_to_lead(sub: FormSubmission) -> Lead:
     company, website = parse_company_field(sub.company, sub.email, sub.website)
     if not company:
         raise ValueError("missing company")
-    category = classify_category(f"{sub.product} {sub.notes}")
-    setup = _one_line(sub.current_setup).lower()
+    category = inbound_category(sub)
+    segment, transitioning = inbound_segment(sub)
     return Lead(
-        company=company, website=website, category=category,
-        segment=SEGMENT_BY_SETUP.get(setup, Segment.UNKNOWN),
-        contact_name=sub.name, email=sub.email, source=SOURCE, stage=Stage.NEW,
-        notes=inbound_note(sub), tags=list(TAGS),
+        company=company, website=website, category=category, segment=segment,
+        contact_name=sub.name, email=sub.email, source=inbound_source(sub), stage=Stage.NEW,
+        notes=inbound_note(sub), tags=inbound_tags(sub),
         signals=LeadSignals(
             seeking_copacker=True,
-            transitioning=setup in TRANSITIONING_SETUPS,
+            transitioning=transitioning,
             detected_categories=[] if category == Category.OTHER else [category],
         ),
     )
@@ -420,8 +593,8 @@ def _merge_inbound(existing: Lead, incoming: Lead) -> None:
         existing.segment = incoming.segment
     if incoming.notes not in existing.notes:
         existing.notes = f"{existing.notes} || {incoming.notes}".strip(" |")
-    if incoming.source not in existing.source:
-        existing.source = f"{existing.source}+{incoming.source}"
+    if incoming.source not in existing.source.split("+"):
+        existing.source = f"{existing.source}+{incoming.source}".strip("+")
     for tag in incoming.tags:
         existing.add_tag(tag)
     existing.signals = existing.signals.model_copy(update={
@@ -435,7 +608,7 @@ def _activity_detail(sub: FormSubmission) -> str:
     return json.dumps(
         {
             "summary": inbound_summary(sub), "name": sub.name, "email": sub.email.lower(),
-            "submission_id": sub.submission_id, "key": submission_key(sub),
+            "submission_id": sub.submission_id, "key": submission_key(sub), "site": site_slug(sub.site),
         },
         ensure_ascii=False,
     )
@@ -507,6 +680,30 @@ def fetch_netlify_submissions(
         if client is None:
             http.close()
     return filter_since(found, since)
+
+
+def parse_site_ids(value: str) -> list[str]:
+    """Netlify site IDs from ``NETLIFY_SITE_ID``: comma-separated, one per domain, blanks and repeats dropped."""
+    return list(dict.fromkeys(part.strip() for part in value.split(",") if part.strip()))
+
+
+def fetch_netlify_sites(
+    site_ids: Iterable[str],
+    token: str,
+    form_name: str = FORM_NAME,
+    since: date | datetime | None = None,
+    client: httpx.Client | None = None,
+) -> list[SitePull]:
+    """Pull the form from each site in turn; a site that fails records its error and the rest still run."""
+    pulls: list[SitePull] = []
+    for site_id in site_ids:
+        try:
+            found = fetch_netlify_submissions(site_id, token, form_name=form_name, since=since, client=client)
+        except NetlifyError as exc:
+            pulls.append(SitePull(site_id=site_id, error=str(exc)))
+            continue
+        pulls.append(SitePull(site_id=site_id, submissions=found))
+    return pulls
 
 
 def _netlify_client() -> httpx.Client:

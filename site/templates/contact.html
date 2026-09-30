@@ -5,7 +5,7 @@
 <section class="page-head"><div class="wrap">
 {{ m.crumbs(page) }}
 <h1>Contact</h1>
-<p class="lead">Email or call directly, or send the capacity check below. Founders at small brands often prefer the phone, and that is fine.</p>
+<p class="lead">Email or call directly, or send the {{ site.cfg.wording.check_name }} below. Founders at small brands often prefer the phone, and that is fine.</p>
 </div></section>
 <section class="section"><div class="wrap split">
 <div>
@@ -16,11 +16,11 @@
 {% if c.address %}<span>{{ site.field(c.address) }}</span>{% endif %}
 {% if c.linkedin %}<span>{{ m.linkedin(c.linkedin) }}</span>{% endif %}
 </div>
-<p class="muted">Replies within {{ site.cfg.reply_within }}. We represent a US manufacturer with open capacity for {{ site.facts.open_line_labels()|lower }}.</p>
+<p class="muted">Replies within {{ site.cfg.reply_within }}. We represent a US manufacturer with open lines for {{ site.facts.open_line_labels()|lower }}.</p>
 </div>
 <div class="aside">
-<div class="box"><h2 class="label">Quickest path</h2><p>Send the four questions below. We check line fit with the facility before we call, so the first conversation is about your product, not a pitch.</p></div>
+<div class="box"><h2 class="label">Quickest path</h2><p>{{ site.form.summary }}, below. We check fit with the facility before we call, so the first conversation is about your product, not a pitch.</p></div>
 </div>
 </div></section>
-{{ m.form_section(page, "Send the capacity check") }}
+{{ m.form_section(page, site.form.submit) }}
 {% endblock %}

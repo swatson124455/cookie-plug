@@ -47,9 +47,9 @@ def payload(cfg: SiteConfig, urls: list[str]) -> dict[str, object]:
 def ping(cfg: SiteConfig, urls: list[str], client: httpx.Client | None = None) -> int:
     """Submit the URLs; return the HTTP status (200 or 202 means accepted)."""
     if is_placeholder(cfg.domain) or not cfg.domain.startswith("https://"):
-        raise IndexNowError("set the real https domain in site/config.yaml before pinging")
+        raise IndexNowError("set the real https domain in the site's site.yaml before pinging")
     if not valid_key(cfg.indexnow_key):
-        raise IndexNowError("set indexnow_key in site/config.yaml (8 to 128 letters, digits, or dashes)")
+        raise IndexNowError("set indexnow_key in the site's site.yaml (8 to 128 letters, digits, or dashes)")
     if not urls:
         raise IndexNowError("no URLs to submit")
     owns_client = client is None

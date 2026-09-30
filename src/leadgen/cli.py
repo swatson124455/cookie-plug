@@ -24,7 +24,7 @@ from leadgen.discover import import_csv, search_queries
 from leadgen.discovery import brand_to_lead, discover
 from leadgen.dossier import build_dossier, find_website, save_dossier
 from leadgen.htmlimport import import_html_file
-from leadgen.inbound import FormSubmission, NetlifyError, fetch_netlify_submissions, filter_since, import_submissions, load_csv
+from leadgen.inbound import FormSubmission, fetch_netlify_sites, filter_since, import_submissions, load_csv, parse_site_ids
 from leadgen.economics import FunnelAssumptions, ReferralTerms, account_value, funnel_plan
 from leadgen.enrich import WebsiteEnricher
 from leadgen.facility import load_facility
@@ -59,7 +59,11 @@ def cmd_import(args: argparse.Namespace) -> int:
 
 
 def cmd_import_form(args: argparse.Namespace) -> int:
-    """Import website capacity-check submissions from a CSV export and/or the Netlify API."""
+    """Import website capacity-check submissions from a CSV export and/or the Netlify API.
+
+    With several Netlify sites, one that fails is reported and the others
+    still import; the exit code is then 1.
+    """
     if not args.csv and not args.netlify:
         print("import-form needs a CSV export path or --netlify", file=sys.stderr)
         return 1
@@ -68,9 +72,10 @@ def cmd_import_form(args: argparse.Namespace) -> int:
     except ValueError:
         print(f"--since must be YYYY-MM-DD, got {args.since!r}", file=sys.stderr)
         return 1
-    submissions = _collect_form_submissions(args, since)
-    if submissions is None:
+    collected = _collect_form_submissions(args, since)
+    if collected is None:
         return 1
+    submissions, all_ok = collected
     with _store(args) as store:
         result = import_submissions(store, submissions)
     for item in result.imported:
@@ -82,14 +87,19 @@ def cmd_import_form(args: argparse.Namespace) -> int:
         f"import-form: {result.new_count} new, {result.merged_count} merged, {len(result.skipped)} skipped. "
         "Run `leadgen enrich` then `leadgen score`."
     )
-    return 0
+    return 0 if all_ok else 1
 
 
-def _collect_form_submissions(args: argparse.Namespace, since: date | None) -> list[FormSubmission] | None:
-    """Read the CSV and/or pull from Netlify; print why and return None when either fails."""
+def _collect_form_submissions(args: argparse.Namespace, since: date | None) -> tuple[list[FormSubmission], bool] | None:
+    """Read the CSV and/or pull from each Netlify site.
+
+    Returns None (after printing why) when nothing can run: missing settings
+    or an unreadable CSV. Otherwise returns the submissions and whether every
+    Netlify site answered.
+    """
     token = os.environ.get("NETLIFY_AUTH_TOKEN", "").strip()
-    site_id = os.environ.get("NETLIFY_SITE_ID", "").strip()
-    if args.netlify and not (token and site_id):
+    site_ids = parse_site_ids(os.environ.get("NETLIFY_SITE_ID", ""))
+    if args.netlify and not (token and site_ids):
         print("import-form --netlify needs NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID set in the environment (see .env.example)", file=sys.stderr)
         return None
     submissions: list[FormSubmission] = []
@@ -100,13 +110,16 @@ def _collect_form_submissions(args: argparse.Namespace, since: date | None) -> l
             reason = "not UTF-8; save the export as a UTF-8 CSV" if isinstance(exc, UnicodeDecodeError) else exc.strerror or str(exc)
             print(f"cannot read {args.csv}: {reason}", file=sys.stderr)
             return None
+    all_ok = True
     if args.netlify:
-        try:
-            submissions.extend(fetch_netlify_submissions(site_id, token, since=since))
-        except NetlifyError as exc:
-            print(f"Netlify import failed: {exc}", file=sys.stderr)
-            return None
-    return submissions
+        for pull in fetch_netlify_sites(site_ids, token, since=since):
+            if pull.ok:
+                print(f"Netlify site {pull.site_id}: {len(pull.submissions)} submissions")
+                submissions.extend(pull.submissions)
+            else:
+                print(f"Netlify import failed for site {pull.site_id}: {pull.error}", file=sys.stderr)
+                all_ok = False
+    return submissions, all_ok
 
 
 def cmd_enrich(args: argparse.Namespace) -> int:
@@ -618,7 +631,11 @@ def _add_import_form_command(sub: argparse._SubParsersAction) -> None:  # type: 
     """The ``import-form`` subcommand, registered next to ``import``."""
     p = sub.add_parser("import-form", help="import website capacity-check submissions (CSV export or --netlify)")
     p.add_argument("csv", nargs="?", default="", help="CSV export of the capacity-check form")
-    p.add_argument("--netlify", action="store_true", help="pull from the Netlify API (needs NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID)")
+    p.add_argument(
+        "--netlify", action="store_true",
+        help="pull from the Netlify API (needs NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID; "
+        "NETLIFY_SITE_ID may list several site IDs, comma-separated, one per domain)",
+    )
     p.add_argument("--since", default="", help="YYYY-MM-DD: only submissions from the start of this day (UTC)")
     p.set_defaults(func=cmd_import_form)
 

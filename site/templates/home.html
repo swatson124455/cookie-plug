@@ -1,56 +1,57 @@
 {% extends layout %}
 {% import "partials/macros.html" as m with context %}
+{% set h = site.home %}
 {% block main %}
 <section class="hero"><div class="wrap">
 <div>
-<p class="kicker"><span class="dot" aria-hidden="true"></span>Contract manufacturing &middot; Private label &middot; Formulation</p>
-<h1>{{ "Open co-packing lines for cookie, bakery, and pet brands."|nobreak }}</h1>
-<p class="lead">Many co-packers make small brands wait or keep raising minimums. The manufacturer we represent has open capacity now and does the whole job under one roof: formulation, production, packaging, labeling, and nutrition panels. You bring the brand; it makes the product.</p>
+<p class="kicker"><span class="dot" aria-hidden="true"></span>{{ h.kicker }}</p>
+<h1>{{ h.h1|nobreak }}</h1>
+<p class="lead">{{ h.lead }}</p>
 <div class="actions">
-<a class="btn" href="{{ site.url('', 'capacity') }}">Check capacity for your product <span class="arrow" aria-hidden="true">&rarr;</span></a>
+<a class="btn" href="{{ site.url('', 'capacity') }}">{{ site.cfg.wording.cta_long }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
 <a class="btn ghost" href="{{ site.url('capabilities') }}">See capabilities</a>
 </div>
-<p class="trust">Brands never pay us; the facility does, once you are its customer. Every fact on this site is confirmed by the facility in writing.</p>
+<p class="trust">{{ h.trust }}</p>
 </div>
 {{ m.facts_panel() }}
 </div></section>
 
 <section class="section"><div class="wrap">
-{{ m.section_head(1, "Who calls us", "Brands at a turning point, not brands that are comfortable. If one of these is you, capacity is probably your constraint.") }}
-<div class="ruled cols-4">
-<div class="cell"><span class="label">Kitchen to line</span><h3>Outgrowing a kitchen</h3><p>You are turning down wholesale orders, a buyer asked for an audit certificate, or the founders are still on the line at 5 a.m.</p></div>
-<div class="cell"><span class="label">New listing</span><h3>Launching into retail</h3><p>A first listing just landed, and the reorder will arrive faster than the first order did. Production has to be ready before the shelf is.</p></div>
-<div class="cell"><span class="label">Format change</span><h3>Changing the product</h3><p>Refrigerated to shelf-stable, food truck to packaged, a cookie brand adding a dog treat. Formulation is part of the job.</p></div>
-<div class="cell"><span class="label">Risk</span><h3>Adding a second source</h3><p>One co-packer is a single point of failure. A second line that already makes your product is cheap insurance.</p></div>
-</div>
-</div></section>
-
-<section class="section"><div class="wrap">
-{{ m.section_head(2, "How it works", "The first step is your product, not a pitch.") }}
-<ol class="steps">
-<li><div><h3>Send the capacity check</h3><p>Four questions about your product, volume, and timing. We confirm line fit with the facility and reply within {{ site.cfg.reply_within }}.</p></div></li>
-<li><div><h3>Get a benchmark sample</h3><p>Send your product or your spec. The facility's formulation team makes a sample to match it, and you judge it side by side with your own.</p></div></li>
-<li><div><h3>Quote, sign, and run</h3><p>Written pricing once the sample is approved, then a first production run on an open line, packed shelf-ready. You sign directly with the facility.</p></div></li>
-</ol>
-</div></section>
-
-<section class="section alt"><div class="wrap">
-{{ m.section_head(3, "Lines with open capacity", "Status confirmed with the facility for " ~ site.facts.as_of ~ ".") }}
-<div class="ruled cols-{{ site.facts.lines|length if site.facts.lines|length in [2, 3, 4] else 3 }}">
-{% for line in site.facts.lines %}
-{% set spec = site.categories.get(line.slug) %}
-<a class="cell" href="{{ site.url(line.slug) }}">
-<span class="status-pill{% if not line.open %} ask{% endif %}">{{ "Open now" if line.open else "Ask" }}</span>
-<h3>{{ line.label }}</h3>
-<p>{{ spec.card if spec else "" }}</p>
-<span class="more">{{ spec.crumb if spec else line.label }} <span class="arrow" aria-hidden="true">&rarr;</span></span>
-</a>
+{{ m.section_head(1, h.who_title, h.who_text) }}
+<div class="ruled cols-{{ h.who|length if h.who|length in [2, 3, 4] else 3 }}">
+{% for item in h.who %}
+<div class="cell">{% if item.label %}<span class="label">{{ item.label }}</span>{% endif %}<h3>{{ item.title }}</h3><p>{{ item.text }}</p></div>
 {% endfor %}
 </div>
 </div></section>
 
 <section class="section"><div class="wrap">
-{{ m.section_head(4, "What is included", "Turnkey means you do not need a manufacturing team. The facility handles all of this in one place.") }}
+{{ m.section_head(2, h.steps_title, h.get("steps_text", "")) }}
+<ol class="steps">
+{% for step in h.steps %}
+<li><div><h3>{{ step.title }}</h3><p>{{ step.text }}</p></div></li>
+{% endfor %}
+</ol>
+</div></section>
+
+<section class="section alt"><div class="wrap">
+{{ m.section_head(3, h.lines_title, h.get("lines_text") or "Status confirmed with the facility for " ~ site.facts.as_of ~ ".") }}
+<div class="ruled cols-{{ site.facts.lines|length if site.facts.lines|length in [2, 3, 4] else 3 }}">
+{% for line in site.facts.lines %}
+{% set found = site.category_for(line.key) %}
+<a class="cell" href="{{ site.line_url(line.key) }}">
+<span class="status-pill{% if not line.open %} ask{% endif %}">{{ "Open now" if line.open else "Ask" }}</span>
+<h3>{{ line.label }}</h3>
+<p>{{ found[1].card if found else "" }}</p>
+<span class="more">{{ found[1].crumb if found else "Capabilities" }} <span class="arrow" aria-hidden="true">&rarr;</span></span>
+</a>
+{% endfor %}
+</div>
+{% if h.get("beyond") %}<p class="muted beyond">{{ h.beyond }}</p>{% endif %}
+</div></section>
+
+<section class="section"><div class="wrap">
+{{ m.section_head(4, h.get("included_title") or "What is included", h.get("included_text") or "Turnkey means you do not need a manufacturing team. The facility handles all of this in one place.") }}
 <dl class="spec-list">
 {% for service in site.facts.services %}
 <div><dt>{{ service.label }}</dt><dd>{{ service.blurb }}</dd></div>
@@ -60,16 +61,16 @@
 </div></section>
 
 <section class="section"><div class="wrap">
-{{ m.section_head(5, "Straight answers", "The questions founders ask first.") }}
+{{ m.section_head(5, "Straight answers", h.get("faq_text") or "The questions founders ask first.") }}
 {{ m.faq_list(site.faq|selectattr("featured")|list) }}
 <p class="actions"><a class="btn ghost" href="{{ site.url('faq') }}">All questions</a></p>
 </div></section>
 
 <section class="section"><div class="wrap">
-{{ m.section_head(6, "Guides for founders", "How to find, qualify, and switch co-packers, written plainly.") }}
+{{ m.section_head(6, "Guides for founders", h.get("guides_text") or "Written plainly, each one starting with the short answer.") }}
 {{ m.guide_cards(site.guides[:3], 3) }}
 <p class="actions"><a class="btn ghost" href="{{ site.url('guides') }}">All guides</a></p>
 </div></section>
 
-{{ m.form_section(page, "Check capacity for your product") }}
+{{ m.form_section(page) }}
 {% endblock %}

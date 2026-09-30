@@ -1,0 +1,41 @@
+# Home page copy for the human-food formulation site. Layout: site/templates/home.html.
+# Formulation leads to production on the facility's open lines. No formulation
+# fees, timelines, recipe-ownership promises, or certification claims.
+
+kicker: "Formulation · Product development · Production"
+h1: "Develop your cookie or baked good here. Then produce it here."
+lead: "A kitchen recipe that has to scale, a product you want matched, a recipe to clean up, or only a concept: the manufacturer we represent develops it with you and then makes it on its open cookie and bakery lines. Formulation, production, packaging, labeling, and nutrition panels, all under one roof. You bring the brand and the idea; it builds the product."
+trust: "Brands never pay us; the facility does, once you are its customer. Every fact on this site is confirmed by the facility in writing."
+
+who_title: "Who starts a project"
+who_text: "Founders whose product is not production-ready yet. Where you start matters less than where it has to end up: on a production line, the same run after run."
+who:
+  - label: "Kitchen recipe"
+    title: "A recipe that has to scale"
+    text: "It works in your oven, a tray at a time. On production equipment, ingredients, mixing, and bake all behave differently, so the recipe is rebuilt for the line and sampled until it tastes like yours."
+  - label: "Benchmark"
+    title: "A product to match"
+    text: "You know what you want because it already exists: your own product from another kitchen, or a style you want to compete with. The facility develops to that benchmark, and you judge the sample side by side."
+  - label: "Reformulation"
+    title: "A recipe to clean up"
+    text: "Fewer allergens, less sugar, a shorter ingredient list, or a shelf-stable version of a fresh product. Each change moves the recipe, the label, and sometimes the packaging."
+  - label: "Concept or private label"
+    title: "A brand without a recipe"
+    text: "A retailer, a cafe group, or a creator with an audience has the idea and the customers but no formula. The facility develops a product with you, under your brand."
+
+steps_title: "How a project works"
+steps_text: "Develop it here, then produce it here. The first step is your product, not a pitch."
+steps:
+  - title: "Send the project check"
+    text: "A few questions about your product, your stage, and your goal. We confirm fit with the facility and reply within {reply_within}."
+  - title: "Judge a sample"
+    text: "Send your recipe, your product, or your brief. The facility's formulation team develops a sample from it, and you judge it against your own product or your target until you approve it."
+  - title: "Quote, sign, and run"
+    text: "Once the sample is approved, the facility quotes production in writing, then makes a first run on an open line, packed shelf-ready. You sign directly with the facility."
+
+lines_title: "Where your recipe goes to production"
+beyond: "Developing something that is not a cookie or a baked good? Tell us what it is in the project check. If it is outside these lines, we say so plainly, within {reply_within}."
+included_title: "From recipe to shelf-ready"
+included_text: "Formulation is the first of the turnkey services, all under one roof. The recipe the facility develops with you is the recipe it produces, packs, and labels."
+faq_text: "The questions founders ask before a project starts."
+guides_text: "Taking a recipe from the kitchen to production, written plainly."

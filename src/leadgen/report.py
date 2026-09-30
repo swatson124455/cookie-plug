@@ -33,9 +33,10 @@ class InboundEntry(BaseModel):
     email: str
     category: str
     summary: str
+    site: str = ""  # which of the sites sent it (bakery, pet, formulation, pet-formulation); empty before sites
 
     def __repr__(self) -> str:
-        return f"InboundEntry(company={self.company!r}, category={self.category!r})"
+        return f"InboundEntry(company={self.company!r}, category={self.category!r}, site={self.site!r})"
 
 
 class WeeklyReport(BaseModel):
@@ -76,7 +77,9 @@ def build_report(store: LeadStore, template: SequenceTemplate, days: int = 7, to
 def _inbound_entries(store: LeadStore, cutoff: datetime) -> list[InboundEntry]:
     """Leads with a website capacity check logged since ``cutoff``: one line each, newest first.
 
-    The email is the submitter's, which can differ from a researched lead's main contact.
+    Keyed on the ``inbound`` activity, so a check from any of the sites
+    shows whatever the lead's source says. The email is the submitter's,
+    which can differ from a researched lead's main contact.
     """
     latest: dict[str, dict[str, str]] = {}
     for activity in store.activities_by_kind(INBOUND_KIND):  # oldest first
@@ -92,6 +95,7 @@ def _inbound_entries(store: LeadStore, cutoff: datetime) -> list[InboundEntry]:
         entries.append(InboundEntry(
             company=lead.company, email=record.get("email") or lead.email,
             category=lead.category.value, summary=record.get("summary") or activity["detail"][:140],
+            site=record.get("site", ""),
         ))
     return entries
 
@@ -137,7 +141,10 @@ def render_report(report: WeeklyReport) -> str:
 def _render_inbound(report: WeeklyReport) -> list[str]:
     """The first section: every website capacity check in the window, since these are the hottest leads."""
     lines = [f"Inbound (website): {len(report.inbound)}"]
-    lines.extend(f"  {e.company}, {e.email} [{e.category}] {e.summary[:140]}" for e in report.inbound)
+    lines.extend(
+        f"  {e.company}, {e.email} [{e.category}] {f'site={e.site}; ' if e.site else ''}{e.summary[:140]}"
+        for e in report.inbound
+    )
     lines.append("")
     return lines
 

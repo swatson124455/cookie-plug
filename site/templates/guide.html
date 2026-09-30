@@ -35,7 +35,7 @@
 </ol>
 </nav>
 {% endif %}
-<div class="box signal"><h3>Capacity is open now</h3><p>{{ site.facts.open_line_labels() }}: status confirmed for {{ site.facts.as_of }}.</p><p><a class="btn small" href="{{ site.url(page.key, 'capacity') }}">Check capacity</a></p></div>
+<div class="box signal"><h3>Lines open now</h3><p>{{ site.facts.open_line_labels() }}: status confirmed for {{ site.facts.as_of }}.</p><p><a class="btn small" href="{{ site.url(page.key, 'capacity') }}">{{ site.cfg.wording.cta }}</a></p></div>
 {% if guide.related %}
 <div class="box"><h2 class="label">Related guides</h2>
 <ul class="link-list">
@@ -49,5 +49,5 @@
 </div>
 </div></div>
 </article>
-{{ m.form_section(page, "Is capacity your constraint?", "If this guide describes where your brand is, send the four questions. We confirm line fit with the facility first.") }}
+{{ m.form_section(page, site.cfg.wording.guide_form_title, site.cfg.wording.guide_form_intro) }}
 {% endblock %}

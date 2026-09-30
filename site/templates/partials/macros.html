@@ -65,51 +65,82 @@
 </aside>
 {%- endmacro %}
 
+{% macro question(q, fid) -%}
+{% set qid = fid ~ "-" ~ q.name %}
+{% if q.type in ["radio", "checkboxes"] %}
+<fieldset class="field choice{% if q.wide %} wide{% endif %}">
+<legend>{{ q.label }}{% if not q.required %} <span class="opt">(optional)</span>{% endif %}</legend>
+{% if q.hint %}<p class="hint">{{ q.hint }}</p>{% endif %}
+<div class="choices">
+{% for option in q.options %}
+<label><input type="{{ 'radio' if q.type == 'radio' else 'checkbox' }}" name="{{ q.name ~ ('[]' if q.type == 'checkboxes' else '') }}" value="{{ option }}"{% if q.required and loop.first %} required{% endif %}> {{ option }}</label>
+{% endfor %}
+</div>
+</fieldset>
+{% else %}
+<div class="field{% if q.wide %} wide{% endif %}"><label for="{{ qid }}">{{ q.label }}{% if not q.required %} <span class="opt">(optional)</span>{% endif %}</label>
+{% if q.type == "select" %}
+<select id="{{ qid }}" name="{{ q.name }}"{% if q.required %} required{% endif %}><option value="">Choose one</option>{% for option in q.options %}<option>{{ option }}</option>{% endfor %}</select>
+{% else %}
+<input id="{{ qid }}" name="{{ q.name }}"{% if q.required %} required{% endif %} maxlength="200"{% if q.placeholder %} placeholder="{{ q.placeholder }}"{% endif %}>
+{% endif %}
+{% if q.hint %}<p class="hint">{{ q.hint }}</p>{% endif %}
+</div>
+{% endif %}
+{%- endmacro %}
+
 {% macro capacity_form(page, fid) -%}
+{% set f = site.form %}
 {% set netlify = not site.preview and site.cfg.form.provider == "netlify" %}
 <form class="capacity-form" {% if site.preview %}data-preview{% elif netlify %}name="capacity-check" method="POST" action="{{ site.url('thanks') }}" data-netlify="true" netlify-honeypot="bot-field"{% else %}method="POST" action="{{ site.cfg.form.action }}"{% endif %}>
 {% if netlify %}<input type="hidden" name="form-name" value="capacity-check">{% endif %}
 <input type="hidden" name="source_page" value="{{ site.path(page.key) }}">
+<input type="hidden" name="site" value="{{ site.cfg.id }}">
 <p class="hp" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-<div class="field wide"><label for="{{ fid }}-product">What are you making?</label><input id="{{ fid }}-product" name="product" required maxlength="200" placeholder="Soft-baked oatmeal cookies, 6 oz bag"></div>
-<div class="field"><label for="{{ fid }}-volume">Monthly volume, now or needed</label>
-<select id="{{ fid }}-volume" name="volume" required><option value="">Choose one</option><option>Under 5,000 units</option><option>5,000 to 25,000</option><option>25,000 to 100,000</option><option>Over 100,000</option></select></div>
-<div class="field"><label for="{{ fid }}-timing">When you need it</label>
-<select id="{{ fid }}-timing" name="timing" required><option value="">Choose one</option><option>Now</option><option>Within 3 months</option><option>3 to 6 months</option><option>Exploring</option></select></div>
-<div class="field"><label for="{{ fid }}-setup">How it is made today</label>
-<select id="{{ fid }}-setup" name="current_setup" required><option value="">Choose one</option><option>Home or shared kitchen</option><option>Our own facility</option><option>A co-packer</option><option>Not in production yet</option></select></div>
+{% for q in f.fields %}{{ question(q, fid) }}{% endfor %}
 <div class="field"><label for="{{ fid }}-name">Your name</label><input id="{{ fid }}-name" name="name" required maxlength="120" autocomplete="name"></div>
 <div class="field"><label for="{{ fid }}-company">Brand and website</label><input id="{{ fid }}-company" name="company" required maxlength="200" autocomplete="organization" placeholder="Brand name, brand.com"></div>
 <div class="field"><label for="{{ fid }}-email">Email</label><input id="{{ fid }}-email" name="email" type="email" required maxlength="200" autocomplete="email"></div>
 <div class="field"><label for="{{ fid }}-phone">Phone <span class="opt">(optional)</span></label><input id="{{ fid }}-phone" name="phone" type="tel" maxlength="40" autocomplete="tel"></div>
-<div class="field wide"><label for="{{ fid }}-notes">Anything else <span class="opt">(optional)</span></label><textarea id="{{ fid }}-notes" name="notes" rows="3" maxlength="2000" placeholder="Retailer, launch date, certifications your buyer asked for"></textarea></div>
-<div class="form-foot"><button class="btn" type="submit">Send the capacity check</button><p class="fine">We reply within {{ site.cfg.reply_within }} and use your details only to answer you. <a href="{{ site.url('privacy') }}">Privacy</a></p></div>
+{% if f.fit.fields %}
+<details class="fit wide">
+<summary><span class="fit-title">{{ f.fit.title }}</span> <span class="opt">(optional)</span></summary>
+{% if f.fit.intro %}<p class="hint">{{ f.fit.intro }}</p>{% endif %}
+<div class="fit-grid">
+{% for q in f.fit.fields %}{{ question(q, fid) }}{% endfor %}
+</div>
+</details>
+{% endif %}
+<div class="field wide"><label for="{{ fid }}-notes">Anything else <span class="opt">(optional)</span></label><textarea id="{{ fid }}-notes" name="notes" rows="3" maxlength="2000"{% if f.notes_placeholder %} placeholder="{{ f.notes_placeholder }}"{% endif %}></textarea></div>
+<div class="form-foot"><button class="btn" type="submit">{{ f.submit }}</button><p class="fine">We reply within {{ site.cfg.reply_within }} and use your details only to answer you. <a href="{{ site.url('privacy') }}">Privacy</a></p></div>
 </form>
 {%- endmacro %}
 
-{% macro form_section(page, title="Check capacity for your product", intro="") -%}
+{% macro next_steps() -%}
+<ol class="next-steps">
+{% for step in site.form.steps %}<li><b>{{ loop.index }}</b><span>{{ step }}</span></li>{% endfor %}
+</ol>
+{%- endmacro %}
+
+{% macro form_section(page, title="", intro="") -%}
 {% set fid = site.anchor_id(page.key, "capacity") %}
 <section class="form-section" id="{{ fid }}" aria-labelledby="{{ fid }}-title">
 <div class="wrap form-layout">
 <div>
-<p class="kicker"><span class="dot" aria-hidden="true"></span>Capacity check</p>
-<h2 id="{{ fid }}-title">{{ title }}</h2>
-<p class="muted">{{ intro or "Four questions about your product, then your contact details. No sales call unless you ask for one." }}</p>
-<ol class="next-steps">
-<li><b>1</b><span>We check line fit with the facility and reply within {{ site.cfg.reply_within }}.</span></li>
-<li><b>2</b><span>If it fits, you send your product or spec for a benchmark sample.</span></li>
-<li><b>3</b><span>You approve the sample, get a written quote, and sign directly with the facility.</span></li>
-</ol>
+<p class="kicker"><span class="dot" aria-hidden="true"></span>{{ site.form.kicker }}</p>
+<h2 id="{{ fid }}-title">{{ title or site.form.title }}</h2>
+<p class="muted">{{ intro or site.form.intro }}</p>
+{{ next_steps() }}
 </div>
 {{ capacity_form(page, fid) }}
 </div>
 </section>
 {%- endmacro %}
 
-{% macro cta_band(title, text, label="Check capacity") -%}
+{% macro cta_band(title, text, label="") -%}
 <section class="cta-band"><div class="wrap">
 <div><h2>{{ title }}</h2><p>{{ text }}</p></div>
-<a class="btn" href="{{ site.url('contact') }}">{{ label }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
+<a class="btn" href="{{ site.url('contact') }}">{{ label or site.cfg.wording.cta }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
 </div></section>
 {%- endmacro %}
 

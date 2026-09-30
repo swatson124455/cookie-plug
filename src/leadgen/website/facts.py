@@ -155,11 +155,12 @@ def _location(confirmed: dict[str, Any]) -> str:
 
 
 def build_facts(facility: FacilityProfile, cfg: SiteConfig) -> FacilityFacts:
-    """Combine confirmed facility config with this month's capacity status."""
+    """Combine confirmed facility config with this month's capacity status, limited to the site's lines."""
     confirmed = _confirmed_values(facility)
     open_now = set(cfg.capacity.lines)
+    shown = set(cfg.lines) or {category.value for category in facility.categories}
     lines = [Line(category.value, *LINES[category.value], open=category.value in open_now)
-             for category in facility.categories if category.value in LINES]
+             for category in facility.categories if category.value in LINES and category.value in shown]
     services = [Service(key, label, blurb) for key, label, blurb in SERVICES if facility.services.get(key)]
     return FacilityFacts(
         lines=lines,

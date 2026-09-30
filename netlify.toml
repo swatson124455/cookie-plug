@@ -1,12 +1,19 @@
 # Netlify reads this file automatically when the repo is connected.
 #
-# The build runs in site/ and stops, on purpose, while site/config.yaml still
-# has TO_FILL placeholders, so a half-filled site cannot go live. For a private
-# look before then, change the command to "python build.py --draft": every
-# page is marked noindex and robots.txt blocks crawlers.
+# One repo, four Netlify sites (one per domain). Connect this repo four times
+# and, in each Netlify site's settings, set the environment variable
+# OPEN_LINE_SITE to that site's id: bakery, pet, formulation, or pet-formulation.
 #
-# After the first deploy, in the Netlify UI: Forms -> enable form detection,
-# redeploy, then add an email notification for the "capacity-check" form.
+# The build runs in site/ and stops, on purpose, while site/shared.yaml or the
+# site's site/sites/<id>/site.yaml still has TO_FILL placeholders, so a
+# half-filled site cannot go live. For a private look before then, change the
+# command to "python build.py --draft": every page is marked noindex and
+# robots.txt blocks crawlers.
+#
+# After each site's first deploy, in the Netlify UI: Forms -> enable form
+# detection, redeploy, then add an email notification for the "capacity-check"
+# form. Every site posts to that same form name; the hidden "site" field says
+# which one a lead came from.
 [build]
   base = "site"
   command = "pip install -r requirements.txt && python build.py"

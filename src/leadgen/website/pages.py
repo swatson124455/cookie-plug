@@ -35,6 +35,7 @@ class Page:
     in_sitemap: bool = True
     lastmod: date | None = None
     crumbs: list[tuple[str, str]] = field(default_factory=list)
+    canonical: str = ""
 
     @property
     def output_path(self) -> str:
@@ -72,10 +73,9 @@ def structured_data(site: "SiteContext", page: Page) -> dict[str, Any]:
 def home_page(site: "SiteContext") -> Page:
     """The front door: capacity status, who it is for, the steps, and the form."""
     url = site.abs_url("")
-    description = ("Open co-packing lines for cookies, baked goods, pet treats, and pet food. Turnkey from formulation "
-                   "to shelf-ready case packs. Check capacity for your product.")
-    service = seo.service_node(site.cfg, "Co-packing for cookie, bakery, pet-treat, and pet-food brands", description, url)
-    return Page("", "home.html", titled(site, "Co-Packer With Open Capacity"), description, nav="home",
+    words = site.cfg.wording
+    service = seo.service_node(site.cfg, words.service_name, words.home_description, url)
+    return Page("", "home.html", titled(site, words.home_title), words.home_description, nav="home",
                 nodes=[service, seo.faq_node([q for q in site.faq if q.featured], url)])
 
 
@@ -103,17 +103,16 @@ def category_pages(site: "SiteContext") -> list[Page]:
 
 def guide_pages(site: "SiteContext") -> list[Page]:
     """The guides index and one page per guide."""
-    index = Page("guides", "guides.html", titled(site, "Co-Packer Guides for Food and Pet Brands"),
-                 "Plain answers for founders: how to find and qualify a co-packer, minimums and costs, retailer "
-                 "requirements, shelf-stable reformulation, and second sourcing.", nav="guides",
-                 crumbs=[("Guides", "guides")])
+    index = Page("guides", "guides.html", titled(site, site.cfg.wording.guides_title), site.cfg.wording.guides_description,
+                 nav="guides", crumbs=[("Guides", "guides")])
     pages = [index]
     for guide in site.guides:
         key = f"guides/{guide.slug}"
         image = site.og_image(f"og/guides/{guide.slug}.png")
+        home = site.guide_home(guide.slug)
         pages.append(Page(key, "guide.html", titled(site, guide.seo_title or guide.title), guide.description, nav="guides",
-                          context={"guide": guide}, og_image=image, lastmod=guide.updated,
-                          nodes=[seo.article_node(site.cfg, guide, site.abs_url(key), site.abs_asset(image))],
+                          context={"guide": guide}, og_image=image, lastmod=guide.updated, canonical=home,
+                          in_sitemap=not home, nodes=[seo.article_node(site.cfg, guide, site.abs_url(key), site.abs_asset(image))],
                           crumbs=[("Guides", "guides"), (guide.short_title, key)]))
     return pages
 
@@ -122,19 +121,19 @@ def company_pages(site: "SiteContext") -> list[Page]:
     """FAQ, about, contact, privacy, and the two utility pages."""
     faq_url = site.abs_url("faq")
     return [
-        Page("faq", "faq.html", titled(site, "Co-Packer FAQ: Minimums, Samples, Costs"),
-             "Straight answers on co-packer minimums, sampling, certifications, private label, pet products, "
-             "costs, and how working with us works.", nav="faq", nodes=[seo.faq_node(site.faq, faq_url)],
+        Page("faq", "faq.html", titled(site, site.cfg.wording.faq_title), site.cfg.wording.faq_description,
+             nav="faq", nodes=[seo.faq_node(site.faq, faq_url)],
              crumbs=[("FAQ", "faq")]),
         Page("about", "about.html", titled(site, f"About {site.cfg.brand}"),
              f"Who runs {site.cfg.brand}, how the referral model works, who pays us (the facility, never the brand), "
              "and what we will never claim.", nav="about", crumbs=[("About", "about")]),
-        Page("contact", "contact.html", titled(site, "Contact and Capacity Check"),
-             f"Reach the partnerships lead directly or send the capacity check. We reply within {site.cfg.reply_within}.",
+        Page("contact", "contact.html", titled(site, f"Contact and {site.cfg.wording.check_name.title()}"),
+             f"Reach the partnerships lead directly or send the {site.cfg.wording.check_name}. "
+             f"We reply within {site.cfg.reply_within}.",
              nav="contact", crumbs=[("Contact", "contact")]),
         Page("privacy", "privacy.html", titled(site, "Privacy"),
-             "What the capacity-check form collects, where it goes, and how to have it deleted.", crumbs=[("Privacy", "privacy")]),
-        Page("thanks", "thanks.html", titled(site, "Thanks, we have it"), "Your capacity check arrived.",
+             "What the website form collects, where it goes, and how to have it deleted.", crumbs=[("Privacy", "privacy")]),
+        Page("thanks", "thanks.html", titled(site, "Thanks, we have it"), f"Your {site.cfg.wording.check_name} arrived.",
              noindex=True, in_sitemap=False),
         Page("404", "404.html", titled(site, "Page not found"), "This page is not on the line.", noindex=True, in_sitemap=False),
     ]

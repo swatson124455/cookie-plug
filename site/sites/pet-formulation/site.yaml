@@ -1,0 +1,42 @@
+# The pet formulation site: recipe development for dog-treat and pet-food brands,
+# presented as the path to production on the facility's open pet lines (develop
+# it here, then produce it here). Merged over site/shared.yaml.
+# No AAFCO-compliance, complete-and-balanced, veterinary-nutritionist, human-grade,
+# or state-registration promises: none is confirmed in config/facility.yaml.
+
+brand: "Open Line Pet Formulation"  # working name (decision 12): check the trademark and domain before you buy
+brand_short: "Open Line"
+tagline: "Recipe development for dog treat and pet food brands"
+domain: "TO_FILL https://yourpetformulationdomain.com"   # the registered domain, https, no trailing slash
+indexnow_key: "39fb4fb658005022790f24a58df59c03"
+family_blurb: "Recipe development for pet brands"
+
+lines: [pet_treat, pet_food]
+categories: [dog-treat-formulation, pet-food-formulation]
+landings: [google-pet-formulation]
+guides:                             # the co-packing sites list these first, so they stay each guide's canonical home
+  - private-label-vs-co-packing-dog-treats
+  - how-to-find-a-dog-treat-co-packer
+  - how-to-find-a-pet-food-co-packer
+  - from-farmers-market-to-packaged-product
+  - small-batch-and-pilot-runs
+  - when-to-leave-the-commissary
+  - questions-to-ask-a-co-packer-before-signing
+
+wording:
+  home_title: "Dog Treat and Pet Food Recipe Development"
+  home_description: "Recipe development for dog treat and pet food brands: scale a home recipe, match a treat, or start from a concept, then produce it on an open pet line."
+  service_name: "Recipe development for dog-treat and pet-food brands"
+  guides_title: "Guides for Pet Founders Developing a Product"
+  guides_description: "Plain answers for pet founders taking a recipe to production: private label or your own formula, pet-food rules, pilot runs, and what to settle in writing."
+  guides_h1: "Guides for pet founders taking a recipe to production"
+  guides_lead: "Plain answers to the questions pet founders ask while a home recipe becomes a product on a production line. Each one starts with the short answer."
+  faq_title: "Pet Formulation FAQ: Recipes, Labels, Costs"
+  faq_description: "Straight answers on dog treat and pet food recipe development: matching a treat, complete and balanced claims, labels, recipe ownership, and costs."
+  faq_lead: "Straight answers about pet recipe development, the facility, and how we work."
+  about_lead: "We connect dog-treat and pet-food brands that need a recipe developed or scaled with a US manufacturer that formulates and produces on open pet lines, and we run the process until you sign."
+  check_name: "project check"
+  cta: "Start a project"
+  cta_long: "Start a formulation project"
+  guide_form_title: "Have a pet recipe that needs to scale?"
+  guide_form_intro: "If this guide describes where your product is, send the project check. We confirm fit with the facility's formulation team and its open pet lines first."

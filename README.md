@@ -64,13 +64,13 @@ CSV format: see `tests/fixtures/sample_leads.csv`. Only `company` is required; `
 
 ## Website
 
-A finished static site for inbound leads, under the working name Open Line Co-Packing (decision 12): home with a Capacity Facts panel, capabilities, four line pages, eight sourced guides, a twenty-question FAQ, about, contact, and privacy, with JSON-LD, `llms.txt`, `llms-full.txt`, a sitemap, and strict security headers. No JavaScript on the live site.
+Four finished static sites for inbound leads, one engine (decisions 12 and 14): Open Line Co-Packing (cookies and baked goods), Open Line Pet Co-Packing, Open Line Formulation, and Open Line Pet Formulation. Each has a home page with a Capacity Facts panel, capabilities, two line pages, sourced guides, an FAQ, about, contact, privacy, ad landing pages, and its own questionnaire, with JSON-LD, `llms.txt`, `llms-full.txt`, a sitemap, and strict security headers. No JavaScript on the live sites.
 
 ```bash
-python site/build.py                  # production build into site/dist/ (stops while site/config.yaml has placeholders)
-python site/build.py --draft          # same pages, placeholders highlighted, noindex
-python site/build.py --preview p.html # the whole site as one file for review
-leadgen import-form export.csv        # website capacity checks into the pipeline (or --netlify)
+python site/build.py --site bakery                  # production build into site/dist/ (stops while placeholders remain)
+python site/build.py --site pet --draft             # same pages, placeholders highlighted, noindex
+python site/build.py --site formulation --preview p.html   # the whole site as one file for review
+leadgen import-form export.csv                      # website forms from any site into the pipeline (or --netlify)
 ```
 
 Facility facts reach the pages only once confirmed in `config/facility.yaml`. Deploy on Netlify with the root `netlify.toml`. Plan and upkeep in `docs/17` (section 11), campaign in `docs/18`, launch pins 20 to 26.
@@ -95,7 +95,7 @@ prompts/          system prompts used by the AI layer and usable by hand
 docs/             strategy documents
 leads/            researched seed list (scored), overrides, and day-0 drafts
 scripts/          weekly_pipeline.sh, install_cron.sh, build_seed_list.py, check_dns.py
-site/             website: config.yaml, build.py, content/ (guides, FAQ, line pages), templates/, static/ (css, fonts, images)
+site/             websites: shared.yaml, sites/<id>/ (settings, home copy, questionnaire, share images), build.py, content/ (guides, FAQ, line pages, landing pages), templates/, static/ (css, fonts, icons)
 tests/            unit, integration, fixtures (offline, about 97% coverage)
 data/             local SQLite pipeline (git-ignored)
 netlify.toml      site deploy settings (base site/, publish site/dist/)
