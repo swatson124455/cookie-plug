@@ -5,10 +5,10 @@ Kept current as work proceeds. Each pin says what is blocked without it. Nothing
 | # | Pin | What it unblocks | Where |
 |---|---|---|---|
 | 1 | Send the facility the data sheet and fill `config/facility.yaml` until `leadgen facility-check` passes | Any certification, MOQ, lead-time, or pricing claim in outreach and on calls; the capabilities one-pager | `docs/05_facility_data_sheet.md`, `docs/06_partner_kickoff.md` |
-| 2 | Agree the referral term sheet in writing and get it signed | Safe to hand off the first lead | `docs/06_partner_kickoff.md` section 2 |
+| 2 | Agree the referral term sheet in writing and get it signed. Include: any brand that reaches the partner through your site, your channels, or a marketplace listing naming you as contact is your referral | Safe to hand off the first lead; protects your commission when brands find the partner directly | `docs/06_partner_kickoff.md` section 2 |
 | 3 | Register a sending domain, set SPF/DKIM/DMARC, start the 14-day warm-up | Day-0 sends in week 2 | `docs/07_email_setup.md` |
 | 4 | Your sender identity: name, title, phone, physical mailing address for the signature | Replace "[Your name]" in every draft; CAN-SPAM compliance | `.env` (`LEADGEN_SENDER_NAME`, `LEADGEN_SENDER_TITLE`) |
-| 5 | The facility's name as it may be used with buyers, and who the technical contact is | Outreach currently says "a US manufacturer" | `config/facility.yaml` `name` |
+| 5 | Decide, with written permission from the partner, whether you may name it publicly (status: TBD). Also who the technical contact is | Until then the site, listings, and outreach say "a US manufacturer"; if yes, "authorized co-manufacturing partner of [partner]" goes on the site and LinkedIn | `config/facility.yaml` `name` |
 | 6 | Run `leadgen import leads/seed_list.csv` then `leadgen enrich` on your own machine | This cloud session cannot reach brand websites; enrichment adds sold-out and catalog signals and moves scores | `leads/README.md` |
 | 7 | Your referral percentage and term in years | Exact account values in the proof memo and prioritization | `leadgen economics --pct X --years Y` |
 | 8 | Decide whether an Anthropic API key is in budget now (cents per lead) or after the proof gate | `leadgen qualify` and `draft --ai`; without it the rule-based path runs | `.env` |
