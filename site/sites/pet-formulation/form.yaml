@@ -75,7 +75,7 @@ fit:
       label: "Claims you want on the pack"
       type: checkboxes
       hint: "Each claim shapes the formula and the label, so the facility confirms which ones it can support for your product before development starts."
-      options: ["Grain-free", "Limited ingredient", "Single protein", "High-protein", "Human grade", "None"]
+      options: ["Grain-free", "Limited ingredient", "Single protein", "High-protein", "None"]
     - name: certifications
       label: "Certifications or standards buyers ask for"
       type: checkboxes
