@@ -36,3 +36,22 @@ lines_title: "Lines with open capacity"
 beyond: "Making something that is not a cookie or a baked good? Tell us what it is in the capacity check. If it is outside these lines, we say so plainly, within {reply_within}."
 included_text: "Turnkey means you do not need a manufacturing team. The facility handles all of this in one place."
 guides_text: "How to find, qualify, and switch co-packers, written plainly."
+
+# Example product lines (shown only while multiple_skus_welcome is confirmed in config/facility.yaml).
+# Examples, not promises: formats are confirmed for each product before sampling.
+skus:
+  title: "Bring the whole line"
+  text: "Multiple SKUs are welcome. Most brands grow by flavor, by pack size, and by channel, and one plant that makes all of it keeps the brand consistent."
+  lines:
+    - label: "By flavor"
+      name: "A cookie range"
+      items: ["Chocolate chip", "Oatmeal raisin", "Double chocolate", "A seasonal flavor each quarter"]
+      note: "One base dough, several flavors: the usual way a cookie brand grows on one line."
+    - label: "By pack size"
+      name: "One cookie, every format"
+      items: ["2 oz single, individually wrapped", "8 oz resealable bag", "12-count gift box", "Club-size multipack"]
+      note: "The same recipe packed for coffee shops, grocery, gifting, and club stores."
+    - label: "By channel"
+      name: "A wholesale assortment"
+      items: ["Cookies", "Brownies", "Biscotti", "A holiday tin assortment"]
+      note: "For cafe groups, gift shops, and retailers' private label."

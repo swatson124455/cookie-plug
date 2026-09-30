@@ -14,8 +14,8 @@ steps:
 
 fields:
   - name: product
-    label: "What are you making?"
-    placeholder: "Peanut butter dog biscuits, 8 oz pouch"
+    label: "What are you making? List every product"
+    placeholder: "Dog biscuits in 3 flavors, 8 oz pouch; training bites, 4 oz"
     wide: true
   - name: pet_product
     label: "Product type"

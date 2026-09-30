@@ -36,3 +36,22 @@ lines_title: "Pet lines with open capacity"
 beyond: "Pet treats and pet food run under one roof with the facility's bakery lines. Tell us the format (baked, soft, jerky-style, kibble, topper) in the capacity check; the facility confirms line fit before anything else."
 included_text: "Turnkey means you do not need a manufacturing team. The facility handles all of this in one place, including the pet-food label."
 guides_text: "How to find, qualify, and work with a pet co-packer, written plainly."
+
+# Example product lines (shown only while multiple_skus_welcome is confirmed in config/facility.yaml).
+# Examples, not promises: formats are confirmed for each product before sampling.
+skus:
+  title: "Bring the whole line"
+  text: "Multiple SKUs are welcome. Pet brands grow by flavor, by size, and from treats into food, and one plant that makes all of it keeps the brand consistent."
+  lines:
+    - label: "By flavor"
+      name: "A dog-treat range"
+      items: ["Peanut butter biscuits", "Pumpkin biscuits", "Sweet potato biscuits", "Small training bites"]
+      note: "One base recipe, several flavors and sizes."
+    - label: "By pack size"
+      name: "One treat, every format"
+      items: ["3 oz sample pouch", "8 oz stand-up pouch", "24 oz value bag", "Bulk case for groomers and daycares"]
+      note: "The same treat packed for boutiques, grocery, and professional clients."
+    - label: "Treats to food"
+      name: "A pet line that grows"
+      items: ["Treats", "A meal topper", "A mixer", "A food, once its label claims are settled"]
+      note: "Pet treats and pet food run under one roof, so the line can grow without a second plant."

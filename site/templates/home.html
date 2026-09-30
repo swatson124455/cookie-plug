@@ -50,8 +50,29 @@
 {% if h.get("beyond") %}<p class="muted beyond">{{ h.beyond }}</p>{% endif %}
 </div></section>
 
+{% set show_skus = h.get("skus") and site.facts.multiple_skus %}
+{% set k = 1 if show_skus else 0 %}
+{% if show_skus %}
 <section class="section"><div class="wrap">
-{{ m.section_head(4, h.get("included_title") or "What is included", h.get("included_text") or "Turnkey means you do not need a manufacturing team. The facility handles all of this in one place.") }}
+{{ m.section_head(4, h.skus.title, h.skus.get("text", "")) }}
+<div class="ruled cols-{{ h.skus.lines|length if h.skus.lines|length in [2, 3, 4] else 3 }}">
+{% for line in h.skus.lines %}
+<div class="cell sku-line">
+{% if line.label %}<span class="label">{{ line.label }}</span>{% endif %}
+<h3>{{ line.name }}</h3>
+<ul class="checks">
+{% for item in line["items"] %}<li>{{ item }}</li>{% endfor %}
+</ul>
+{% if line.note %}<p>{{ line.note }}</p>{% endif %}
+</div>
+{% endfor %}
+</div>
+<p class="muted beyond">{{ h.skus.get("note") or "Examples, not a menu: each product is checked for line fit with the facility before sampling." }}</p>
+</div></section>
+{% endif %}
+
+<section class="section"><div class="wrap">
+{{ m.section_head(4 + k, h.get("included_title") or "What is included", h.get("included_text") or "Turnkey means you do not need a manufacturing team. The facility handles all of this in one place.") }}
 <dl class="spec-list">
 {% for service in site.facts.services %}
 <div><dt>{{ service.label }}</dt><dd>{{ service.blurb }}</dd></div>
@@ -61,13 +82,13 @@
 </div></section>
 
 <section class="section"><div class="wrap">
-{{ m.section_head(5, "Straight answers", h.get("faq_text") or "The questions founders ask first.") }}
+{{ m.section_head(5 + k, "Straight answers", h.get("faq_text") or "The questions founders ask first.") }}
 {{ m.faq_list(site.faq|selectattr("featured")|list) }}
 <p class="actions"><a class="btn ghost" href="{{ site.url('faq') }}">All questions</a></p>
 </div></section>
 
 <section class="section"><div class="wrap">
-{{ m.section_head(6, "Guides for founders", h.get("guides_text") or "Written plainly, each one starting with the short answer.") }}
+{{ m.section_head(6 + k, "Guides for founders", h.get("guides_text") or "Written plainly, each one starting with the short answer.") }}
 {{ m.guide_cards(site.guides[:3], 3) }}
 <p class="actions"><a class="btn ghost" href="{{ site.url('guides') }}">All guides</a></p>
 </div></section>

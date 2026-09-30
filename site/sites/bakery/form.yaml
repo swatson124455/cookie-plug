@@ -18,8 +18,8 @@ steps:
 
 fields:
   - name: product
-    label: "What are you making?"
-    placeholder: "Soft-baked oatmeal cookies, 6 oz bag"
+    label: "What are you making? List every product"
+    placeholder: "Soft-baked cookies in 3 flavors: 2 oz singles and 8 oz bags"
     wide: true
   - name: volume
     label: "Monthly volume, now or needed"

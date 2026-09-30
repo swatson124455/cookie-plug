@@ -15,8 +15,8 @@ steps:
 
 fields:
   - name: product
-    label: "What do you want to make?"
-    placeholder: "Lower-sugar oatmeal cookie, from a kitchen recipe"
+    label: "What do you want to make? List every product"
+    placeholder: "Lower-sugar oatmeal cookie from a kitchen recipe, plus 2 flavors"
     wide: true
   - name: stage
     label: "Where are you now?"

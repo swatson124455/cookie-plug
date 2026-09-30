@@ -213,3 +213,14 @@ def test_every_repo_site_has_a_valid_form_and_home():
         form = load_form(own / "form.yaml", {"reply_within": "one business day"})
         home = load_home(own / "home.yaml", {"reply_within": "one business day"})
         assert "product" in field_names(form) and home["h1"], site_id
+
+
+def test_home_product_lines_are_checked(tmp_path):
+    home = {"kicker": "K", "h1": "H", "lead": "L", "trust": "T", "who_title": "W", "who_text": "WT",
+            "who": [{"title": "a", "text": "b"}], "steps_title": "S", "steps": [{"title": "a", "text": "b"}],
+            "lines_title": "Lines", "skus": {"title": "Bring the line", "lines": [{"name": "Range", "items": ["A", "B"]}]}}
+    assert load_home(_write(tmp_path / "home.yaml", home))["skus"]["lines"][0]["items"] == ["A", "B"]
+    with pytest.raises(ContentError, match="skus needs title and lines"):
+        load_home(_write(tmp_path / "home.yaml", home | {"skus": {"title": "No lines"}}))
+    with pytest.raises(ContentError, match=r"skus lines \[1\] need a name and at least two items"):
+        load_home(_write(tmp_path / "home.yaml", home | {"skus": {"title": "T", "lines": [{"name": "One", "items": ["A"]}]}}))

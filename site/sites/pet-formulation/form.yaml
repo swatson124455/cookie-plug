@@ -16,8 +16,8 @@ steps:
 
 fields:
   - name: product
-    label: "What do you want to make?"
-    placeholder: "Single-protein salmon training treats, 6 oz pouch"
+    label: "What do you want to make? List every product"
+    placeholder: "Single-protein training treats in salmon, chicken, and beef"
     wide: true
   - name: pet_product
     label: "Product type"

@@ -81,6 +81,18 @@ def field_names(form: dict[str, Any]) -> list[str]:
     return asked + ["name", "company", "email", "phone", "notes", "source_page", "site"]
 
 
+def _check_skus(skus: dict[str, Any] | None, path: Path) -> None:
+    """The optional product-lineup section: a title and example lines, each with a name and at least two products."""
+    if skus is None:
+        return
+    if not skus.get("title") or not skus.get("lines"):
+        raise ContentError(f"{path}: skus needs title and lines")
+    bad = [index + 1 for index, line in enumerate(skus["lines"])
+           if not line.get("name") or len(line.get("items") or []) < 2]
+    if bad:
+        raise ContentError(f"{path}: skus lines {bad} need a name and at least two items")
+
+
 def load_home(path: Path, tokens: dict[str, str] | None = None) -> dict[str, Any]:
     """The home page copy for a site: hero, who it is for, steps, and section headings."""
     raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
@@ -92,6 +104,7 @@ def load_home(path: Path, tokens: dict[str, str] | None = None) -> dict[str, Any
         bad = [index + 1 for index, item in enumerate(raw[key]) if not item.get("title") or not item.get("text")]
         if bad:
             raise ContentError(f"{path}: {key} items {bad} need title and text")
+    _check_skus(raw.get("skus"), path)
     home = {key: fill_tokens(value, tokens) if isinstance(value, str) else value for key, value in raw.items()}
     home["steps"] = [{"title": str(step["title"]), "text": fill_tokens(str(step["text"]), tokens)} for step in raw["steps"]]
     return home

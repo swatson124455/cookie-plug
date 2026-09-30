@@ -498,3 +498,18 @@ def test_images_command_writes_one_site_and_the_shared_icons(tmp_path):
     assert main(["--images", "--site", "pet"], root=root) == 0
     assert (own_static / "og" / "default.png").exists() and (own_static / "og" / "dog-treat-co-packer.png").exists()
     assert (static / "logo.png").exists() and (static / "apple-touch-icon.png").exists()
+
+
+def test_product_lines_show_only_once_multiple_skus_are_confirmed(production, confirmed):
+    _, _, open_pages = production
+    _, confirmed_pages = confirmed
+    assert not open_pages["index.html"].select(".sku-line")
+    lines = confirmed_pages["index.html"].select(".sku-line")
+    assert len(lines) == 3 and all(len(line.select("li")) >= 2 for line in lines)
+    assert "Bring the whole line" in confirmed_pages["index.html"].get_text(" ")
+
+
+def test_every_site_asks_for_every_product(family):
+    for site_id, (_, _, parsed) in family.items():
+        label = parsed["index.html"].find("label", attrs={"for": "capacity-product"})
+        assert "List every product" in label.get_text(), site_id

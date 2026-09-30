@@ -39,3 +39,23 @@ included_title: "From recipe to shelf-ready"
 included_text: "Formulation is the first of the turnkey services, all under one roof. The recipe the facility develops with you is the recipe it produces, packs, and labels, including the pet-food label."
 faq_text: "The questions pet founders ask before a project starts."
 guides_text: "Taking a pet recipe from the kitchen to production, written plainly."
+
+# Example project lines (shown only while multiple_skus_welcome is confirmed in config/facility.yaml).
+# Examples, not promises: formats are confirmed for each product before development starts,
+# and no nutrition or health claims are made here.
+skus:
+  title: "Develop a line, not only a product"
+  text: "Multiple SKUs are welcome. Developing several products together shares the base recipe, the sampling rounds, and the label work, and every one of them goes to production on the same lines."
+  lines:
+    - label: "One base"
+      name: "Several proteins"
+      items: ["Chicken single-protein treat", "Salmon single-protein treat", "Beef single-protein treat"]
+      note: "One base recipe, one protein each: a common way to build a limited-ingredient line."
+    - label: "Professionals"
+      name: "A trainer's or groomer's range"
+      items: ["Small training bites", "A larger reward biscuit", "A meal topper"]
+      note: "For vets, trainers, groomers, and creators launching under their own name."
+    - label: "Treats to food"
+      name: "A line that grows"
+      items: ["Treats first", "Then a topper or mixer", "Then a food, with its label claims substantiated first"]
+      note: "Pet treats and pet food run under one roof, so the line can grow without a second plant."
