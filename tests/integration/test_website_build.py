@@ -44,7 +44,7 @@ def make_root(base: Path, shared_config: str, facility: str) -> Path:
     root = base / "repo"
     (root / "site" / "sites").mkdir(parents=True)
     (root / "config").mkdir()
-    for name in ("templates", "content", "static"):
+    for name in ("templates", "content", "static", "themes"):
         (root / "site" / name).symlink_to(REPO / "site" / name, target_is_directory=True)
     shared = yaml.safe_load((FIXTURES / shared_config).read_text(encoding="utf-8"))
     (root / "site" / "shared.yaml").write_text(yaml.safe_dump(shared | {"sites": list(SITES)}), encoding="utf-8")
@@ -120,7 +120,7 @@ def test_production_build_writes_every_page_and_file(family):
         expected |= {f"lp/{slug}/index.html" for slug in cfg.landings or []}
         assert set(parsed) == expected, site_id
         for name in ("styles.css", "robots.txt", "sitemap.xml", "llms.txt", "llms-full.txt", "_headers", "favicon.svg",
-                     "apple-touch-icon.png", "logo.png", "og/default.png", "fonts/archivo-var.woff2", f"{cfg.indexnow_key}.txt"):
+                     "apple-touch-icon.png", "logo.png", "og/default.png", f"{cfg.indexnow_key}.txt"):
             assert (dist / name).exists(), (site_id, name)
         assert result.warnings == [], site_id
 
@@ -363,7 +363,7 @@ def test_share_images_are_drawn_from_site_fonts(tmp_path):
     root = make_root(tmp_path, "site_complete.yaml", "facility_unconfirmed.yaml")
     site, _ = load_context(BuildOptions(root=root, site_id="pet", mode="draft", today=TODAY))
     static = tmp_path / "static"
-    written = generate_images(site, static, REPO / "site" / "static" / "fonts")
+    written = generate_images(site, static)
     assert len(written) == 1 + len(site.categories) + len(site.guides)
     assert Image.open(static / "og" / "default.png").size == (1200, 630)
     assert [path.name for path in generate_icons(static)] == ["apple-touch-icon.png", "logo.png"]
@@ -486,12 +486,10 @@ def test_the_build_needs_a_site(tmp_path, monkeypatch, capsys):
 
 def test_images_command_writes_one_site_and_the_shared_icons(tmp_path):
     pytest.importorskip("PIL")
-    import shutil
-
     root = make_root(tmp_path, "site_complete.yaml", "facility_unconfirmed.yaml")
     static = root / "site" / "static"
     static.unlink()  # a private copy, so the command never writes into the repo
-    shutil.copytree(REPO / "site" / "static" / "fonts", static / "fonts")
+    static.mkdir()
     own_static = root / "site" / "sites" / "pet" / "static"
     if own_static.is_symlink():
         own_static.unlink()
@@ -513,3 +511,34 @@ def test_every_site_asks_for_every_product(family):
     for site_id, (_, _, parsed) in family.items():
         label = parsed["index.html"].find("label", attrs={"for": "capacity-product"})
         assert "List every product" in label.get_text(), site_id
+
+
+THEMES = {"bakery": "open-book", "pet": "open-signal", "formulation": "blueprint", "pet-formulation": "night-shift"}
+
+
+@pytest.mark.parametrize("site_id", SITES)
+def test_each_site_ships_its_own_skin(family, site_id):
+    from leadgen.website.themes import load_theme
+
+    _, dist, parsed = family[site_id]
+    theme = load_theme(REPO / "site", THEMES[site_id])
+    css = (dist / "styles.css").read_text(encoding="utf-8")
+    assert theme.folder.joinpath("theme.css").read_text(encoding="utf-8").strip() in css
+    assert all(f'url("/fonts/{path.name}")' in css for path in theme.font_dir.glob("*.woff2"))
+    shipped = {path.name for path in (dist / "fonts").glob("*.woff2")}
+    assert shipped == {path.name for path in theme.font_dir.glob("*.woff2")}
+    preloads = {tag["href"] for tag in parsed["index.html"].find_all("link", rel="preload")}
+    assert preloads == {f"/fonts/{name}" for name in theme.preload}
+
+
+def test_the_four_skins_differ(family):
+    sheets = {site_id: (dist / "styles.css").read_text(encoding="utf-8") for site_id, (_, dist, _) in family.items()}
+    assert len(set(sheets.values())) == len(SITES)
+    assert "Fraunces" in sheets["bakery"] and "Bricolage Grotesque" in sheets["pet"]
+    assert "Barlow Condensed" in sheets["formulation"] and "Sora" in sheets["pet-formulation"]
+
+
+def test_preview_loads_the_theme_fonts(preview):
+    html, soup = preview
+    assert "family=Fraunces" in soup.find("link", rel="stylesheet")["href"]
+    assert "@font-face" not in html

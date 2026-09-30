@@ -1,0 +1,15 @@
+# Formulation: a technical blueprint. Condensed uppercase display, mono labels, blueprint-blue bands with a grid.
+name: "Blueprint"
+google_fonts: "https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@400..600&display=swap"
+preload: [barlow-condensed-700.woff2, barlow-400.woff2]
+share:
+  display: barlow-condensed-700.woff2
+  label: jetbrains-mono-400-600.woff2
+  display_weight: 700
+  bg: "#f2f5fb"
+  ink: "#0b2a66"
+  panel: "#ffffff"
+  signal: "#0a7a55"
+  bright: "#34d399"
+  muted: "#9fb2d6"
+  radius: 0

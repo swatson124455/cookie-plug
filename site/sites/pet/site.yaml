@@ -6,6 +6,7 @@ tagline: "Open co-packing lines for pet treats and pet food"
 domain: "TO_FILL https://yourpetdomain.com"   # the registered domain, https, no trailing slash
 indexnow_key: "0cc6b7c9447e7102633f39fbacd00ab0"
 family_blurb: "Pet treats and pet food"
+theme: "open-signal"                  # skin from site/themes/ (fonts, colors, components)
 
 lines: [pet_treat, pet_food]
 categories: [dog-treat-co-packer, pet-food-co-packer]

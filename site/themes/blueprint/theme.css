@@ -1,0 +1,179 @@
+/* Blueprint (formulation): a technical spec skin over the shared styles.
+   Condensed uppercase display, mono labels, blueprint-blue bands drawn on a grid, thin blue rules. */
+
+:root {
+  --bg: #f2f5fb;
+  --surface: #ffffff;
+  --ink: #0b1f44;
+  --ink-2: #3a4f78;
+  --ink-3: #56698f;
+  --rule: #0b3d91;
+  --hair: #c8d5ee;
+  --accent: #1747c4;
+  --accent-hover: #0f3391;
+  --on-accent: #ffffff;
+  --signal: #0a7a55;
+  --signal-bright: #34d399;
+  --signal-soft: #dff5ec;
+  --invert-bg: #0b3d91;
+  --invert-ink: #e8f0ff;
+  --invert-muted: #b9cdf5;
+  --field-line: #7d93bf;
+  --print: #0b3d91;
+  --print-deep: #072a66;
+  --print-ink: #e8f0ff;
+  --print-muted: #b9cdf5;
+  --grid: rgba(232, 240, 255, 0.09);
+  --tint: #eaf0ff;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #06142e;
+    --surface: #0b1d40;
+    --ink: #e8f0ff;
+    --ink-2: #b9cdf5;
+    --ink-3: #8fa6d6;
+    --rule: #9db7ec;
+    --hair: #1d3563;
+    --accent: #8fb0ff;
+    --accent-hover: #b8ccff;
+    --on-accent: #06142e;
+    --signal: #34d399;
+    --signal-soft: #0c2e2a;
+    --invert-bg: #041026;
+    --invert-ink: #e8f0ff;
+    --invert-muted: #9fb6e6;
+    --field-line: #4b6aa6;
+    --print: #0a2f70;
+    --print-deep: #041b45;
+    --tint: #10275a;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #06142e;
+  --surface: #0b1d40;
+  --ink: #e8f0ff;
+  --ink-2: #b9cdf5;
+  --ink-3: #8fa6d6;
+  --rule: #9db7ec;
+  --hair: #1d3563;
+  --accent: #8fb0ff;
+  --accent-hover: #b8ccff;
+  --on-accent: #06142e;
+  --signal: #34d399;
+  --signal-soft: #0c2e2a;
+  --invert-bg: #041026;
+  --invert-ink: #e8f0ff;
+  --invert-muted: #9fb6e6;
+  --field-line: #4b6aa6;
+  --print: #0a2f70;
+  --print-deep: #041b45;
+  --tint: #10275a;
+}
+
+/* Type: condensed caps, like drawing titles */
+h1, h2, h3, h4 { font-stretch: normal; text-transform: uppercase; letter-spacing: 0.01em; line-height: 0.98; }
+h1 { font-weight: 700; font-size: clamp(2.6rem, 6vw, 4.9rem); }
+h2 { font-weight: 700; }
+h3, h4 { font-weight: 600; letter-spacing: 0.02em; }
+.label, .kicker { font-weight: 500; letter-spacing: 0.06em; }
+
+/* The blueprint surface: blue paper with a drawn grid */
+.hero, .page-head, .cta-band, .site-footer {
+  background-color: var(--print);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--print-ink);
+}
+.hero, .page-head { border-bottom: 0; }
+.hero h1, .page-head h1 { color: #ffffff; }
+.hero .lead, .page-head .lead { color: var(--print-muted); }
+.hero .kicker, .page-head .kicker, .hero .trust, .page-head .byline { color: var(--print-muted); }
+.hero a:not(.btn), .page-head a:not(.btn) { color: #ffffff; }
+.hero .btn, .page-head .btn { background: #ffffff; color: var(--print); border-color: #ffffff; }
+.hero .btn:hover, .page-head .btn:hover { background: var(--signal-bright); border-color: var(--signal-bright); color: #06142e; }
+.hero .btn.ghost, .page-head .btn.ghost { background: transparent; color: #ffffff; border-color: rgba(232, 240, 255, 0.7); }
+.hero .btn.ghost:hover, .page-head .btn.ghost:hover { background: rgba(232, 240, 255, 0.12); color: #ffffff; }
+.page-head .crumbs, .page-head .crumbs a { color: var(--print-muted); }
+.page-head .crumbs li + li::before { color: rgba(232, 240, 255, 0.4); }
+.page-head .checks, .page-head .checks li { border-color: rgba(232, 240, 255, 0.3); }
+.page-head .checks li::before { border-color: var(--signal-bright); }
+.page-head .status-pill { background: rgba(52, 211, 153, 0.16); color: var(--signal-bright); }
+.page-head .status-pill.ask { background: rgba(232, 240, 255, 0.12); color: var(--print-muted); }
+
+/* Chrome */
+.statusbar { background: var(--print-deep); }
+.site-header { border-bottom: 1px solid var(--rule); }
+.brand-mark .m-bg { fill: var(--print); }
+.brand-name b { font: 700 1.6rem/0.9 var(--font-display); font-stretch: normal; letter-spacing: 0.03em; }
+.nav a { text-transform: uppercase; font-family: var(--font-display); font-weight: 600; letter-spacing: 0.06em; font-size: 1.02rem; }
+.nav a[aria-current="page"] { box-shadow: inset 0 -2px 0 var(--accent); }
+
+/* Buttons: squared, drafted */
+.btn { border-radius: 2px; font: 600 1.08rem/1.1 var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--on-accent); }
+.btn.ghost { background: transparent; color: var(--accent); border-color: var(--accent); }
+.btn.ghost:hover { background: var(--accent); color: var(--on-accent); }
+
+/* Capacity Facts as a spec table on the drawing */
+.facts { border: 1.5px solid var(--rule); border-radius: 0; box-shadow: 10px 10px 0 -1px rgba(7, 42, 102, 0.35); padding: 12px 16px 12px; }
+.facts h2 { font: 700 2.4rem/0.95 var(--font-display); font-stretch: normal; text-transform: uppercase; letter-spacing: 0.02em; }
+.facts .sub { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.02em; }
+.bar-xl { height: 2px; background: var(--rule); margin: 6px 0; }
+.bar-md { height: 1px; background: var(--rule); margin: 4px 0 0; }
+.facts .row { border-top: 1px dashed var(--hair); }
+.facts dt { font-weight: 600; }
+.facts .row.big dt { font: 700 1.7rem/1 var(--font-display); text-transform: uppercase; }
+.facts .row.big dd { font: 600 1.7rem/1 var(--font-mono); }
+.facts .foot { border-top: 1px solid var(--rule); font-family: var(--font-body); }
+
+/* Sections: section marks and thin blue rules */
+.section.alt { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.section-head { border-top: 1px solid var(--rule); }
+.section-head .label { color: var(--accent); }
+.section-head .label::before { content: "§ "; }
+.ruled { gap: 1px; background: var(--hair); border: 1px solid var(--rule); }
+a.cell:hover { background: var(--tint); }
+.steps li { border-top: 1px dashed var(--hair); }
+.steps li:last-child { border-bottom: 1px dashed var(--hair); }
+.steps li::before { content: "0" counter(step); font: 600 2rem/1 var(--font-mono); color: var(--accent); }
+.status-pill { border-radius: 0; }
+.spec-list { border-top: 1px solid var(--rule); }
+.spec-list > div { border-bottom: 1px dashed var(--hair); }
+.spec-list dt { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; font-size: 1.08rem; }
+
+/* Inner pages */
+.box { border: 1px solid var(--rule); }
+.box.signal { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent); }
+.prose h2 { border-top: 1px solid var(--rule); }
+.answer { border: 1px solid var(--rule); border-top: 4px solid var(--accent); }
+.author { border-left: 4px solid var(--accent); }
+.faq { border-top: 1px solid var(--rule); }
+.faq details { border-bottom: 1px dashed var(--hair); }
+.faq summary::after { font-family: var(--font-mono); color: var(--accent); }
+.checks { border-top: 1px solid var(--rule); }
+.checks li { border-bottom: 1px dashed var(--hair); }
+.checks li::before { border-color: var(--accent); }
+
+/* Bands and form */
+.cta-band h2 { color: #ffffff; }
+.cta-band p { color: var(--print-muted); }
+.cta-band .btn { background: #ffffff; color: var(--print); border-color: #ffffff; }
+.cta-band .btn:hover { background: var(--signal-bright); border-color: var(--signal-bright); color: #06142e; }
+.site-footer { color: var(--print-ink); }
+.foot-grid, .family { border-color: rgba(232, 240, 255, 0.25); }
+.form-section { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.next-steps, .next-steps li { border-color: var(--hair); }
+.next-steps b { font: 600 1.1rem/1.2 var(--font-mono); color: var(--accent); }
+.field label, .field.choice legend { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; font-size: 1rem; }
+.field .choices label { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: 0.93rem; font-weight: 500; }
+.field input, .field select, .field textarea { border: 1.5px solid var(--field-line); border-radius: 2px; }
+.field .choices label { border: 1.5px solid var(--hair); border-radius: 2px; }
+.field .choices label:has(input:checked) { border-color: var(--accent); background: var(--tint); }
+.fit { border: 1.5px solid var(--rule); border-radius: 0; }
+.fit summary { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.05em; }

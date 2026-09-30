@@ -1,0 +1,16 @@
+# Pet co-packing: friendly and rounded. Grotesque display, mint paper, green signal, pill buttons.
+name: "Open Signal"
+google_fonts: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&display=swap"
+preload: [bricolage-grotesque-400-800.woff2, instrument-sans-400-700.woff2]
+share:
+  display: bricolage-grotesque-400-800.woff2
+  label: instrument-sans-400-700.woff2
+  display_weight: 800
+  display_width: 96
+  bg: "#eaf5ee"
+  ink: "#13241c"
+  panel: "#ffffff"
+  signal: "#0b7a4b"
+  bright: "#33d17a"
+  muted: "#b7cabf"
+  radius: 26

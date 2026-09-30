@@ -167,6 +167,7 @@ class SiteConfig(BaseModel):
     guides: list[str] | None = None
     landings: list[str] | None = None
     family_blurb: str = ""
+    theme: str = "default"
     wording: SiteWording = Field(default_factory=SiteWording)
     family: list[FamilyMember] = Field(default_factory=list)
     family_order_ids: list[str] = Field(default_factory=list)

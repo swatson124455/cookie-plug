@@ -7,6 +7,7 @@ tagline: "Open co-packing lines for cookies and baked goods"
 domain: "TO_FILL https://yourdomain.com"   # the registered domain, https, no trailing slash
 indexnow_key: "ee3f17956e9b3482a5103f90939a20b0"   # public by design; the build publishes /<key>.txt
 family_blurb: "Cookies and baked goods"   # how the other sites' footers describe this one
+theme: "open-book"                  # skin from site/themes/ (fonts, colors, components)
 
 lines: [cookie, bakery]             # facility lines this site presents
 categories: [cookie-co-packer, bakery-co-packer]   # line pages from site/content/categories.yaml

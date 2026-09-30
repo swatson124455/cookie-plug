@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING, Any
 from leadgen.website.config import FamilyMember, SiteConfig, display_value, is_placeholder
 from leadgen.website.content import FaqItem, Guide
 from leadgen.website.facts import FacilityFacts, Line
+from leadgen.website.themes import Theme
 
 if TYPE_CHECKING:
     from jinja2 import Environment
@@ -42,6 +43,7 @@ class SiteContext:
         self.faq: list[FaqItem] = []
         self.categories: dict[str, dict[str, Any]] = {}
         self.landings: dict[str, dict[str, Any]] = {}
+        self.theme: Theme | None = None
         self.home: dict[str, Any] = {}
         self.form: dict[str, Any] = {}
         self.css_version = ""

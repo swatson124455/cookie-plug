@@ -11,6 +11,7 @@ tagline: "Recipe and product development for cookie and bakery brands"
 domain: "TO_FILL https://yourformulationdomain.com"   # the registered domain, https, no trailing slash
 indexnow_key: "e88454fb6beca3a01cab4fbd06846cb2"
 family_blurb: "Recipe development for food brands"
+theme: "blueprint"                  # skin from site/themes/ (fonts, colors, components)
 
 lines: [cookie, bakery]
 categories: [cookie-recipe-development, bakery-product-development]

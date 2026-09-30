@@ -1,0 +1,15 @@
+# Pet formulation: dark and warm. Geometric display, deep navy, orange glow; dark in both OS modes.
+name: "Night Shift"
+google_fonts: "https://fonts.googleapis.com/css2?family=Sora:wght@400..800&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..600&display=swap"
+preload: [sora-400-800.woff2, dm-sans-400-700.woff2]
+share:
+  display: sora-400-800.woff2
+  label: dm-sans-400-700.woff2
+  display_weight: 700
+  bg: "#0b1422"
+  ink: "#edf2fa"
+  panel: "#111d31"
+  signal: "#34d399"
+  bright: "#fb923c"
+  muted: "#3a4d6e"
+  radius: 18

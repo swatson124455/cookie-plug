@@ -224,3 +224,38 @@ def test_home_product_lines_are_checked(tmp_path):
         load_home(_write(tmp_path / "home.yaml", home | {"skus": {"title": "No lines"}}))
     with pytest.raises(ContentError, match=r"skus lines \[1\] need a name and at least two items"):
         load_home(_write(tmp_path / "home.yaml", home | {"skus": {"title": "T", "lines": [{"name": "One", "items": ["A"]}]}}))
+
+
+# themes ---------------------------------------------------------------------
+
+def test_every_repo_theme_loads_with_its_files():
+    from leadgen.website.themes import load_theme
+
+    for folder in sorted((REPO / "site" / "themes").iterdir()):
+        theme = load_theme(REPO / "site", folder.name)
+        fonts, overrides = theme.css(with_fonts=True)
+        assert "@font-face" in fonts and theme.google_fonts.startswith("https://fonts.googleapis.com/")
+        assert theme.css(with_fonts=False)[0] == "" and theme.share.color("ink") == tuple(
+            int(theme.share.ink[i:i + 2], 16) for i in (1, 3, 5))
+        assert folder.name in repr(theme) and "ShareStyle" in repr(theme.share)
+
+
+def test_themes_reject_unknown_ids_bad_colors_and_missing_fonts(tmp_path):
+    from leadgen.website.themes import load_theme
+
+    folder = tmp_path / "themes" / "plain"
+    (folder / "fonts").mkdir(parents=True)
+    (folder / "fonts.css").write_text("@font-face {}", encoding="utf-8")
+    good = {"name": "Plain", "google_fonts": "https://fonts.googleapis.com/css2?family=X",
+            "share": {"display": "d.woff2", "label": "l.woff2"}}
+    _write(folder / "theme.yaml", good)
+    with pytest.raises(ContentError, match="choose one of plain"):
+        load_theme(tmp_path, "nope")
+    with pytest.raises(ContentError, match="missing themes/plain/fonts/d.woff2"):
+        load_theme(tmp_path, "plain")
+    for name in ("d.woff2", "l.woff2"):
+        (folder / "fonts" / name).write_bytes(b"")
+    assert load_theme(tmp_path, "plain").css(with_fonts=True)[1] == ""
+    _write(folder / "theme.yaml", good | {"share": good["share"] | {"ink": "black"}})
+    with pytest.raises(ContentError, match="not a #rrggbb color"):
+        load_theme(tmp_path, "plain")

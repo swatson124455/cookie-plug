@@ -26,14 +26,13 @@ from leadgen.website.facts import build_facts
 from leadgen.website.forms import load_form, load_home
 from leadgen.website.pages import Page, all_pages
 from leadgen.website.render import SiteContext, environment, render_page, rewrite_internal_links
+from leadgen.website.themes import load_theme
 
 STALE_AFTER_DAYS = 45
 DRAFT_DOMAIN = "https://draft.invalid"
 SITE_ENV = "OPEN_LINE_SITE"
 STATIC_FILES = ("favicon.svg", "apple-touch-icon.png", "logo.png")
-STATIC_DIRS = ("fonts", "og")
-GOOGLE_FONTS = ("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..100,500..900"
-                "&family=IBM+Plex+Mono:wght@500&family=Libre+Franklin:ital,wght@0,400..700;1,400..600&display=swap")
+STATIC_DIRS = ("og",)
 
 
 @dataclass
@@ -95,6 +94,7 @@ def load_context(options: BuildOptions) -> tuple[SiteContext, list[str]]:
         cfg = cfg.model_copy(update={"domain": DRAFT_DOMAIN})
     facts = build_facts(facility, cfg)
     site = SiteContext(cfg, facts, options.mode, options.today, options.own_dir / "static")
+    site.theme = load_theme(options.site_dir, cfg.theme)
     _load_content(site, options)
     return site, _warnings(site, options)
 
@@ -128,12 +128,11 @@ def _warnings(site: SiteContext, options: BuildOptions) -> list[str]:
     return warnings
 
 
-def stylesheet(site_dir: Path, with_fonts: bool) -> str:
-    """The site CSS; production prepends the self-hosted @font-face rules."""
-    css = (site_dir / "static" / "styles.css").read_text(encoding="utf-8")
-    if with_fonts:
-        css = (site_dir / "static" / "fonts.css").read_text(encoding="utf-8") + "\n" + css
-    return css
+def stylesheet(site: SiteContext, site_dir: Path, with_fonts: bool) -> str:
+    """The site CSS: the theme's @font-face rules (production only), the shared styles, then the theme's overrides."""
+    fonts, overrides = site.theme.css(with_fonts)
+    base = (site_dir / "static" / "styles.css").read_text(encoding="utf-8")
+    return "\n".join(part for part in (fonts, base, overrides) if part)
 
 
 def reset_output(path: Path) -> None:
@@ -189,7 +188,7 @@ def build_site(options: BuildOptions) -> BuildResult:
     """Render every page and supporting file into the output directory."""
     site, warnings = load_context(options)
     env = environment(options.site_dir / "templates")
-    css = stylesheet(options.site_dir, with_fonts=True)
+    css = stylesheet(site, options.site_dir, with_fonts=True)
     site.css_version = hashlib.sha256(css.encode("utf-8")).hexdigest()[:10]
     pages = all_pages(site)
     out = options.output_dir
@@ -199,6 +198,7 @@ def build_site(options: BuildOptions) -> BuildResult:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(render_page(env, site, page, "base.html"), encoding="utf-8")
     copy_static([options.site_dir / "static", site.static_dir], out)
+    shutil.copytree(site.theme.font_dir, out / "fonts")
     (out / "styles.css").write_text(css, encoding="utf-8")
     write_machine_files(site, pages, out)
     return BuildResult(pages, warnings, out)
@@ -216,8 +216,8 @@ def build_preview(options: BuildOptions) -> BuildResult:
     routes = "\n".join(render_page(env, site, page, "_route.html") for page in pages)
     static = options.site_dir / "static"
     html = env.get_template("preview.html").render(
-        site=site, routes=Markup(routes), fonts_url=GOOGLE_FONTS,
-        css=Markup(stylesheet(options.site_dir, with_fonts=False) + (static / "preview.css").read_text(encoding="utf-8")),
+        site=site, routes=Markup(routes), fonts_url=site.theme.google_fonts,
+        css=Markup(stylesheet(site, options.site_dir, with_fonts=False) + "\n" + (static / "preview.css").read_text(encoding="utf-8")),
         script=Markup((static / "preview.js").read_text(encoding="utf-8")))
     options.preview_file.parent.mkdir(parents=True, exist_ok=True)
     options.preview_file.write_text(html, encoding="utf-8")
@@ -264,7 +264,7 @@ def write_images(root: Path, only: str | None) -> BuildResult:
     for site_id in [only] if only else site_ids(root / "site"):
         options = BuildOptions(root=root, site_id=site_id, mode="draft")
         site, _ = load_context(options)
-        written += generate_images(site, options.own_dir / "static", root / "site" / "static" / "fonts")
+        written += generate_images(site, options.own_dir / "static")
     written += generate_icons(root / "site" / "static")
     return BuildResult([], [], root / "site", f"wrote {len(written)} images under {root / 'site'} (commit them)")
 

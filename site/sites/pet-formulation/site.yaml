@@ -10,6 +10,7 @@ tagline: "Recipe development for dog treat and pet food brands"
 domain: "TO_FILL https://yourpetformulationdomain.com"   # the registered domain, https, no trailing slash
 indexnow_key: "39fb4fb658005022790f24a58df59c03"
 family_blurb: "Recipe development for pet brands"
+theme: "night-shift"                  # skin from site/themes/ (fonts, colors, components)
 
 lines: [pet_treat, pet_food]
 categories: [dog-treat-formulation, pet-food-formulation]

@@ -1,4 +1,4 @@
-/* Self-hosted, Latin-subset variable fonts (SIL Open Font License, see fonts/LICENSE-OFL.txt). */
+/* default: self-hosted, Latin-subset variable fonts (SIL Open Font License, see fonts/LICENSE-OFL.txt). */
 @font-face {
   font-family: "Archivo";
   src: url("/fonts/archivo-var.woff2") format("woff2");

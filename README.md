@@ -64,7 +64,7 @@ CSV format: see `tests/fixtures/sample_leads.csv`. Only `company` is required; `
 
 ## Website
 
-Four finished static sites for inbound leads, one engine (decisions 12 and 14): Open Line Co-Packing (cookies and baked goods), Open Line Pet Co-Packing, Open Line Formulation, and Open Line Pet Formulation. Each has a home page with a Capacity Facts panel, capabilities, two line pages, sourced guides, an FAQ, about, contact, privacy, ad landing pages, and its own questionnaire, with JSON-LD, `llms.txt`, `llms-full.txt`, a sitemap, and strict security headers. No JavaScript on the live sites.
+Four finished static sites for inbound leads, one engine (decisions 12 and 14): Open Line Co-Packing (cookies and baked goods), Open Line Pet Co-Packing, Open Line Formulation, and Open Line Pet Formulation. Each has its own skin (`site/themes/`), a home page with a Capacity Facts panel, capabilities, two line pages, sourced guides, an FAQ, about, contact, privacy, ad landing pages, and its own questionnaire, with JSON-LD, `llms.txt`, `llms-full.txt`, a sitemap, and strict security headers. No JavaScript on the live sites.
 
 ```bash
 python site/build.py --site bakery                  # production build into site/dist/ (stops while placeholders remain)

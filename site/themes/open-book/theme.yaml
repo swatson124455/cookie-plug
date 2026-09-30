@@ -1,0 +1,15 @@
+# Baked goods: a warm recipe-book look. Serif display, cream paper, terracotta accent, soft cards.
+name: "Open Book"
+google_fonts: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&family=Public+Sans:ital,wght@0,400..700;1,400..600&display=swap"
+preload: [fraunces-400-800.woff2, public-sans-400-700.woff2]
+share:
+  display: fraunces-400-800.woff2
+  label: public-sans-400-700.woff2
+  display_weight: 640
+  bg: "#f6efe4"
+  ink: "#2b1d14"
+  panel: "#fffcf6"
+  signal: "#2f7d46"
+  bright: "#e0703f"
+  muted: "#c9b59d"
+  radius: 18

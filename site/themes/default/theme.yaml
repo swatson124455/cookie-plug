@@ -1,0 +1,9 @@
+# The original spec-sheet look: heavy rules, condensed headings, the Capacity Facts panel.
+name: "Spec Sheet"
+google_fonts: "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..100,500..900&family=IBM+Plex+Mono:wght@500&family=Libre+Franklin:ital,wght@0,400..700;1,400..600&display=swap"
+preload: [archivo-var.woff2, libre-franklin-var.woff2]
+share:
+  display: archivo-var.woff2
+  label: ibm-plex-mono-500.woff2
+  display_weight: 860
+  heavy_bars: true
