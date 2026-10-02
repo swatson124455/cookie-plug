@@ -42,4 +42,4 @@ The weighting was corrected on 2026-09-29: emerging and transitioning brands out
 python scripts/build_seed_list.py path/to/research_1.csv path/to/research_2.csv ...
 ```
 
-The five original research CSVs are not committed (they were session scratch files); `seed_list.csv` is their merged output and can be passed back in as the single input.
+The six original research CSVs are kept as-is in `research_raw/` (added at the 2026-10-02 handoff): they hold notes and sources for 25 rows that were dropped from the seed list (closures, recalls, hiring signals). `seed_list.csv` is their merged output and can be passed back in as the single input.

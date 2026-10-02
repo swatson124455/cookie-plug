@@ -1,0 +1,81 @@
+<title>Blueprint Spec Mockup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Barlow:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+/* Fixed-look design mockup shown at 1280px and scaled to fit; single light look by choice. */
+:root { --ground: #cfd5db; --caption: #2b333b; color-scheme: light; }
+body { background: var(--ground); color: var(--caption); margin: 0; padding-block: 20px; padding-inline: 16px; }
+.note { max-width: 1280px; margin: 0 auto 12px; font: 600 14px/1.4 system-ui, sans-serif; color: var(--caption); }
+.wrap { max-width: 1280px; margin: 0 auto; overflow: hidden; }
+.stage { width: 1280px; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
+
+.stage{font-family:Barlow,system-ui,sans-serif;color:#e8f0ff;background:#0b3d91}
+.stage .c{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase}
+.stage .m{font-family:"JetBrains Mono",monospace}
+.stage .box{border:1.5px solid rgba(232,240,255,.8)}
+.stage .dim{display:flex;align-items:center;gap:10px;font-size:12px;color:#b9cdf5}
+.stage .dim::before,.stage .dim::after{content:"";flex:1;height:0;border-top:1px solid #b9cdf5}
+.stage table{border-collapse:collapse;width:100%}
+.stage td,.stage th{border:1px solid rgba(232,240,255,.5);padding:14px 16px;text-align:left;font-size:17px}
+.stage th{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:13px;color:#b9cdf5}
+
+</style>
+<p class="note">Option 6 · Blueprint spec sheet: home page mockup for Open Line Co-Packing (desktop, scaled to fit your screen). Placeholders in [brackets].</p>
+<div class="wrap" id="wrap"><div class="stage" id="stage"><div style="height:2300px;display:flex;flex-direction:column;background:#0b3d91;background-image:linear-gradient(rgba(232,240,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(232,240,255,.08) 1px,transparent 1px),linear-gradient(rgba(232,240,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,240,255,.04) 1px,transparent 1px);background-size:100px 100px,100px 100px,20px 20px,20px 20px">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:24px 72px;border-bottom:1.5px solid rgba(232,240,255,.8)">
+<span class="c" style="font-size:30px;font-weight:700;letter-spacing:.06em">Open Line Co-Packing</span>
+<span style="display:flex;gap:28px;align-items:center;font-weight:500"><span>Capabilities</span><span>Guides</span><span>FAQ</span><a href="#c" style="border:1.5px solid #e8f0ff;color:#e8f0ff;text-decoration:none;padding:12px 20px;font-weight:600">Check capacity</a></span>
+</div>
+<div style="padding:72px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px;align-items:start">
+<div style="grid-column:1 / 8;display:flex;flex-direction:column;gap:22px">
+<span class="m" style="font-size:13px;color:#b9cdf5">DWG NO. OL-001 · REV A · SHEET 1 OF 1</span>
+<h1 class="c" style="margin:0;font-size:104px;line-height:.9;font-weight:700">Spec'd for scale. Open now.</h1>
+<p style="margin:0;font-size:20px;line-height:1.55;max-width:600px;color:#d3e0fb">A US manufacturer with open lines for cookies, baked goods, pet treats, and pet food. Formulation, production, packaging, labeling, and nutrition panels under one roof. Multiple SKUs welcome.</p>
+<a href="#c" style="align-self:flex-start;background:#e8f0ff;color:#0b3d91;text-decoration:none;padding:18px 26px;font-weight:700;font-size:18px">Check capacity for your product</a>
+</div>
+<div style="grid-column:8 / 13;display:flex;flex-direction:column;gap:10px">
+<span class="dim m">WIDTH: 4 LINES</span>
+<div class="box" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr))">
+<div style="padding:22px;border-right:1.5px solid rgba(232,240,255,.8);border-bottom:1.5px solid rgba(232,240,255,.8)"><div class="c" style="font-size:28px;font-weight:700">Cookies</div><div class="m" style="font-size:12px;color:#8ff0b4">● OPEN</div></div>
+<div style="padding:22px;border-bottom:1.5px solid rgba(232,240,255,.8)"><div class="c" style="font-size:28px;font-weight:700">Baked goods</div><div class="m" style="font-size:12px;color:#8ff0b4">● OPEN</div></div>
+<div style="padding:22px;border-right:1.5px solid rgba(232,240,255,.8)"><div class="c" style="font-size:28px;font-weight:700">Pet treats</div><div class="m" style="font-size:12px;color:#8ff0b4">● OPEN</div></div>
+<div style="padding:22px"><div class="c" style="font-size:28px;font-weight:700">Pet food</div><div class="m" style="font-size:12px;color:#8ff0b4">● OPEN</div></div>
+</div>
+<span class="m" style="font-size:12px;color:#b9cdf5">NOTE 1: STATUS CONFIRMED WITH THE FACILITY, 2026-09.</span>
+</div>
+</div>
+<div style="padding:24px 72px 88px;display:flex;flex-direction:column;gap:20px">
+<h2 class="c" style="margin:0;font-size:56px;font-weight:700">Specification</h2>
+<table>
+<tr><th>ITEM</th><th>VALUE</th><th>NOTE</th></tr>
+<tr><td>Production lines</td><td>Cookies, baked goods, pet treats, pet food</td><td>All open</td></tr>
+<tr><td>Services</td><td>Formulation, contract manufacturing, private label, packaging, labeling, nutrition panels, shelf-ready case packs</td><td>7 in-house</td></tr>
+<tr><td>SKUs per brand</td><td>Multiple welcome</td><td></td></tr>
+<tr><td>Waitlist</td><td>None</td><td>First-run timing set after sampling</td></tr>
+<tr><td>Minimum run</td><td>Per product</td><td>Confirmed on the first call</td></tr>
+<tr><td>Certifications</td><td>On request</td><td>Listed only when documented</td></tr>
+<tr><td>Cost to ask</td><td>$0</td><td>Paid by the facility, never by brands</td></tr>
+</table>
+</div>
+<div style="padding:0 72px 88px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+<div class="box" style="padding:28px;display:flex;flex-direction:column;gap:10px"><span class="m" style="font-size:12px;color:#b9cdf5">STEP 01</span><span class="c" style="font-size:30px;font-weight:700">Capacity check</span><span style="color:#d3e0fb;line-height:1.55">Four questions. Reply within one business day.</span></div>
+<div class="box" style="padding:28px;display:flex;flex-direction:column;gap:10px"><span class="m" style="font-size:12px;color:#b9cdf5">STEP 02</span><span class="c" style="font-size:30px;font-weight:700">Benchmark sample</span><span style="color:#d3e0fb;line-height:1.55">The formulation team matches your product.</span></div>
+<div class="box" style="padding:28px;display:flex;flex-direction:column;gap:10px"><span class="m" style="font-size:12px;color:#b9cdf5">STEP 03</span><span class="c" style="font-size:30px;font-weight:700">Quote and run</span><span style="color:#d3e0fb;line-height:1.55">First run on an open line. Sign with the facility.</span></div>
+</div>
+<div id="c" style="flex-grow:1;margin:0 72px 72px;padding:48px;display:flex;flex-direction:column;gap:22px" class="box">
+<h2 class="c" style="margin:0;font-size:56px;font-weight:700">Submit your spec</h2>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:600">Product and SKUs<input id="bp-1" placeholder="3 SKUs, soft-baked, 6 oz" style="min-height:52px;border:1.5px solid #e8f0ff;background:transparent;color:#e8f0ff;padding:0 14px;font:inherit"></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:600">Email<input id="bp-2" placeholder="you@brand.com" style="min-height:52px;border:1.5px solid #e8f0ff;background:transparent;color:#e8f0ff;padding:0 14px;font:inherit"></label>
+<button style="align-self:end;min-height:52px;border:0;background:#e8f0ff;color:#0b3d91;font:700 17px Barlow,sans-serif">Check capacity</button>
+</div>
+<span class="m" style="font-size:13px;color:#b9cdf5">[YOUR NAME] · [YOUR EMAIL] · [YOUR PHONE]</span>
+</div>
+</div></div></div>
+<script>
+(function () {
+  var wrap = document.getElementById("wrap"), stage = document.getElementById("stage");
+  function fit() { stage.style.zoom = Math.min(1, wrap.clientWidth / 1280); }
+  window.addEventListener("resize", fit); fit();
+  document.addEventListener("click", function (e) { var a = e.target.closest && e.target.closest('a[href^="#"]'); if (a) e.preventDefault(); });
+}());
+</script>

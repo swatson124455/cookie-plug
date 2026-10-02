@@ -1,0 +1,64 @@
+<title>Form First Mockup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&amp;family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&amp;display=swap">
+<style>
+/* Fixed-look design mockup shown at 1280px and scaled to fit; single light look by choice. */
+:root { --ground: #cfd5db; --caption: #2b333b; color-scheme: light; }
+body { background: var(--ground); color: var(--caption); margin: 0; padding-block: 20px; padding-inline: 16px; }
+.note { max-width: 1280px; margin: 0 auto 12px; font: 600 14px/1.4 system-ui, sans-serif; color: var(--caption); }
+.wrap { max-width: 1280px; margin: 0 auto; overflow: hidden; }
+.stage { width: 1280px; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
+
+.stage{font-family:"Schibsted Grotesk",system-ui,sans-serif;color:#10211f;background:#eef3f1}
+.stage .it{font-family:Newsreader,serif;font-style:italic;font-weight:400}
+.stage .chip{display:flex;align-items:center;justify-content:center;min-height:64px;padding:0 18px;border-radius:14px;border:2px solid #c3d3cf;background:#fff;font-weight:600;font-size:17px}
+.stage .chip.on{border-color:#0f766e;background:#e0f2ef;color:#0b5d57}
+
+</style>
+<p class="note">Option 3 · Form-first: home page mockup for Open Line Co-Packing (desktop, scaled to fit your screen). Placeholders in [brackets].</p>
+<div class="wrap" id="wrap"><div class="stage" id="stage"><div style="height:2150px;display:flex;flex-direction:column">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:24px 72px">
+<span style="font-weight:900;font-size:24px;letter-spacing:-.02em">Open Line <span class="it" style="font-size:26px">co-packing</span></span>
+<span style="display:flex;gap:28px;font-weight:600;color:#33504b"><span>Capabilities</span><span>Guides</span><span>FAQ</span><span>About</span></span>
+</div>
+<div style="padding:40px 72px 88px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px;align-items:start">
+<div style="grid-column:1 / 6;display:flex;flex-direction:column;gap:22px;padding-top:24px">
+<span style="align-self:flex-start;padding:8px 14px;border-radius:999px;background:#0f766e;color:#fff;font-weight:700;font-size:14px">4 lines open · no waitlist</span>
+<h1 style="margin:0;font-size:68px;line-height:1;font-weight:900;letter-spacing:-.035em">Find out if your product fits, <span class="it" style="font-weight:400">in two minutes.</span></h1>
+<p style="margin:0;font-size:20px;line-height:1.55;color:#33504b">A US manufacturer with open lines for cookies, baked goods, pet treats, and pet food, turnkey from formulation to shelf-ready. Answer four questions; we confirm fit with the facility and reply within one business day.</p>
+<div style="display:flex;flex-direction:column;gap:10px;font-size:16px;color:#33504b"><span>✓ Free to ask. Brands never pay us.</span><span>✓ Multiple SKUs welcome.</span><span>✓ No sales call unless you want one.</span></div>
+</div>
+<div style="grid-column:7 / 13;padding:36px;border-radius:24px;background:#fff;box-shadow:0 30px 80px rgba(16,33,31,.14);display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;color:#0b5d57">Step 1 of 4</span><span style="color:#5a716c">About 2 minutes</span></div>
+<div style="height:8px;border-radius:4px;background:#e2ebe8"><div style="width:25%;height:8px;border-radius:4px;background:#0f766e"></div></div>
+<h2 style="margin:0;font-size:34px;font-weight:800;letter-spacing:-.02em">What are you making?</h2>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+<span class="chip on">Cookies</span><span class="chip">Baked goods</span><span class="chip">Pet treats</span><span class="chip">Pet food</span>
+</div>
+<label style="display:flex;flex-direction:column;gap:8px;font-weight:600">Describe it (SKUs, pack sizes)<input id="ff-1" placeholder="3 SKUs: soft-baked oatmeal, chocolate chip, snickerdoodle; 6 oz bags" style="min-height:56px;border-radius:12px;border:2px solid #c3d3cf;padding:0 16px;font:inherit"></label>
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="color:#5a716c">Next: volume, timing, how it's made today</span><button style="min-height:56px;padding:0 28px;border:0;border-radius:12px;background:#0f766e;color:#fff;font:700 18px 'Schibsted Grotesk',sans-serif">Continue</button></div>
+</div>
+</div>
+<div style="padding:88px 72px;background:#fff;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px">
+<div style="display:flex;flex-direction:column;gap:10px"><span class="it" style="font-size:44px;color:#0f766e">After you send it</span></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font-weight:800;font-size:22px">We check line fit</span><span style="color:#33504b;line-height:1.55">With the facility, then reply within one business day. If it is not a fit, we say so.</span></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font-weight:800;font-size:22px">You judge a sample</span><span style="color:#33504b;line-height:1.55">The formulation team matches your product. Then a written quote, and you sign directly with the facility.</span></div>
+</div>
+<div style="padding:88px 72px;display:flex;flex-direction:column;gap:28px">
+<h2 style="margin:0;font-size:48px;font-weight:900;letter-spacing:-.03em">Everything under <span class="it" style="font-weight:400">one roof</span></h2>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+<div style="padding:24px;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:8px"><span style="font-weight:800;font-size:19px">Formulation</span><span style="color:#33504b">From a kitchen recipe, a product to match, or a concept.</span></div>
+<div style="padding:24px;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:8px"><span style="font-weight:800;font-size:19px">Production</span><span style="color:#33504b">Contract manufacturing or private label.</span></div>
+<div style="padding:24px;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:8px"><span style="font-weight:800;font-size:19px">Packaging and labels</span><span style="color:#33504b">Ingredient and allergen statements, Nutrition Facts.</span></div>
+<div style="padding:24px;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:8px"><span style="font-weight:800;font-size:19px">Shelf-ready</span><span style="color:#33504b">Case packs and pallets to your retailer's specs.</span></div>
+</div>
+</div>
+<div style="flex-grow:1;padding:56px 72px;background:#10211f;color:#c9d9d5;display:flex;justify-content:space-between"><span style="color:#fff;font-weight:800;font-size:20px">Open Line Co-Packing</span><span>[YOUR NAME] · [YOUR EMAIL] · [YOUR PHONE] · Paid by the facility, never by brands</span></div>
+</div></div></div>
+<script>
+(function () {
+  var wrap = document.getElementById("wrap"), stage = document.getElementById("stage");
+  function fit() { stage.style.zoom = Math.min(1, wrap.clientWidth / 1280); }
+  window.addEventListener("resize", fit); fit();
+  document.addEventListener("click", function (e) { var a = e.target.closest && e.target.closest('a[href^="#"]'); if (a) e.preventDefault(); });
+}());
+</script>
